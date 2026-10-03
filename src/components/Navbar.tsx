@@ -82,16 +82,7 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <a
-              href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Chat with us on WhatsApp"
-              className="group flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:scale-105 bg-white/10 hover:bg-white/20 text-white"
-            >
-              <WhatsAppIcon size={18} className="transition-transform duration-300 group-hover:rotate-12" />
-            </a>
+          <div className="hidden items-center md:flex">
             <Link
               href="/contact"
               className="btn min-h-[2.75rem] px-5 group transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 btn-primary"
