@@ -4,10 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Check } from 'lucide-react';
 import Reveal from '@/components/ui/Reveal';
-import SectionHeader from '@/components/ui/SectionHeader';
 import CtaBand from '@/components/ui/CtaBand';
 import { WhatsAppIcon } from '@/components/ui/icons';
 import { whatsappLink } from '@/lib/site';
+import TurnkeyProcessDiagram from '@/components/TurnkeyProcessDiagram';
 
 export const metadata: Metadata = {
   title: 'Services — Design, Permits, Construction & Interiors',
@@ -117,13 +117,6 @@ const SERVICES: Service[] = [
   },
 ];
 
-const STEPS = [
-  { title: 'Site visit & brief', text: 'We visit your plot, listen, and agree what you want and what you can spend.' },
-  { title: 'Design & 3D', text: 'We design it and walk you through it in 3D before anything is built.' },
-  { title: 'Permits & BOQ', text: 'We get your building permit and give you a full BOQ, so the cost is clear.' },
-  { title: 'Construction', text: 'Our site team builds it. You pay in stages and get weekly updates.' },
-  { title: 'Handover', text: 'We hand over your keys, then stay on for the defects period.' },
-];
 
 export default function ServicesPage() {
   return (
@@ -220,32 +213,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* How we work */}
-      <section className="bg-sand">
-        <div className="container-site section">
-          <SectionHeader
-            eyebrow="How we work"
-            title="Five clear steps. No guesswork."
-            intro="Every project follows the same simple path, so you always know what is happening and what comes next."
-          />
-          <ol className="snap-row md:mx-0 md:grid md:grid-cols-5 md:gap-5 md:overflow-visible md:px-0 md:pb-0">
-            {STEPS.map((step, i) => (
-              <Reveal
-                as="li"
-                key={step.title}
-                delay={i * 80}
-                className="card flex w-[78%] shrink-0 snap-start flex-col gap-3 p-6 sm:w-[45%] md:w-auto"
-              >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ink-900 text-base font-bold text-brand">
-                  {i + 1}
-                </span>
-                <h3 className="text-lg font-bold text-ink-900">{step.title}</h3>
-                <p className="text-base leading-relaxed text-ink-600">{step.text}</p>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
-      </section>
+      {/* How we work: Interactive 5-stage turnkey delivery process diagram */}
+      <TurnkeyProcessDiagram />
 
       <div className="pt-20 md:pt-28">
         <CtaBand

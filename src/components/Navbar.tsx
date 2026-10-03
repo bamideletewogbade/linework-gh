@@ -42,13 +42,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 h-16 transition-[background-color,border-color,color] duration-300 md:h-[72px] ${
-          open
-            ? 'bg-ink-950 text-white'
-            : overHero
-              ? 'border-b border-transparent bg-transparent text-white'
-              : 'border-b border-line bg-paper/85 text-ink-900 backdrop-blur-lg'
-        }`}
+        className={`sticky top-0 z-50 h-16 transition-[background-color,border-color,color] duration-300 md:h-[72px] bg-ink-950/95 text-white backdrop-blur-md border-b border-white/10 shadow-sm`}
       >
         <div className="container-site flex h-full items-center justify-between gap-6">
           {/* Logo */}
@@ -72,12 +66,8 @@ export default function Navbar() {
                   aria-current={active ? 'page' : undefined}
                   className={`group relative rounded-full px-4 py-2 text-[0.95rem] font-medium transition-all duration-200 ${
                     active
-                      ? overHero
-                        ? 'bg-white/15 text-white font-semibold shadow-sm'
-                        : 'bg-ink-900/[0.08] text-ink-950 font-semibold'
-                      : overHero
-                        ? 'text-white/80 hover:text-white hover:bg-white/10'
-                        : 'text-ink-600 hover:text-ink-950 hover:bg-ink-900/[0.05]'
+                      ? 'bg-white/15 text-white font-semibold shadow-sm'
+                      : 'text-white/80 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   <span>{link.label}</span>
@@ -98,17 +88,13 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat with us on WhatsApp"
-              className={`group flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:scale-105 ${
-                overHero ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-ink-900/[0.06] hover:bg-ink-900/10 text-ink-900'
-              }`}
+              className="group flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:scale-105 bg-white/10 hover:bg-white/20 text-white"
             >
               <WhatsAppIcon size={18} className="transition-transform duration-300 group-hover:rotate-12" />
             </a>
             <Link
               href="/contact"
-              className={`btn min-h-[2.75rem] px-5 group transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 ${
-                overHero ? 'btn-primary' : 'btn-dark'
-              }`}
+              className="btn min-h-[2.75rem] px-5 group transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 btn-primary"
             >
               <span>Start a project</span>
               <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

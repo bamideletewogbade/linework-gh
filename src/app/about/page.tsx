@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Compass, ShieldCheck, Hammer, Users } from 'lucide-react';
 import Reveal from '@/components/ui/Reveal';
 import CtaBand from '@/components/ui/CtaBand';
+import StudioWorkflowDiagram from '@/components/StudioWorkflowDiagram';
 
 export const metadata: Metadata = {
   title: 'About — The Studio & Philosophy',
@@ -126,6 +127,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Integrated Studio Model Diagram */}
+      <StudioWorkflowDiagram />
 
       {/* Who You Work With */}
       <section className="section bg-paper">

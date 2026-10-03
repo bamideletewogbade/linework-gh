@@ -130,10 +130,25 @@ export default function ContactPage() {
 
           <ConversationalBrief />
 
-          {/* Diaspora note */}
-          <div className="mt-8 text-center text-xs text-ink-500">
-            Living in the UK, US, or Canada? We schedule video calls across your local time zone.
-          </div>
+          {/* Diaspora note & Consultation Card */}
+          <Reveal delay={120} className="mt-12 max-w-2xl mx-auto p-6 rounded-3xl bg-white border border-line shadow-sm text-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand/10 text-brand-700 text-xs font-bold uppercase tracking-wider mb-3">
+              <span>Diaspora Consultation Support</span>
+            </div>
+            <h3 className="text-lg font-bold text-ink-900 mb-2">
+              Living in the UK, US, or Canada?
+            </h3>
+            <p className="text-ink-600 text-sm leading-relaxed mb-4">
+              We sync consultations across GMT-5 to GMT+1. Book a dedicated Google Meet or WhatsApp video call to review your land title, architectural drawings, or construction progress with our partners.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-ink-700 pt-4 border-t border-line">
+              <span>Studio: Accra, Ghana</span>
+              <span>&middot;</span>
+              <span>Hours: Mon–Sat, 8:00am – 6:00pm GMT</span>
+              <span>&middot;</span>
+              <span>Online: 24/7 on WhatsApp</span>
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>
