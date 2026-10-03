@@ -64,16 +64,6 @@ export default function HomePage() {
                 >
                   View built work
                 </Link>
-
-                <a
-                  href="https://wa.me/233256869481"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/80 hover:text-white text-sm font-semibold flex items-center gap-2 py-2 px-2"
-                >
-                  <Phone size={15} className="text-brand" />
-                  <span>Direct WhatsApp</span>
-                </a>
               </div>
 
               {/* Quick Trust Highlights */}
