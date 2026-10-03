@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Linework GH — Design &amp; Construction | Coming Soon</title>
+<meta name="description" content="Linework GH is a design and construction studio in Ghana. Architecture, build and project delivery. Our new site is under construction — get in touch at info@lineworkgh.com." />
+<meta name="theme-color" content="#070B10" />
+<link rel="canonical" href="https://lineworkgh.com/" />
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://lineworkgh.com/" />
+<meta property="og:title" content="Linework GH — Design &amp; Construction" />
+<meta property="og:description" content="Drawn with intent. Built to last. Something is going up here." />
+<meta property="og:image" content="https://lineworkgh.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23070B10'/%3E%3Cpath d='M7 24V8M7 24h18' stroke='%23F5A524' stroke-width='2.5' stroke-linecap='square'/%3E%3Cpath d='M12 24V15l6-5 6 5v9' stroke='%236EE7F9' stroke-width='1.6' fill='none'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   LINEWORK GH — coming soon
+   Single file. No build step. Drop into public_html/
+   ============================================================ */
+
+:root{
+  --ink:        #070B10;
+  --ink-2:      #0B1119;
+  --paper:      #E8EEF7;
+  --muted:      #7C8CA3;
+  --line:       rgba(110,231,249,.14);
+  --line-soft:  rgba(110,231,249,.07);
+  --cyan:       #6EE7F9;
+  --amber:      #F5A524;
+
+  --ease:       cubic-bezier(.22,1,.36,1);
+  --ease-io:    cubic-bezier(.65,0,.35,1);
+
+  --gutter:     clamp(20px, 5vw, 64px);
+  --mono:       'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans:       'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{ color:inherit; text-decoration:none; }
+::selection{ background:var(--amber); color:var(--ink); }
+
+/* ---------- 1. BLUEPRINT GROUND ---------------------------- */
+
+.grid-layer{
+  position:fixed; inset:-10%;
+  z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px),
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
+  opacity:0;
+  transform: translate3d(0,0,0);
+  transition: opacity 1.6s var(--ease);
+  will-change: transform;
+}
+.is-ready .grid-layer{ opacity:1; }
+
+/* radial vignette so the centre reads and the edges recede */
+.vignette{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 50% 0%,   rgba(110,231,249,.07), transparent 55%),
+    radial-gradient(90%  80% at 50% 100%, rgba(245,165,36,.06),  transparent 60%),
+    radial-gradient(100% 100% at 50% 50%, transparent 30%, rgba(7,11,16,.85) 100%);
+}
+
+/* cursor spotlight — lifts the grid under the pointer */
+.spotlight{
+  position:fixed; z-index:1; pointer-events:none;
+  width:520px; height:520px; left:0; top:0;
+  margin:-260px 0 0 -260px;
+  background:radial-gradient(circle, rgba(110,231,249,.10), transparent 62%);
+  opacity:0;
+  transition:opacity .6s var(--ease);
+  will-change:transform;
+}
+.is-pointing .spotlight{ opacity:1; }
+
+/* ---------- 2. FRAME + CROSSHAIRS -------------------------- */
+
+.frame{
+  position:fixed; inset:calc(var(--gutter) * .55);
+  z-index:2; pointer-events:none;
+  border:1px solid rgba(232,238,247,.10);
+}
+.frame::before,.frame::after{
+  content:''; position:absolute; background:var(--amber);
+  opacity:0; animation:tickIn .9s var(--ease) 1.1s forwards;
+}
+.frame::before{ left:-1px; top:-1px; width:34px; height:2px; }
+.frame::after { left:-1px; top:-1px; width:2px;  height:34px; }
+@keyframes tickIn{ from{ opacity:0; transform:scale(.2); } to{ opacity:1; transform:scale(1); } }
+
+.tick{
+  position:fixed; z-index:2; pointer-events:none;
+  width:34px; height:2px; background:var(--amber);
+  opacity:0; animation:tickIn .9s var(--ease) 1.25s forwards;
+}
+.tick.tr{ right:calc(var(--gutter)*.55 - 1px); top:calc(var(--gutter)*.55 - 1px); }
+.tick.tr-v{ width:2px; height:34px; animation-delay:1.35s; }
+.tick.bl{ left:calc(var(--gutter)*.55 - 1px); bottom:calc(var(--gutter)*.55 - 1px); }
+.tick.bl-v{ width:2px; height:34px; animation-delay:1.45s; }
+.tick.br{ right:calc(var(--gutter)*.55 - 1px); bottom:calc(var(--gutter)*.55 - 1px); }
+.tick.br-v{ width:2px; height:34px; animation-delay:1.55s; }
+
+/* ---------- 3. LAYOUT --------------------------------------- */
+
+.shell{
+  position:relative; z-index:3;
+  min-height:100svh;
+  display:flex; flex-direction:column;
+  padding: calc(var(--gutter) * 1.15) var(--gutter);
+}
+
+header.top{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; flex-wrap:wrap;
+}
+
+/* wordmark drawn in markup, no image dependency */
+.mark{ display:flex; align-items:center; gap:12px; }
+.mark svg{ width:30px; height:30px; overflow:visible; }
+.mark .name{
+  font-weight:800; letter-spacing:.16em; font-size:15px;
+  text-transform:uppercase;
+}
+.mark .name span{ color:var(--amber); }
+
+.top-meta{
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted);
+  display:flex; align-items:center; gap:10px;
+}
+.pulse{
+  width:7px; height:7px; border-radius:50%;
+  background:var(--amber);
+  box-shadow:0 0 0 0 rgba(245,165,36,.55);
+  animation:pulse 2.4s infinite;
+}
+@keyframes pulse{
+  0%  { box-shadow:0 0 0 0    rgba(245,165,36,.5); }
+  70% { box-shadow:0 0 0 11px rgba(245,165,36,0);  }
+  100%{ box-shadow:0 0 0 0    rgba(245,165,36,0);  }
+}
+
+main{
+  flex:1;
+  display:grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr);
+  align-items:center;
+  gap: clamp(32px, 6vw, 88px);
+  padding: clamp(40px, 8vh, 96px) 0;
+}
+
+/* ---------- 4. TYPE + REVEALS ------------------------------ */
+
+.eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--cyan);
+  display:flex; align-items:center; gap:12px;
+  margin:0 0 clamp(20px,3vh,30px);
+}
+.eyebrow::after{
+  content:''; height:1px; flex:1; max-width:120px;
+  background:linear-gradient(90deg, var(--cyan), transparent);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform 1.1s var(--ease) .6s;
+}
+.is-ready .eyebrow::after{ transform:scaleX(1); }
+
+h1{
+  margin:0;
+  font-size: clamp(40px, 7.4vw, 96px);
+  line-height:.94;
+  letter-spacing:-.035em;
+  font-weight:800;
+  text-transform:uppercase;
+}
+h1 .row{ display:block; overflow:hidden; }
+h1 .row > i{
+  display:block; font-style:normal;
+  transform:translateY(105%);
+  transition:transform 1.05s var(--ease);
+}
+h1 .row:nth-child(1) > i{ transition-delay:.30s; }
+h1 .row:nth-child(2) > i{ transition-delay:.40s; }
+h1 .row:nth-child(3) > i{ transition-delay:.50s; }
+.is-ready h1 .row > i{ transform:translateY(0); }
+
+h1 .thin{
+  -webkit-text-stroke:1.4px var(--paper);
+  color:transparent;
+}
+h1 .amber{ color:var(--amber); }
+
+.lede{
+  margin: clamp(22px,3.4vh,32px) 0 0;
+  max-width:46ch;
+  font-size: clamp(15px,1.55vw,18px);
+  line-height:1.62;
+  color:#A9B6C9;
+}
+
+/* generic scroll/load reveal */
+.rise{ opacity:0; transform:translateY(20px); transition:opacity .9s var(--ease), transform .9s var(--ease); }
+.is-ready .rise{ opacity:1; transform:none; }
+.d1{ transition-delay:.70s } .d2{ transition-delay:.82s }
+.d3{ transition-delay:.94s } .d4{ transition-delay:1.06s }
+
+/* ---------- 5. THE DRAWING ---------------------------------- */
+
+.plate{ position:relative; }
+.plate svg{ width:100%; height:auto; display:block; overflow:visible; }
+
+.draw{
+  fill:none;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
+  stroke-dasharray:var(--len,1200);
+  stroke-dashoffset:var(--len,1200);
+}
+.is-ready .draw{
+  animation: drawIn 2.3s var(--ease-io) forwards;
+}
+@keyframes drawIn{ to{ stroke-dashoffset:0; } }
+
+.s-guide { stroke:rgba(110,231,249,.30); stroke-width:1;   animation-delay:.35s !important; }
+.s-struct{ stroke:var(--paper);          stroke-width:1.6; animation-delay:.75s !important; }
+.s-accent{ stroke:var(--amber);          stroke-width:2;   animation-delay:1.35s !important; }
+.s-dim   { stroke:var(--muted);          stroke-width:.9;  animation-delay:1.7s  !important; }
+
+.node{
+  fill:var(--ink); stroke:var(--amber); stroke-width:1.6;
+  opacity:0; transform-box:fill-box; transform-origin:center;
+  transition:opacity .5s var(--ease), transform .5s var(--ease);
+}
+.is-ready .node{ opacity:1; }
+.is-ready .node:nth-of-type(1){ transition-delay:2.0s }
+.is-ready .node:nth-of-type(2){ transition-delay:2.1s }
+.is-ready .node:nth-of-type(3){ transition-delay:2.2s }
+.is-ready .node:nth-of-type(4){ transition-delay:2.3s }
+
+.plate-label{
+  font-family:var(--mono); font-size:9px; letter-spacing:.18em;
+  fill:var(--muted); text-transform:uppercase;
+  opacity:0; transition:opacity .8s var(--ease) 2.2s;
+}
+.is-ready .plate-label{ opacity:1; }
+
+/* slow float so the drawing never feels dead */
+.plate-inner{ animation:float 9s ease-in-out infinite; }
+@keyframes float{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-10px) } }
+
+/* ---------- 6. FORM + BUTTONS ------------------------------- */
+
+.actions{ margin-top: clamp(30px,4.6vh,44px); }
+
+form.notify{
+  display:flex; align-items:stretch; gap:0;
+  max-width:460px;
+  border-bottom:1px solid rgba(232,238,247,.22);
+  position:relative;
+  transition:border-color .4s var(--ease);
+}
+form.notify::after{
+  content:''; position:absolute; left:0; right:0; bottom:-1px; height:1px;
+  background:var(--amber); transform:scaleX(0); transform-origin:left;
+  transition:transform .55s var(--ease);
+}
+form.notify:focus-within::after{ transform:scaleX(1); }
+
+form.notify input{
+  flex:1; min-width:0;
+  background:transparent; border:0; outline:0;
+  color:var(--paper);
+  font-family:var(--mono); font-size:14px; letter-spacing:.02em;
+  padding:15px 4px 15px 0;
+}
+form.notify input::placeholder{ color:#5C6B80; }
+
+.btn{
+  position:relative; overflow:hidden;
+  background:transparent; border:0; cursor:pointer;
+  color:var(--paper);
+  font-family:var(--mono); font-size:11px; font-weight:500;
+  letter-spacing:.2em; text-transform:uppercase;
+  padding:15px 4px 15px 22px;
+  display:inline-flex; align-items:center; gap:10px;
+  white-space:nowrap;
+  transition:color .35s var(--ease);
+}
+.btn .arrow{ transition:transform .45s var(--ease); display:inline-block; }
+.btn:hover{ color:var(--amber); }
+.btn:hover .arrow{ transform:translateX(6px); }
+.btn:focus-visible{ outline:1px dashed var(--amber); outline-offset:4px; }
+
+.form-note{
+  margin:14px 0 0; min-height:18px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em;
+  color:var(--muted);
+  opacity:0; transform:translateY(-4px);
+  transition:opacity .45s var(--ease), transform .45s var(--ease);
+}
+.form-note.show{ opacity:1; transform:none; }
+.form-note.ok{ color:var(--amber); }
+.form-note.err{ color:#FF7A7A; }
+
+/* contact row */
+.contacts{
+  margin-top: clamp(26px,3.6vh,36px);
+  display:flex; flex-wrap:wrap; gap:10px 26px;
+  font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+}
+.contacts a{
+  color:#A9B6C9; position:relative; padding-bottom:3px;
+  transition:color .35s var(--ease);
+}
+.contacts a::after{
+  content:''; position:absolute; left:0; bottom:0; height:1px; width:100%;
+  background:var(--amber);
+  transform:scaleX(0); transform-origin:right;
+  transition:transform .45s var(--ease);
+}
+.contacts a:hover{ color:var(--paper); }
+.contacts a:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+/* ---------- 7. FOOTER MARQUEE ------------------------------ */
+
+footer.bottom{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:20px; flex-wrap:wrap;
+  border-top:1px solid rgba(232,238,247,.08);
+  padding-top:18px;
+}
+.marquee{
+  flex:1; min-width:220px; overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.marquee-track{
+  display:flex; width:max-content;
+  animation:slide 34s linear infinite;
+}
+.marquee:hover .marquee-track{ animation-play-state:paused; }
+@keyframes slide{ to{ transform:translateX(-50%); } }
+.marquee span{
+  font-family:var(--mono); font-size:11px; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--muted);
+  padding:0 22px; display:inline-flex; align-items:center; gap:22px;
+}
+.marquee span::after{ content:'◆'; color:var(--amber); font-size:7px; opacity:.7; }
+
+.copyright{
+  font-family:var(--mono); font-size:10px; letter-spacing:.16em;
+  text-transform:uppercase; color:#4E5C70;
+}
+
+/* ---------- 8. RESPONSIVE ---------------------------------- */
+
+@media (max-width: 900px){
+  main{ grid-template-columns:1fr; gap:44px; padding-top:36px; }
+  .plate{ order:2; max-width:440px; margin:0 auto; width:100%; }
+  .copy{ order:1; }
+  .frame{ display:none; }
+  .tick{ display:none; }
+}
+@media (max-width: 520px){
+  form.notify{ flex-wrap:wrap; }
+  .btn{ padding-left:0; }
+  h1{ font-size: clamp(34px, 12vw, 56px); }
+}
+
+/* pointer-fine only niceties */
+@media (hover:none){ .spotlight{ display:none; } }
+
+/* ---------- 9. REDUCED MOTION ------------------------------ */
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .draw{ stroke-dashoffset:0 !important; }
+  .node,.plate-label{ opacity:1 !important; }
+  h1 .row > i{ transform:none !important; }
+  .rise{ opacity:1 !important; transform:none !important; }
+  .plate-inner{ animation:none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-layer" id="grid"></div>
+<div class="vignette"></div>
+<div class="spotlight" id="spot"></div>
+
+<div class="frame"></div>
+<i class="tick tr"></i><i class="tick tr tr-v"></i>
+<i class="tick bl"></i><i class="tick bl bl-v"></i>
+<i class="tick br"></i><i class="tick br br-v"></i>
+
+<div class="shell">
+
+  <!-- ============ HEADER ============ -->
+  <header class="top">
+    <div class="mark">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M6 26V6M6 26h20" stroke="#F5A524" stroke-width="2.4" stroke-linecap="square"/>
+        <path d="M11 26v-9l6.5-5.5L24 17v9" stroke="#6EE7F9" stroke-width="1.5" fill="none"/>
+      </svg>
+      <div class="name">Linework<span>&nbsp;GH</span></div>
+    </div>
+    <div class="top-meta">
+      <span class="pulse" aria-hidden="true"></span>
+      Accra, Ghana &nbsp;·&nbsp; Est. 2026
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <!-- ---- copy column ---- -->
+    <div class="copy">
+      <p class="eyebrow">Site under construction</p>
+
+      <h1>
+        <span class="row"><i>Drawn</i></span>
+        <span class="row"><i class="thin">with intent.</i></span>
+        <span class="row"><i>Built <span class="amber">to last.</span></i></span>
+      </h1>
+
+      <p class="lede rise d1">
+        Linework GH is a design and construction studio working across architecture,
+        interiors and build delivery. We're drafting a new home for the practice —
+        drawings, projects and the full story land here shortly.
+      </p>
+
+      <div class="actions rise d2">
+        <form class="notify" id="notifyForm" novalidate>
+          <label for="email" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+                 placeholder="you@company.com" required />
+          <button class="btn" type="submit" id="submitBtn">
+            Notify me <span class="arrow" aria-hidden="true">→</span>
+          </button>
+        </form>
+        <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="contacts rise d3">
+        <a href="mailto:info@lineworkgh.com">info@lineworkgh.com</a>
+        <!-- TODO: real number + handle. Uncomment once confirmed.
+        <a href="tel:+233XXXXXXXXX">+233 XX XXX XXXX</a>
+        <a href="https://wa.me/233XXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://instagram.com/lineworkgh" target="_blank" rel="noopener">Instagram</a>
+        -->
+      </div>
+    </div>
+
+    <!-- ---- drawing column ---- -->
+    <div class="plate rise d4" aria-hidden="true">
+      <svg viewBox="0 0 420 380" role="img" aria-label="Architectural elevation drawing">
+        <g class="plate-inner">
+
+          <!-- construction guides -->
+          <line class="draw s-guide" style="--len:420" x1="0"   y1="300" x2="420" y2="300"/>
+          <line class="draw s-guide" style="--len:300" x1="60"  y1="0"   x2="60"  y2="300"/>
+          <line class="draw s-guide" style="--len:300" x1="360" y1="0"   x2="360" y2="300"/>
+          <line class="draw s-guide" style="--len:520" x1="60"  y1="300" x2="360" y2="120"/>
+
+          <!-- primary structure: elevation -->
+          <path class="draw s-struct" style="--len:900"
+                d="M60 300 V150 L210 60 L360 150 V300"/>
+          <path class="draw s-struct" style="--len:340"
+                d="M60 150 H360"/>
+          <path class="draw s-struct" style="--len:640"
+                d="M100 300 V210 H180 V300 M240 300 V210 H320 V300"/>
+
+          <!-- floor plates -->
+          <line class="draw s-struct" style="--len:300" x1="60" y1="210" x2="360" y2="210"/>
+          <line class="draw s-struct" style="--len:300" x1="60" y1="255" x2="360" y2="255"/>
+
+          <!-- accent: the aperture -->
+          <rect class="draw s-accent" style="--len:260" x="185" y="180" width="50" height="80"/>
+          <line class="draw s-accent" style="--len:80"  x1="210" y1="180" x2="210" y2="260"/>
+
+          <!-- dimension line -->
+          <path class="draw s-dim" style="--len:340"
+                d="M60 335 H360 M60 329 v12 M360 329 v12"/>
+          <path class="draw s-dim" style="--len:120"
+                d="M392 150 V300 M386 150 h12 M386 300 h12"/>
+
+          <!-- setting-out nodes -->
+          <circle class="node" cx="60"  cy="150" r="4"/>
+          <circle class="node" cx="210" cy="60"  r="4"/>
+          <circle class="node" cx="360" cy="150" r="4"/>
+          <circle class="node" cx="210" cy="300" r="4"/>
+
+          <!-- annotations -->
+          <text class="plate-label" x="186" y="356">SITE — 001</text>
+          <text class="plate-label" x="398" y="228" transform="rotate(90 398 228)">ELEV.</text>
+          <text class="plate-label" x="0"  y="24">DWG / LWGH-2026</text>
+        </g>
+      </svg>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bottom">
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track" id="track">
+        <span>Architectural Design</span><span>Construction Management</span>
+        <span>Interior Fit-Out</span><span>Structural Works</span>
+        <span>Project Delivery</span><span>Renovation</span>
+        <span>3D Visualisation</span><span>Site Supervision</span>
+      </div>
+    </div>
+    <div class="copyright">© <span id="yr">2026</span> Linework GH</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- kick off the entrance once fonts/paint settle --- */
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){ document.body.classList.add('is-ready'); });
+  });
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* --- duplicate marquee content so the loop is seamless --- */
+  var track = document.getElementById('track');
+  track.innerHTML += track.innerHTML;
+
+  /* --- cursor spotlight + grid parallax (fine pointers only) --- */
+  if (!reduce && window.matchMedia('(hover:hover)').matches) {
+    var spot = document.getElementById('spot');
+    var grid = document.getElementById('grid');
+    var tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+
+    window.addEventListener('pointermove', function(e){
+      tx = e.clientX; ty = e.clientY;
+      document.body.classList.add('is-pointing');
+      if (!raf) raf = requestAnimationFrame(loop);
+    }, { passive:true });
+
+    window.addEventListener('pointerleave', function(){
+      document.body.classList.remove('is-pointing');
+    });
+
+    function loop(){
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      spot.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
+
+      // grid drifts a few px against the pointer — depth without noise
+      var px = (cx / window.innerWidth  - 0.5) * -18;
+      var py = (cy / window.innerHeight - 0.5) * -18;
+      grid.style.transform = 'translate3d(' + px + 'px,' + py + 'px,0)';
+
+      raf = (Math.abs(tx - cx) > 0.4 || Math.abs(ty - cy) > 0.4)
+            ? requestAnimationFrame(loop) : null;
+    }
+  }
+
+  /* --- notify form ------------------------------------------------
+     ENDPOINT: replace with your Formspree form id (formspree.io — free).
+     Until then the form falls back to opening a pre-filled email.
+  ------------------------------------------------------------------ */
+  var ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxxx'
+
+  var form = document.getElementById('notifyForm');
+  var input = document.getElementById('email');
+  var note  = document.getElementById('formNote');
+  var btn   = document.getElementById('submitBtn');
+
+  function say(msg, kind){
+    note.textContent = msg;
+    note.className = 'form-note show ' + (kind || '');
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var value = input.value.trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+      say('That address doesn’t look right — check it and try again.', 'err');
+      input.focus();
+      return;
+    }
+
+    if (!ENDPOINT) {
+      // no backend configured yet: hand off to the user's mail client
+      say('Opening your mail app…', 'ok');
+      window.location.href = 'mailto:info@lineworkgh.com'
+        + '?subject=' + encodeURIComponent('Notify me when Linework GH launches')
+        + '&body='    + encodeURIComponent('Please add ' + value + ' to your launch list.');
+      return;
+    }
+
+    btn.disabled = true;
+    say('Sending…');
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    })
+    .then(function(res){
+      if (!res.ok) throw new Error('bad response');
+      form.style.display = 'none';
+      say('You’re on the list. We’ll be in touch.', 'ok');
+    })
+    .catch(function(){
+      btn.disabled = false;
+      say('Couldn’t send that. Email info@lineworkgh.com instead.', 'err');
+    });
+  });
+
+  input.addEventListener('input', function(){
+    if (note.classList.contains('err')) note.className = 'form-note';
+  });
+})();
+</script>
+</body>
+</html>
