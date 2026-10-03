@@ -46,12 +46,12 @@ export default function Navbar() {
       >
         <div className="container-site flex h-full items-center justify-between gap-6">
           {/* Logo */}
-          <Link href="/" className="group flex items-center gap-2.5" aria-label="Linework GH — home">
+          <Link href="/" className="group flex items-center gap-2.5" aria-label="notjustlines — home">
             <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 border border-white/10 transition-all duration-300 group-hover:scale-105 group-hover:border-brand/40 group-hover:bg-brand/10">
               <LineworkMark className="h-6 w-6 transition-all duration-300 group-hover:-rotate-6 group-hover:scale-110" />
             </span>
             <span className="font-display text-lg font-bold tracking-tight">
-              linework<span className="inline-block text-brand transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">.</span>
+              notjustlines<span className="inline-block text-brand transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">.</span>
             </span>
           </Link>
 

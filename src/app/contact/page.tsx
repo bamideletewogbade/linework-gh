@@ -10,7 +10,7 @@ import { SITE, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '@/lib/site';
 export const metadata: Metadata = {
   title: 'Contact — Talk to Our Architects & Builders',
   description:
-    'Reach out to Linework GH on WhatsApp, phone, or email. Tell us about your plot or building project in Accra and get direct feasibility feedback.',
+    'Reach out to notjustlines on WhatsApp, phone, or email. Tell us about your plot or building project in Accra and get direct feasibility feedback.',
   alternates: { canonical: '/contact' },
 };
 

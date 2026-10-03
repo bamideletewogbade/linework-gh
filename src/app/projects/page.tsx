@@ -7,7 +7,7 @@ import CtaBand from '@/components/ui/CtaBand';
 export const metadata: Metadata = {
   title: 'Projects — Built Homes, Commercial & Interiors in Accra',
   description:
-    'Explore completed and current Linework GH projects across Cantonments, Airport Residential, East Legon, and Greater Accra.',
+    'Explore completed and current notjustlines projects across Cantonments, Airport Residential, East Legon, and Greater Accra.',
   alternates: { canonical: '/projects' },
 };
 
@@ -38,7 +38,7 @@ export default function ProjectsPage() {
         text="Whether you have an empty plot or want to remodel an existing home, let’s talk through your ideas."
         primaryLabel="Start your project"
         primaryHref="/contact"
-        whatsappMessage="Hi Linework, I was looking at your projects and want to build something similar."
+        whatsappMessage="Hi notjustlines, I was looking at your projects and want to build something similar."
       />
     </div>
   );

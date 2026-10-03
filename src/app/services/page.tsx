@@ -43,8 +43,8 @@ const SERVICES: Service[] = [
       'BOQ (bill of quantities) so you know the cost before you build',
     ],
     image: '/assets/craft-studio.jpg',
-    imageAlt: 'Drawings, models and material samples on a table in the Linework studio',
-    whatsapp: "Hi Linework, I'd like to talk about drawings and a building permit.",
+    imageAlt: 'Drawings, models and material samples on a table in the notjustlines studio',
+    whatsapp: "Hi notjustlines, I'd like to talk about drawings and a building permit.",
   },
   {
     id: 'construction',
@@ -61,8 +61,8 @@ const SERVICES: Service[] = [
       'Daily site supervision by our engineers',
     ],
     image: '/assets/site-engineering.jpg',
-    imageAlt: 'Linework site team working on a reinforced concrete structure',
-    whatsapp: "Hi Linework, I'd like to talk about building on my plot.",
+    imageAlt: 'notjustlines site team working on a reinforced concrete structure',
+    whatsapp: "Hi notjustlines, I'd like to talk about building on my plot.",
   },
   {
     id: 'interiors',
@@ -79,7 +79,7 @@ const SERVICES: Service[] = [
     ],
     image: '/assets/interior-ridge.jpg',
     imageAlt: 'Finished living room with walnut joinery and a floating staircase',
-    whatsapp: "Hi Linework, I'd like to talk about interiors / fit-out.",
+    whatsapp: "Hi notjustlines, I'd like to talk about interiors / fit-out.",
   },
   {
     id: 'diaspora',
@@ -97,7 +97,7 @@ const SERVICES: Service[] = [
     ],
     image: '/assets/villa-cantonments.jpg',
     imageAlt: 'A finished family home in Cantonments built for a client living in London',
-    whatsapp: "Hi Linework, I live abroad and I'd like to build in Ghana.",
+    whatsapp: "Hi notjustlines, I live abroad and I'd like to build in Ghana.",
   },
   {
     id: 'renovations',
@@ -113,7 +113,7 @@ const SERVICES: Service[] = [
     ],
     image: '/assets/facade-detail.jpg',
     imageAlt: 'Concrete and timber louvre detail on a renovated home',
-    whatsapp: "Hi Linework, I'd like to talk about a renovation or extension.",
+    whatsapp: "Hi notjustlines, I'd like to talk about a renovation or extension.",
   },
 ];
 
@@ -220,7 +220,7 @@ export default function ServicesPage() {
         <CtaBand
           title="Not sure which service you need?"
           text="Tell us about your plot or your building. We will tell you honestly where to start — usually within one working day."
-          whatsappMessage="Hi Linework, I'm not sure which service I need. Can we talk?"
+          whatsappMessage="Hi notjustlines, I'm not sure which service I need. Can we talk?"
         />
       </div>
     </>

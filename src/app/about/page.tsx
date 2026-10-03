@@ -10,7 +10,7 @@ import StudioWorkflowDiagram from '@/components/StudioWorkflowDiagram';
 export const metadata: Metadata = {
   title: 'About — The Studio & Philosophy',
   description:
-    'The story behind Linework GH: why architecture is not just lines on paper, how our architects and builders work together in Accra, and our commitments to every client.',
+    'The story behind notjustlines: why architecture is not just lines on paper, how our architects and builders work together in Accra, and our commitments to every client.',
   alternates: { canonical: '/about' },
 };
 
@@ -25,7 +25,7 @@ export default function AboutPage() {
             Drawn with care. Built to last.
           </h1>
           <p className="max-w-2xl text-lg text-ink-600">
-            Linework is an integrated architecture and construction studio in Accra. We believe a design is only as good as the finished building you walk into.
+            notjustlines is an integrated architecture and construction studio in Accra. We believe a design is only as good as the finished building you walk into.
           </p>
         </Reveal>
 
@@ -33,7 +33,7 @@ export default function AboutPage() {
         <Reveal delay={100} className="mt-10 relative aspect-[16/9] md:aspect-[21/9] w-full rounded-3xl overflow-hidden border border-line bg-paper shadow-sm">
           <Image
             src="/assets/craft-studio.jpg"
-            alt="Linework studio workshop in Accra"
+            alt="notjustlines studio workshop in Accra"
             fill
             priority
             sizes="(max-width: 768px) 100vw, 1200px"
@@ -41,7 +41,7 @@ export default function AboutPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 via-transparent to-transparent" />
           <div className="absolute bottom-5 left-5 sm:bottom-6 sm:left-6 text-white text-xs sm:text-sm font-medium">
-            Linework Studio &middot; Physical modeling and joinery workshop &middot; Accra
+            notjustlines Studio &middot; Physical modeling and joinery workshop &middot; Accra
           </div>
         </Reveal>
       </section>
@@ -140,7 +140,7 @@ export default function AboutPage() {
               Who you work with
             </h2>
             <p className="text-ink-600 text-base md:text-lg leading-relaxed">
-              When you hire Linework, you get a coordinated team under one roof — not subcontractors you have never met.
+              When you hire notjustlines, you get a coordinated team under one roof — not subcontractors you have never met.
             </p>
           </Reveal>
 
@@ -184,7 +184,7 @@ export default function AboutPage() {
         text="Visit our studio in Accra or schedule a video call across your time zone. We’ll review your plot and give you straight answers."
         primaryLabel="Start your brief"
         primaryHref="/contact"
-        whatsappMessage="Hi Linework, I'd like to talk about a building project in Ghana."
+        whatsappMessage="Hi notjustlines, I'd like to talk about a building project in Ghana."
       />
     </div>
   );

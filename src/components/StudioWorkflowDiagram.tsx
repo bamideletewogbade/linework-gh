@@ -93,7 +93,7 @@ export default function StudioWorkflowDiagram() {
             Why two separate contracts always break down.
           </h2>
           <p className="text-ink-600 text-base md:text-lg leading-relaxed">
-            When you hire an architect separately from a building contractor in Accra, you inherit the gap between drawings and reality. Here is how Linework unites the entire process.
+            When you hire an architect separately from a building contractor in Accra, you inherit the gap between drawings and reality. Here is how notjustlines unites the entire process.
           </p>
         </Reveal>
 
@@ -158,7 +158,7 @@ export default function StudioWorkflowDiagram() {
             <div className="relative z-10">
               <div className="flex items-center justify-between pb-4 mb-5 border-b border-white/10">
                 <span className="text-xs font-bold uppercase tracking-wider text-brand">
-                  The Linework Single-Loop
+                  The notjustlines Single-Loop
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand/20 text-brand text-xs font-semibold">
                   <CheckCircle2 size={14} />

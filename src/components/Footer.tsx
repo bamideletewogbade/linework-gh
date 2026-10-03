@@ -35,10 +35,10 @@ export default function Footer() {
         <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-12 md:pb-16">
           {/* Brand */}
           <div className="md:col-span-5">
-            <Link href="/" className="inline-flex items-center gap-2.5 text-white" aria-label="Linework GH — home">
+            <Link href="/" className="inline-flex items-center gap-2.5 text-white" aria-label="notjustlines — home">
               <LineworkMark className="h-9 w-9" />
               <span className="font-display text-xl font-bold tracking-tight">
-                linework<span className="text-brand">.</span>
+                notjustlines<span className="text-brand">.</span>
               </span>
             </Link>
             <p className="mt-5 max-w-sm text-base leading-relaxed">
@@ -59,7 +59,7 @@ export default function Footer() {
                 href={SITE.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Linework on Instagram"
+                aria-label="notjustlines on Instagram"
                 className="btn btn-outline-light min-h-[2.75rem] w-11 px-0"
               >
                 <Instagram size={18} />

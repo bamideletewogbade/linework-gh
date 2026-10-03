@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${project.title} — ${project.neighborhood}, Accra`,
     description: project.tagline,
     openGraph: {
-      title: `${project.title} | Linework GH`,
+      title: `${project.title} | notjustlines`,
       description: project.tagline,
       images: [{ url: project.heroImage, alt: project.title }],
     },
@@ -165,7 +165,7 @@ export default function ProjectDetailPage({ params }: Props) {
               {/* Inquire Buttons */}
               <div className="mt-8 pt-6 border-t border-line flex flex-col gap-3">
                 <a
-                  href={whatsappLink(`Hi Linework, I am interested in building something like ${project.title}.`)}
+                  href={whatsappLink(`Hi notjustlines, I am interested in building something like ${project.title}.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-whatsapp w-full text-xs"

@@ -252,7 +252,7 @@ export default function TurnkeyProcessDiagram() {
                 <div className="space-y-1.5 text-ink-300">
                   <div className="flex justify-between">
                     <span>Supervisor:</span>
-                    <span className="text-white font-medium">In-house Linework Engineer</span>
+                    <span className="text-white font-medium">In-house notjustlines Engineer</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Payment gate:</span>

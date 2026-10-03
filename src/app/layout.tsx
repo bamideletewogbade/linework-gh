@@ -3,7 +3,6 @@ import { Inter, Bricolage_Grotesque } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import MobileActionBar from '@/components/MobileActionBar';
 import { SITE } from '@/lib/site';
 
 const inter = Inter({
@@ -20,13 +19,13 @@ const display = Bricolage_Grotesque({
 });
 
 const description =
-  'Linework is an architecture and construction company in Accra. We design, get permits, build and finish homes, offices and interiors — one team from your plot to your keys.';
+  'notjustlines is an architecture and construction company in Accra. We design, get permits, build and finish homes, offices and interiors — one team from your plot to your keys.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: 'Linework GH — Architects & Builders in Accra | Design & Build',
-    template: '%s | Linework GH',
+    default: 'notjustlines — Architects & Builders in Accra | Design & Build',
+    template: '%s | notjustlines',
   },
   description,
   keywords: [
@@ -38,7 +37,7 @@ export const metadata: Metadata = {
     'turnkey construction Accra',
     'interior fit-out Accra',
     'building permit Accra',
-    'Linework GH',
+    'notjustlines',
   ],
   authors: [{ name: SITE.legalName }],
   creator: SITE.name,
@@ -49,13 +48,13 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     url: SITE.url,
     siteName: SITE.name,
-    title: 'Linework GH — We don’t just draw it. We build it.',
+    title: 'notjustlines — We don’t just draw it. We build it.',
     description,
-    images: [{ url: '/assets/villa-cantonments.jpg', width: 1376, height: 768, alt: 'A house designed and built by Linework in Accra' }],
+    images: [{ url: '/assets/villa-cantonments.jpg', width: 1376, height: 768, alt: 'A house designed and built by notjustlines in Accra' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Linework GH — We don’t just draw it. We build it.',
+    title: 'notjustlines — We don’t just draw it. We build it.',
     description,
     images: ['/assets/villa-cantonments.jpg'],
   },
@@ -108,7 +107,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
-        <MobileActionBar />
       </body>
     </html>
   );

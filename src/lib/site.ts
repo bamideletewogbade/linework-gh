@@ -2,8 +2,8 @@
 // Change a number here and it updates across the whole site.
 
 export const SITE = {
-  name: 'Linework GH',
-  legalName: 'Linework Design & Construction Ltd.',
+  name: 'notjustlines',
+  legalName: 'notjustlines Design & Construction Ltd.',
   tagline: 'Not just lines.',
   url: 'https://notjustlines.com',
   phoneDisplay: '+233 25 686 9481',
@@ -24,7 +24,7 @@ export function whatsappLink(message?: string) {
 }
 
 export const DEFAULT_WHATSAPP_MESSAGE =
-  "Hi Linework, I'd like to talk about a building project.";
+  "Hi notjustlines, I'd like to talk about a building project.";
 
 /**
  * Rough build-cost guide used by the brief estimator (USD per m², turnkey, excl. land).

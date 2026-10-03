@@ -45,7 +45,7 @@ export default function HomePage() {
 
               {/* Instant Clarification Subhead */}
               <p className="text-ink-200 text-base sm:text-lg leading-relaxed font-sans max-w-xl mb-7">
-                Linework designs, secures building permits, builds and finishes luxury homes and commercial spaces across Cantonments, Airport Residential, East Legon and Greater Accra. One team from your plot to your keys.
+                notjustlines designs, secures building permits, builds and finishes luxury homes and commercial spaces across Cantonments, Airport Residential, East Legon and Greater Accra. One team from your plot to your keys.
               </p>
 
               {/* Primary Calls to Action */}
@@ -126,7 +126,7 @@ export default function HomePage() {
                 In building, the biggest risk is handing drawings to an independent contractor who cuts corners on blockwork, downgrades steel, or demands endless extra money.
               </p>
               <p className="text-ink-600 text-base leading-relaxed">
-                Linework was founded in Accra to bring design and construction together. Our architects and site engineers work side by side under one contract — from initial plot check to the day you pick up your keys.
+                notjustlines was founded in Accra to bring design and construction together. Our architects and site engineers work side by side under one contract — from initial plot check to the day you pick up your keys.
               </p>
               <div className="pt-2">
                 <Link
@@ -257,7 +257,7 @@ export default function HomePage() {
         text="Whether you have site drawings or are starting from scratch, we’re happy to review your plot and offer honest guidance."
         primaryLabel="Schedule consultation"
         primaryHref="/contact"
-        whatsappMessage="Hi Linework, I have a plot in Accra and would like to schedule a consultation."
+        whatsappMessage="Hi notjustlines, I have a plot in Accra and would like to schedule a consultation."
       />
 
     </div>

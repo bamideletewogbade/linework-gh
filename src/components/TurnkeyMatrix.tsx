@@ -12,7 +12,7 @@ export default function TurnkeyMatrix() {
         <Reveal className="max-w-3xl mb-12">
           <span className="eyebrow mb-3">How we work</span>
           <h2 className="text-display-md font-bold text-ink-900 mb-4">
-            The usual way vs. The Linework way
+            The usual way vs. The notjustlines way
           </h2>
           <p className="text-ink-600 text-base md:text-lg leading-relaxed">
             In Ghana, hiring an architect separately and then shopping around for a contractor often leads to delays, arguments over drawings, and unexpected costs. We keep everything under one roof.
@@ -92,7 +92,7 @@ export default function TurnkeyMatrix() {
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand/20 text-brand text-xs font-semibold uppercase tracking-wider mb-6">
                 <span className="w-2 h-2 rounded-full bg-brand" />
-                <span>The Linework way</span>
+                <span>The notjustlines way</span>
               </div>
 
               <h3 className="text-2xl font-bold text-white mb-3">
