@@ -1,124 +1,127 @@
 import React from 'react';
 import Link from 'next/link';
-import { Instagram, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Instagram, Mail, MapPin, Phone } from 'lucide-react';
+import { LineworkMark, WhatsAppIcon } from './ui/icons';
+import { SITE, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '@/lib/site';
+
+const COLUMNS = [
+  {
+    title: 'Company',
+    links: [
+      { label: 'About us', href: '/about' },
+      { label: 'Projects', href: '/projects' },
+      { label: 'Services', href: '/services' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    title: 'What we do',
+    links: [
+      { label: 'Homes', href: '/projects?type=residential' },
+      { label: 'Offices & commercial', href: '/projects?type=commercial' },
+      { label: 'Interiors & fit-out', href: '/projects?type=interior' },
+      { label: 'Building from abroad', href: '/services#diaspora' },
+    ],
+  },
+];
 
 export default function Footer() {
+  const year = new Date().getFullYear();
   return (
-    <footer className="bg-[#0B0E14] text-white border-t border-white/10 pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-16 border-b border-white/10">
-          
-          {/* Brand & Manifesto Column */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-white/10 rounded-sm flex items-center justify-center p-1.5">
-                <svg viewBox="0 0 32 32" className="w-full h-full" aria-hidden="true">
-                  <path d="M6 26V6M6 26h20" stroke="#F5A524" strokeWidth="3" strokeLinecap="square"/>
-                  <path d="M12 26v-9l6.5-5.5L25 17v9" stroke="#6EE7F9" strokeWidth="2" fill="none"/>
-                </svg>
-              </div>
-              <span className="font-extrabold text-lg tracking-[0.16em] uppercase text-white font-sans">
-                Linework<span className="text-amber-500 ml-0.5">GH</span>
+    <footer className="relative overflow-hidden bg-ink-950 pb-28 pt-16 text-ink-300 md:pb-10 md:pt-24">
+      <div className="bg-grid-dark pointer-events-none absolute inset-0 opacity-40" />
+
+      <div className="container-site relative">
+        <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-12 md:pb-16">
+          {/* Brand */}
+          <div className="md:col-span-5">
+            <Link href="/" className="inline-flex items-center gap-2.5 text-white" aria-label="Linework GH — home">
+              <LineworkMark className="h-9 w-9" />
+              <span className="font-display text-xl font-bold tracking-tight">
+                linework<span className="text-brand">.</span>
               </span>
             </Link>
-
-            <p className="text-stone-400 text-sm leading-relaxed max-w-md font-sans">
-              Linework Design &amp; Construction Ltd. is an integrated architectural practice and general building company based in Accra, Ghana. We close the gap between theoretical blueprints and on-site engineering execution.
+            <p className="mt-5 max-w-sm text-base leading-relaxed">
+              Architects and builders in Accra. We design it, get it approved, build it and hand you the keys —
+              one team, one contract.
             </p>
 
-            <div className="mt-2 flex flex-col gap-2 font-mono text-xs text-stone-400">
-              <div className="flex items-center gap-2">
-                <MapPin size={14} className="text-amber-500 flex-shrink-0" />
-                <span>Cantonments &middot; Airport Residential &middot; Accra, Ghana</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone size={14} className="text-amber-500 flex-shrink-0" />
-                <a href="tel:+233256869481" className="hover:text-white transition-colors">+233 25 686 9481</a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail size={14} className="text-amber-500 flex-shrink-0" />
-                <a href="mailto:info@notjustlines.com" className="hover:text-white transition-colors">info@notjustlines.com</a>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div className="flex flex-col gap-3">
-            <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-amber-500 font-semibold">
-              The Practice
-            </h4>
-            <ul className="flex flex-col gap-2.5 text-sm text-stone-400 font-sans">
-              <li><Link href="/about" className="hover:text-white transition-colors">About Linework</Link></li>
-              <li><Link href="/services" className="hover:text-white transition-colors">Design-Build Services</Link></li>
-              <li><Link href="/projects" className="hover:text-white transition-colors">Selected Projects</Link></li>
-              <li><Link href="/services#diaspora" className="hover:text-white transition-colors">Diaspora Remote Hub</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Schedule Consultation</Link></li>
-            </ul>
-          </div>
-
-          {/* Typologies */}
-          <div className="flex flex-col gap-3">
-            <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-amber-500 font-semibold">
-              Typologies
-            </h4>
-            <ul className="flex flex-col gap-2.5 text-sm text-stone-400 font-sans">
-              <li><Link href="/projects?type=residential" className="hover:text-white transition-colors">Private Luxury Villas</Link></li>
-              <li><Link href="/projects?type=commercial" className="hover:text-white transition-colors">Commercial Pavilions</Link></li>
-              <li><Link href="/projects?type=interior" className="hover:text-white transition-colors">Interior Architecture</Link></li>
-              <li><Link href="/projects?type=structural" className="hover:text-white transition-colors">Coastal Superstructures</Link></li>
-              <li><Link href="/projects" className="hover:text-white transition-colors">Masterplanning</Link></li>
-            </ul>
-          </div>
-
-          {/* Direct Social & Connect */}
-          <div className="flex flex-col gap-4">
-            <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-amber-500 font-semibold">
-              Direct Channels
-            </h4>
-            <p className="text-xs text-stone-400 font-sans">
-              Connect directly with our principal architects for preliminary project appraisals.
-            </p>
-            <div className="flex flex-col gap-2.5">
+            <div className="mt-6 flex flex-wrap gap-3">
               <a
-                href="https://wa.me/233256869481"
+                href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366] text-stone-950 font-bold text-xs font-mono uppercase tracking-wider py-2.5 px-3.5 rounded flex items-center justify-between hover:bg-[#20ba5a] transition-colors"
+                className="btn btn-whatsapp min-h-[2.75rem] px-5"
               >
-                <span>WhatsApp Studio</span>
-                <ArrowUpRight size={14} />
+                <WhatsAppIcon size={18} /> WhatsApp us
               </a>
               <a
-                href="https://www.instagram.com/linework.design/?igshid=Yzg5MTU1MDY%3D"
+                href={SITE.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/20 text-white text-xs font-mono uppercase tracking-wider py-2.5 px-3.5 rounded flex items-center justify-between hover:border-amber-500 hover:text-amber-400 transition-colors"
+                aria-label="Linework on Instagram"
+                className="btn btn-outline-light min-h-[2.75rem] w-11 px-0"
               >
-                <div className="flex items-center gap-2">
-                  <Instagram size={14} />
-                  <span>@linework.design</span>
-                </div>
-                <ArrowUpRight size={14} />
+                <Instagram size={18} />
               </a>
             </div>
           </div>
 
+          {/* Link columns */}
+          {COLUMNS.map((col) => (
+            <div key={col.title} className="md:col-span-2">
+              <h3 className="font-sans text-sm font-semibold text-white">{col.title}</h3>
+              <ul className="mt-4 flex flex-col gap-1">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="inline-block py-1.5 text-base transition-colors hover:text-brand">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* Contact */}
+          <div className="md:col-span-3">
+            <h3 className="font-sans text-sm font-semibold text-white">Talk to us</h3>
+            <ul className="mt-4 flex flex-col gap-3 text-base">
+              <li>
+                <a href={`tel:${SITE.phoneE164}`} className="inline-flex items-center gap-3 py-1 transition-colors hover:text-brand">
+                  <Phone size={16} className="text-brand" /> {SITE.phoneDisplay}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${SITE.email}`} className="inline-flex items-center gap-3 py-1 transition-colors hover:text-brand">
+                  <Mail size={16} className="text-brand" /> {SITE.email}
+                </a>
+              </li>
+              <li className="inline-flex items-center gap-3 py-1">
+                <MapPin size={16} className="text-brand" /> Accra, Ghana
+              </li>
+            </ul>
+          </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-stone-400">
-          <div>
-            &copy; {new Date().getFullYear()} LINEWORK DESIGN &amp; CONSTRUCTION LTD. ALL RIGHTS RESERVED.
-          </div>
-          <div className="flex items-center gap-6">
-            <span>NOT JUST LINES</span>
-            <span className="text-stone-400">&middot;</span>
-            <span>ACCRA, GHANA</span>
-          </div>
+        {/* Big sign-off */}
+        <div className="py-10 md:py-14">
+          <p
+            aria-hidden="true"
+            className="select-none font-display text-[clamp(3.5rem,13vw,11rem)] font-extrabold leading-[0.85] tracking-[-0.05em] text-white/[0.07]"
+          >
+            Not just lines.
+          </p>
         </div>
 
+        <div className="flex flex-col gap-3 text-sm text-ink-400 md:flex-row md:items-center md:justify-between">
+          <p>
+            © {year} {SITE.legalName}
+          </p>
+          <Link href="/contact" className="inline-flex items-center gap-1 transition-colors hover:text-white">
+            Start a project <ArrowUpRight size={14} />
+          </Link>
+        </div>
       </div>
     </footer>
   );

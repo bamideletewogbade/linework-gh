@@ -1,74 +1,62 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowUpRight, MapPin, Maximize2 } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Project } from '@/data/projects';
 
 interface ProjectCardProps {
   project: Project;
-  featured?: boolean;
+  /** Responsive `sizes` hint for the image */
+  sizes?: string;
+  className?: string;
 }
 
-export default function ProjectCard({ project, featured = false }: ProjectCardProps) {
+/** Whole card is one tap target. Image-led, minimal text. */
+export default function ProjectCard({
+  project,
+  sizes = '(max-width: 640px) 85vw, (max-width: 1024px) 50vw, 33vw',
+  className = '',
+}: ProjectCardProps) {
+  const inProgress = project.status !== 'Completed';
   return (
-    <div className="group bg-white rounded-lg border border-stone-200 overflow-hidden shadow-sm hover:shadow-card hover:border-stone-400 transition-all duration-300 flex flex-col">
-      {/* Image Container */}
-      <Link href={`/projects/${project.slug}`} className="relative aspect-[16/10] overflow-hidden bg-stone-100 block">
+    <Link
+      href={`/projects/${project.slug}`}
+      className={`group relative flex flex-col overflow-hidden rounded-3xl bg-ink-900 text-white ${className}`}
+    >
+      <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[4/4.6]">
         <Image
           src={project.heroImage}
-          alt={project.title}
+          alt={`${project.title}, ${project.neighborhood}`}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          sizes={sizes}
+          className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
         />
-        
-        {/* Typology Badge */}
-        <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-sm text-white text-[10px] font-mono tracking-widest uppercase px-3 py-1 rounded-sm border border-white/10">
-          {project.categoryLabel}
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/20 to-transparent" />
 
-        {/* Year / Status Badge */}
-        <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm text-stone-900 text-[10px] font-mono tracking-wider px-2.5 py-1 rounded-sm shadow-sm">
-          {project.year} &middot; {project.status}
-        </div>
-      </Link>
-
-      {/* Content Details */}
-      <div className="p-6 flex flex-col flex-1">
-        <div className="flex items-center gap-1.5 text-xs text-stone-500 font-mono mb-2">
-          <MapPin size={13} className="text-amber-600" />
-          <span>{project.neighborhood}</span>
-        </div>
-
-        <h3 className="font-serif text-xl font-bold text-stone-900 group-hover:text-amber-700 transition-colors mb-2">
-          <Link href={`/projects/${project.slug}`} className="flex items-center justify-between">
-            <span>{project.title}</span>
-            <ArrowUpRight size={18} className="opacity-0 group-hover:opacity-100 transition-opacity text-amber-600" />
-          </Link>
-        </h3>
-
-        <p className="text-stone-600 text-sm line-clamp-2 mb-6 font-sans leading-relaxed flex-1">
-          {project.tagline}
-        </p>
-
-        {/* Architectural Metrics Bar */}
-        <div className="pt-4 border-t border-stone-100 grid grid-cols-3 gap-2 text-center font-mono text-[11px]">
-          <div className="flex flex-col">
-            <span className="text-stone-400 text-[9px] uppercase tracking-wider">Area</span>
-            <span className="font-semibold text-stone-800">{project.area}</span>
-          </div>
-          <div className="flex flex-col border-x border-stone-100">
-            <span className="text-stone-400 text-[9px] uppercase tracking-wider">Timeline</span>
-            <span className="font-semibold text-stone-800">{project.timeline}</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-stone-400 text-[9px] uppercase tracking-wider">Scope</span>
-            <span className="font-semibold text-stone-800 truncate" title={project.deliveryMethod}>
-              {project.deliveryMethod.split(' ')[0]}
+        <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
+          <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-ink-900 backdrop-blur">
+            {project.categoryLabel}
+          </span>
+          {inProgress && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-ink-950/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+              {project.status === 'Under Construction' ? 'On site now' : 'In design'}
             </span>
+          )}
+        </div>
+
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 md:p-6">
+          <div>
+            <p className="mb-1 text-sm text-white/70">
+              {project.neighborhood} · {project.area}
+            </p>
+            <h3 className="text-xl font-bold leading-tight md:text-2xl">{project.title}</h3>
           </div>
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink-900 transition-all duration-300 group-hover:rotate-45 group-hover:bg-brand">
+            <ArrowUpRight size={20} />
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

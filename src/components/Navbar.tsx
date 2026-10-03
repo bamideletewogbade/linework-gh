@@ -1,189 +1,194 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowUpRight, Instagram, Phone, Mail } from 'lucide-react';
+import { ArrowUpRight, Mail, Phone } from 'lucide-react';
+import { LineworkMark, WhatsAppIcon } from './ui/icons';
+import { NAV_LINKS, SITE, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '@/lib/site';
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const overHero = pathname === '/' && !scrolled && !open;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks = [
-    { label: 'Projects', href: '/projects' },
-    { label: 'Services', href: '/services' },
-    { label: 'The Practice', href: '/about' },
-    { label: 'Contact', href: '/contact' },
-  ];
+  // Close the menu on route change
+  useEffect(() => setOpen(false), [pathname]);
+
+  // Lock page scroll + Escape to close while the menu is open
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <>
-      {/* Top Professional Announcement Bar */}
-      <div className="bg-[#0B0E14] text-[#A9B6C9] border-b border-white/10 text-[11px] font-mono tracking-wider uppercase py-2 px-4 md:px-8 flex items-center justify-between">
-        <div className="flex items-center gap-2 mx-auto md:mx-0">
-          <span className="inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-          <span>Accra Studio &middot; Integrated Architecture &amp; Turnkey Construction</span>
-          <span className="hidden lg:inline text-white/40">&middot; Cantonments &amp; Airport Residential</span>
-        </div>
-        <div className="hidden md:flex items-center gap-6">
-          <a 
-            href="https://www.instagram.com/linework.design/?igshid=Yzg5MTU1MDY%3D" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 hover:text-white transition-colors"
-          >
-            <Instagram size={13} className="text-amber-500" />
-            <span>@linework.design</span>
-          </a>
-          <a 
-            href="https://wa.me/233256869481" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-white/90 hover:text-amber-400 transition-colors"
-          >
-            <Phone size={13} className="text-amber-500" />
-            <span>+233 25 686 9481</span>
-          </a>
-        </div>
-      </div>
-
-      {/* Main Navigation Bar */}
-      <header 
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-stone-200 text-stone-900 py-3.5' 
-            : 'bg-white border-b border-stone-200 text-stone-900 py-4 md:py-5'
+      <header
+        className={`sticky top-0 z-50 h-16 transition-[background-color,border-color,color] duration-300 md:h-[72px] ${
+          open
+            ? 'bg-ink-950 text-white'
+            : overHero
+              ? 'border-b border-transparent bg-transparent text-white'
+              : 'border-b border-line bg-paper/85 text-ink-900 backdrop-blur-lg'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
-          
-          {/* Brand Wordmark */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 bg-[#0B0E14] rounded-sm flex items-center justify-center p-1.5 transition-transform duration-300 group-hover:scale-105">
-              <svg viewBox="0 0 32 32" className="w-full h-full" aria-hidden="true">
-                <path d="M6 26V6M6 26h20" stroke="#F5A524" strokeWidth="3" strokeLinecap="square"/>
-                <path d="M12 26v-9l6.5-5.5L25 17v9" stroke="#6EE7F9" strokeWidth="2" fill="none"/>
-              </svg>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-extrabold text-base tracking-[0.16em] uppercase leading-tight font-sans">
-                Linework<span className="text-amber-600 ml-0.5">GH</span>
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.2em] text-stone-500 font-mono">
-                Design &amp; Build Studio
-              </span>
-            </div>
+        <div className="container-site flex h-full items-center justify-between gap-6">
+          {/* Logo */}
+          <Link href="/" className="group flex items-center gap-2.5" aria-label="Linework GH — home">
+            <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 border border-white/10 transition-all duration-300 group-hover:scale-105 group-hover:border-brand/40 group-hover:bg-brand/10">
+              <LineworkMark className="h-6 w-6 transition-all duration-300 group-hover:-rotate-6 group-hover:scale-110" />
+            </span>
+            <span className="font-display text-lg font-bold tracking-tight">
+              linework<span className="inline-block text-brand transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">.</span>
+            </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+          {/* Desktop nav with interactive sliding hover */}
+          <nav className="hidden items-center gap-1.5 md:flex" aria-label="Main">
+            {NAV_LINKS.map((link) => {
+              const active = isActive(link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-xs uppercase tracking-[0.18em] font-medium transition-colors py-1 relative ${
-                    isActive ? 'text-amber-600 font-semibold' : 'text-stone-700 hover:text-stone-900'
+                  aria-current={active ? 'page' : undefined}
+                  className={`group relative rounded-full px-4 py-2 text-[0.95rem] font-medium transition-all duration-200 ${
+                    active
+                      ? overHero
+                        ? 'bg-white/15 text-white font-semibold shadow-sm'
+                        : 'bg-ink-900/[0.08] text-ink-950 font-semibold'
+                      : overHero
+                        ? 'text-white/80 hover:text-white hover:bg-white/10'
+                        : 'text-ink-600 hover:text-ink-950 hover:bg-ink-900/[0.05]'
                   }`}
                 >
-                  {link.label}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-amber-600 rounded-full" />
-                  )}
+                  <span>{link.label}</span>
+                  {/* Subtle active / hover micro dot */}
+                  <span
+                    className={`absolute bottom-1 left-1/2 -translate-x-1/2 h-1 rounded-full bg-brand transition-all duration-300 ${
+                      active ? 'w-4 opacity-100' : 'w-0 opacity-0 group-hover:w-2 group-hover:opacity-75'
+                    }`}
+                  />
                 </Link>
               );
             })}
           </nav>
 
-          {/* Desktop Direct Action Buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden items-center gap-3 md:flex">
             <a
-              href="https://wa.me/233256869481"
+              href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs uppercase tracking-wider font-mono text-stone-600 hover:text-stone-900 px-3 py-2 border border-stone-300 rounded hover:border-stone-900 transition-colors"
+              aria-label="Chat with us on WhatsApp"
+              className={`group flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300 hover:scale-105 ${
+                overHero ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-ink-900/[0.06] hover:bg-ink-900/10 text-ink-900'
+              }`}
             >
-              Direct Studio Line
+              <WhatsAppIcon size={18} className="transition-transform duration-300 group-hover:rotate-12" />
             </a>
             <Link
               href="/contact"
-              className="bg-[#0B0E14] text-white text-xs uppercase tracking-[0.14em] font-semibold px-5 py-2.5 rounded hover:bg-amber-600 transition-all duration-200 shadow-sm flex items-center gap-1.5"
+              className={`btn min-h-[2.75rem] px-5 group transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 ${
+                overHero ? 'btn-primary' : 'btn-dark'
+              }`}
             >
-              <span>Start Project</span>
-              <ArrowUpRight size={14} />
+              <span>Start a project</span>
+              <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </div>
 
-          {/* Mobile Menu Hamburger Button */}
+          {/* Mobile menu toggle */}
           <button
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-stone-800 hover:text-black focus:outline-none"
-            aria-label="Toggle Navigation Menu"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            className="relative -mr-2 flex h-11 w-11 items-center justify-center md:hidden"
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <span className="sr-only">Menu</span>
+            <span
+              className={`absolute h-0.5 w-6 rounded bg-current transition-transform duration-300 ${
+                open ? 'rotate-45' : '-translate-y-[5px]'
+              }`}
+            />
+            <span
+              className={`absolute h-0.5 w-6 rounded bg-current transition-transform duration-300 ${
+                open ? '-rotate-45' : 'translate-y-[5px]'
+              }`}
+            />
           </button>
         </div>
       </header>
 
-      {/* Mobile Drawer Overlay */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white md:hidden flex flex-col pt-24 px-6 pb-8 overflow-y-auto animate-fadeIn">
-          <div className="flex flex-col gap-6 text-lg font-serif">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`py-2 border-b border-stone-200 text-stone-900 flex items-center justify-between ${
-                  pathname === link.href ? 'text-amber-600 font-bold' : ''
-                }`}
-              >
-                <span>{link.label}</span>
-                <span className="text-xs font-mono text-stone-400">&rarr;</span>
-              </Link>
-            ))}
-          </div>
+      {/* Mobile menu */}
+      <div
+        id="mobile-menu"
+        className={`fixed inset-0 z-40 flex flex-col bg-ink-950 pt-16 text-white transition-[opacity,visibility] duration-300 md:hidden ${
+          open ? 'visible opacity-100' : 'invisible opacity-0'
+        }`}
+        aria-hidden={!open}
+      >
+        <div className="bg-grid-dark pointer-events-none absolute inset-0 opacity-50" />
+        <nav className="container-site relative flex flex-1 flex-col justify-center gap-1" aria-label="Mobile">
+          {[{ label: 'Home', href: '/' }, ...NAV_LINKS].map((link, i) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              tabIndex={open ? 0 : -1}
+              className={`flex items-baseline gap-4 border-b border-white/10 py-4 font-display text-4xl font-bold tracking-tight transition-all duration-500 ${
+                open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              } ${isActive(link.href) && link.href !== '/' ? 'text-brand' : pathname === link.href ? 'text-brand' : ''}`}
+              style={{ transitionDelay: open ? `${80 + i * 50}ms` : '0ms' }}
+            >
+              <span className="text-sm font-medium text-white/40">0{i + 1}</span>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
-          <div className="mt-auto pt-8 border-t border-stone-200 flex flex-col gap-4 font-mono text-xs uppercase tracking-wider">
-            <a
-              href="https://wa.me/233256869481"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-[#25D366] text-stone-950 font-bold py-3.5 px-4 rounded text-center flex items-center justify-center gap-2"
-            >
-              <Phone size={15} />
-              <span>WhatsApp Studio (+233 25 686 9481)</span>
+        <div
+          className={`container-site relative flex flex-col gap-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] transition-all delay-300 duration-500 ${
+            open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+          }`}
+        >
+          <a
+            href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={open ? 0 : -1}
+            className="btn btn-whatsapp w-full"
+          >
+            <WhatsAppIcon size={18} /> Chat on WhatsApp
+          </a>
+          <div className="grid grid-cols-2 gap-3">
+            <a href={`tel:${SITE.phoneE164}`} tabIndex={open ? 0 : -1} className="btn btn-outline-light">
+              <Phone size={16} /> Call
             </a>
-            <a
-              href="mailto:info@notjustlines.com"
-              className="w-full bg-stone-100 text-stone-800 py-3 px-4 rounded text-center flex items-center justify-center gap-2 hover:bg-stone-200 transition-colors"
-            >
-              <Mail size={15} />
-              <span>info@notjustlines.com</span>
-            </a>
-            <a
-              href="https://www.instagram.com/linework.design/?igshid=Yzg5MTU1MDY%3D"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full border border-stone-300 text-stone-700 py-3 px-4 rounded text-center flex items-center justify-center gap-2"
-            >
-              <Instagram size={15} />
-              <span>Instagram @linework.design</span>
+            <a href={`mailto:${SITE.email}`} tabIndex={open ? 0 : -1} className="btn btn-outline-light">
+              <Mail size={16} /> Email
             </a>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

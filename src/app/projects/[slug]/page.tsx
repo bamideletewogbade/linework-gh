@@ -1,9 +1,14 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { PROJECTS, Project } from '@/data/projects';
-import { MapPin, Calendar, Clock, Maximize2, ShieldCheck, ArrowLeft, ArrowRight, Phone } from 'lucide-react';
+import { PROJECTS } from '@/data/projects';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Reveal from '@/components/ui/Reveal';
+import CtaBand from '@/components/ui/CtaBand';
+import { WhatsAppIcon } from '@/components/ui/icons';
+import { whatsappLink } from '@/lib/site';
 
 interface Props {
   params: {
@@ -17,6 +22,21 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const project = PROJECTS.find((p) => p.slug === params.slug);
+  if (!project) return { title: 'Project Not Found' };
+
+  return {
+    title: `${project.title} — ${project.neighborhood}, Accra`,
+    description: project.tagline,
+    openGraph: {
+      title: `${project.title} | Linework GH`,
+      description: project.tagline,
+      images: [{ url: project.heroImage, alt: project.title }],
+    },
+  };
+}
+
 export default function ProjectDetailPage({ params }: Props) {
   const project = PROJECTS.find((p) => p.slug === params.slug);
 
@@ -24,40 +44,43 @@ export default function ProjectDetailPage({ params }: Props) {
     notFound();
   }
 
+  const currentIndex = PROJECTS.findIndex((p) => p.slug === params.slug);
+  const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
+
   return (
-    <div className="bg-[#FAF9F6] min-h-screen py-10 md:py-16">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
-        
-        {/* Back Link */}
-        <div className="mb-8">
+    <div className="flex flex-col">
+      {/* Top Breadcrumb & Header */}
+      <section className="container-site pt-8 pb-10 md:pt-14 md:pb-12">
+        <Reveal className="mb-6">
           <Link
             href="/projects"
-            className="text-stone-500 hover:text-stone-900 font-mono text-xs uppercase tracking-wider inline-flex items-center gap-2 transition-colors"
+            className="text-xs font-semibold text-ink-600 hover:text-ink-950 inline-flex items-center gap-2 transition-colors"
           >
             <ArrowLeft size={14} />
-            <span>&larr; Back to All Projects</span>
+            <span>Back to all projects</span>
           </Link>
-        </div>
+        </Reveal>
 
-        {/* Project Header */}
-        <div className="mb-10">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-amber-700 font-bold mb-3">
+        <Reveal delay={60} className="max-w-4xl">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-700 mb-3">
             <span>{project.categoryLabel}</span>
             <span>&middot;</span>
-            <span className="text-stone-500">{project.status}</span>
+            <span className="text-ink-500">{project.status}</span>
           </div>
 
-          <h1 className="font-serif text-3xl md:text-5xl font-extrabold text-stone-900 tracking-tight mb-4">
+          <h1 className="text-display-lg font-bold text-ink-900 mb-4">
             {project.title}
           </h1>
 
-          <p className="text-stone-600 text-lg md:text-xl font-sans max-w-3xl leading-relaxed">
+          <p className="text-ink-600 text-lg md:text-xl leading-relaxed max-w-3xl">
             {project.tagline}
           </p>
-        </div>
+        </Reveal>
+      </section>
 
-        {/* Hero Image */}
-        <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-stone-200 shadow-md mb-12 bg-stone-100">
+      {/* Hero Image */}
+      <section className="container-site pb-12 md:pb-16">
+        <Reveal delay={100} className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden border border-line bg-paper shadow-sm">
           <Image
             src={project.heroImage}
             alt={project.title}
@@ -66,121 +89,147 @@ export default function ProjectDetailPage({ params }: Props) {
             sizes="100vw"
             className="object-cover"
           />
-        </div>
+        </Reveal>
+      </section>
 
-        {/* Specifications Sheet & Story Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+      {/* Narrative & Technical Specs */}
+      <section className="container-site pb-16 md:pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           
-          {/* Left Column: Narrative Story (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col gap-6 font-sans">
-            <h2 className="font-serif text-2xl font-bold text-stone-900">
-              Architectural Concept &amp; Delivery Narrative
-            </h2>
-            <p className="text-stone-700 text-base leading-relaxed">
-              {project.description}
-            </p>
+          {/* Left Column: Story & Highlights (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col gap-8">
+            <Reveal>
+              <h2 className="text-2xl font-bold text-ink-900 mb-4">
+                The Story &amp; Delivery
+              </h2>
+              <p className="text-ink-700 text-base md:text-lg leading-relaxed">
+                {project.description}
+              </p>
+            </Reveal>
 
-            {/* Key Features */}
-            <div className="mt-4 pt-6 border-t border-stone-200">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-amber-800 font-bold mb-4">
-                Key Architectural Highlights
+            {/* Highlights List */}
+            <Reveal delay={80} className="p-7 rounded-3xl bg-paper border border-line">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-brand-700 mb-4">
+                Key Project Highlights
               </h3>
               <ul className="space-y-3">
                 {project.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-sm text-stone-700">
-                    <span className="text-amber-600 font-bold">&bull;</span>
+                  <li key={idx} className="flex items-start gap-3 text-sm text-ink-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand mt-2 shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
           </div>
 
-          {/* Right Column: Architectural Dossier Specifications (5 cols) */}
+          {/* Right Column: Key Facts Card (5 cols) */}
           <div className="lg:col-span-5">
-            <div className="bg-white border border-stone-200 rounded-xl p-6 md:p-8 shadow-sm">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-stone-500 font-bold pb-4 mb-4 border-b border-stone-100">
-                Architectural Technical Dossier
+            <Reveal delay={120} className="bg-white border border-line rounded-3xl p-6 sm:p-8 shadow-sm lg:sticky lg:top-24">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-ink-500 pb-4 mb-4 border-b border-line">
+                Project Facts
               </h3>
 
-              <div className="space-y-4 font-mono text-xs">
-                <div>
-                  <span className="text-stone-400 uppercase tracking-wider block text-[10px]">Location</span>
-                  <span className="font-bold text-stone-900 text-sm">{project.neighborhood}, {project.location}</span>
+              <div className="space-y-3.5 text-xs">
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-ink-500">Location</span>
+                  <span className="font-bold text-ink-900 text-sm">{project.neighborhood}, Accra</span>
                 </div>
 
-                <div className="pt-3 border-t border-stone-100">
-                  <span className="text-stone-400 uppercase tracking-wider block text-[10px]">Gross Floor Area</span>
-                  <span className="font-bold text-stone-900 text-sm">{project.area}</span>
+                <div className="flex justify-between items-center py-1 border-t border-line">
+                  <span className="text-ink-500">Gross Floor Area</span>
+                  <span className="font-bold text-ink-900 text-sm">{project.area}</span>
                 </div>
 
-                <div className="pt-3 border-t border-stone-100">
-                  <span className="text-stone-400 uppercase tracking-wider block text-[10px]">Delivery Method</span>
-                  <span className="font-bold text-stone-900 text-sm">{project.deliveryMethod}</span>
+                <div className="flex justify-between items-center py-1 border-t border-line">
+                  <span className="text-ink-500">Scope of Work</span>
+                  <span className="font-bold text-ink-900 text-sm">{project.deliveryMethod}</span>
                 </div>
 
-                <div className="pt-3 border-t border-stone-100">
-                  <span className="text-stone-400 uppercase tracking-wider block text-[10px]">Structural Engineering System</span>
-                  <span className="font-bold text-stone-900 text-sm">{project.structuralSystem}</span>
+                <div className="flex justify-between items-center py-1 border-t border-line">
+                  <span className="text-ink-500">Structural System</span>
+                  <span className="font-bold text-ink-900 text-sm text-right max-w-[200px]">{project.structuralSystem}</span>
                 </div>
 
-                <div className="pt-3 border-t border-stone-100">
-                  <span className="text-stone-400 uppercase tracking-wider block text-[10px]">Construction Timeline</span>
-                  <span className="font-bold text-stone-900 text-sm">{project.timeline}</span>
+                <div className="flex justify-between items-center py-1 border-t border-line">
+                  <span className="text-ink-500">Timeline</span>
+                  <span className="font-bold text-ink-900 text-sm">{project.timeline}</span>
                 </div>
 
-                <div className="pt-3 border-t border-stone-100">
-                  <span className="text-stone-400 uppercase tracking-wider block text-[10px]">Completion Year</span>
-                  <span className="font-bold text-stone-900 text-sm">{project.year}</span>
+                <div className="flex justify-between items-center py-1 border-t border-line">
+                  <span className="text-ink-500">Completion</span>
+                  <span className="font-bold text-ink-900 text-sm">{project.year}</span>
                 </div>
               </div>
 
-              {/* Consultation Trigger */}
-              <div className="mt-8 pt-6 border-t border-stone-200 flex flex-col gap-3">
-                <Link
-                  href="/contact"
-                  className="w-full bg-[#0B0E14] text-white text-xs font-mono uppercase tracking-widest font-bold py-3.5 px-4 rounded text-center hover:bg-amber-600 transition-colors shadow-sm"
-                >
-                  Commission Similar Project
-                </Link>
-
+              {/* Inquire Buttons */}
+              <div className="mt-8 pt-6 border-t border-line flex flex-col gap-3">
                 <a
-                  href={`https://wa.me/233256869481?text=${encodeURIComponent(`Hello Linework studio, I am interested in discussing a project similar to ${project.title}.`)}`}
+                  href={whatsappLink(`Hi Linework, I am interested in building something like ${project.title}.`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full border border-stone-300 text-stone-700 text-xs font-mono uppercase tracking-wider py-3 px-4 rounded text-center hover:border-stone-900 flex items-center justify-center gap-2 transition-colors"
+                  className="btn btn-whatsapp w-full text-xs"
                 >
-                  <Phone size={14} className="text-emerald-600" />
-                  <span>Inquire via WhatsApp</span>
+                  <WhatsAppIcon size={16} />
+                  <span>Build something like this</span>
                 </a>
-              </div>
 
-            </div>
+                <Link
+                  href="/contact"
+                  className="btn btn-outline w-full text-xs"
+                >
+                  Start your brief
+                </Link>
+              </div>
+            </Reveal>
           </div>
 
         </div>
+      </section>
 
-        {/* Gallery Grid */}
-        <div className="mb-16">
-          <h3 className="font-serif text-2xl font-bold text-stone-900 mb-6">
-            Project Visual Documentation
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {project.galleryImages.map((imgSrc, idx) => (
-              <div key={idx} className="relative aspect-[16/10] rounded-lg overflow-hidden border border-stone-200 bg-stone-100">
-                <Image
-                  src={imgSrc}
-                  alt={`${project.title} detail ${idx + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
+      {/* Gallery Section */}
+      <section className="container-site pb-16 md:pb-24">
+        <Reveal className="mb-8">
+          <h2 className="text-2xl font-bold text-ink-900">
+            Project Gallery
+          </h2>
+        </Reveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {project.galleryImages.map((imgSrc, idx) => (
+            <Reveal key={idx} delay={idx * 80} className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-line bg-paper shadow-sm">
+              <Image
+                src={imgSrc}
+                alt={`${project.title} detail ${idx + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </Reveal>
+          ))}
         </div>
+      </section>
 
-      </div>
+      {/* Next Project Footer Link */}
+      <section className="container-site pb-16 md:pb-24">
+        <Link
+          href={`/projects/${nextProject.slug}`}
+          className="group flex items-center justify-between p-6 sm:p-8 rounded-3xl bg-paper border border-line hover:border-brand transition-colors"
+        >
+          <div>
+            <span className="text-xs font-semibold text-ink-500 block mb-1">Next project</span>
+            <span className="font-display text-xl sm:text-2xl font-bold text-ink-900 group-hover:text-brand-700 transition-colors">
+              {nextProject.title} &rarr;
+            </span>
+          </div>
+          <span className="text-xs font-semibold text-brand-700 hidden sm:inline">
+            {nextProject.neighborhood}
+          </span>
+        </Link>
+      </section>
+
+      {/* Closing CTA */}
+      <CtaBand />
     </div>
   );
 }

@@ -1,3 +1,6 @@
+// ⚠️ PLACEHOLDER PORTFOLIO — replace with real Linework projects & photos before launch.
+// Copy is written in plain English; avoid claims the team can't back up on site.
+
 export interface Project {
   id: string;
   slug: string;
@@ -19,185 +22,174 @@ export interface Project {
   features: string[];
 }
 
+export const TYPOLOGY_LABELS: Record<Project['typology'], string> = {
+  Residential: 'Homes',
+  Commercial: 'Commercial',
+  Interior: 'Interiors',
+  Structural: 'Construction',
+};
+
 export const PROJECTS: Project[] = [
   {
     id: 'cantonments-pavilion',
     slug: 'cantonments-pavilion',
-    title: 'The Cantonments Pavilion',
+    title: 'The Cantonments House',
     typology: 'Residential',
-    categoryLabel: 'Private Luxury Villa',
+    categoryLabel: 'Private home',
     location: 'Accra, Ghana',
-    neighborhood: 'Cantonments Embassy Enclave',
+    neighborhood: 'Cantonments',
     year: '2026',
     status: 'Completed',
     area: '840 m²',
-    timeline: '14 Months',
-    deliveryMethod: 'Turnkey Design-Build',
-    structuralSystem: 'Post-Tensioned Reinforced Concrete & Teak',
-    tagline: 'An introspective tropical minimalist residence harmonizing concrete, timber, and water.',
-    description: 'Commissioned by a Ghanaian diaspora executive returning from London, The Cantonments Pavilion was designed to provide secluded sanctuary within one of Accra’s most prestigious residential quarters. The architecture centers around a central tropical courtyard and a 16-meter reflective pool that actively pre-cools southwest breezes before they enter the double-height living pavilion. Expansive cantilevered concrete floor plates shade floor-to-ceiling Low-E glazing, eliminating midday solar heat gain while preserving unobstructed garden views.',
+    timeline: '14 months',
+    deliveryMethod: 'Design & build',
+    structuralSystem: 'Reinforced concrete frame, timber louvres',
+    tagline: 'A calm family home built around a courtyard and a long pool.',
+    description:
+      'Our client was moving back home from London and wanted a house that felt private in the middle of Cantonments. We planned the rooms around a central courtyard and a 16-metre pool, so every main space looks onto water and green. Deep concrete overhangs shade the big glass walls, which keeps the living areas bright without the afternoon heat. We handled everything — drawings, permit, construction and finishing — and the client followed progress from London through weekly WhatsApp updates.',
     heroImage: '/assets/villa-cantonments.jpg',
-    galleryImages: [
-      '/assets/villa-cantonments.jpg',
-      '/assets/facade-detail.jpg',
-      '/assets/interior-ridge.jpg'
-    ],
+    galleryImages: ['/assets/villa-cantonments.jpg', '/assets/facade-detail.jpg', '/assets/interior-ridge.jpg'],
     features: [
-      'Double-height open living pavilion with 5.8m ceilings',
-      'Vertical native Iroko brise-soleil automated solar shading',
-      '16-meter perimeter reflection pool and sunken seating lounge',
-      'Integrated solar photovoltaic array with 15kWh battery storage',
-      'Subterranean rainwater harvesting system for landscape irrigation'
-    ]
+      'Double-height living room opening onto the courtyard',
+      'Timber louvres that block harsh sun but keep the light',
+      '16 m pool with a sunken seating area',
+      'Solar panels with battery backup for dumsor',
+      'Rainwater storage for the garden',
+    ],
   },
   {
     id: 'ridge-monolith',
     slug: 'ridge-monolith',
-    title: 'The Ridge Monolith Penthouse',
+    title: 'Ridge Penthouse',
     typology: 'Interior',
-    categoryLabel: 'Luxury Interior Architecture',
+    categoryLabel: 'Interior fit-out',
     location: 'Accra, Ghana',
-    neighborhood: 'Ridge Financial District',
+    neighborhood: 'Ridge',
     year: '2026',
     status: 'Completed',
     area: '420 m²',
-    timeline: '7 Months',
-    deliveryMethod: 'Bespoke Interior & Millwork',
-    structuralSystem: 'Honed Microcement & Cantilevered Walnut',
-    tagline: 'Double-height spatial drama with monolithic concrete surfaces and custom walnut joinery.',
-    description: 'A complete interior architectural gut-renovation of a top-floor duplex penthouse in Ridge. Linework was engaged to transform an outdated compartmentalized layout into an open, museum-grade living gallery. The focal point is a sculptural cantilevered staircase fabricated from solid smoked walnut and tempered structural glass, floating against a monolithic board-marked microcement wall. All cabinetry and architectural lighting were designed and built by Linework’s bespoke fabrication workshop in Accra.',
+    timeline: '7 months',
+    deliveryMethod: 'Interior design & fit-out',
+    structuralSystem: 'Microcement finishes, walnut joinery',
+    tagline: 'An old, boxed-in duplex opened up into one bright living space.',
+    description:
+      'The penthouse had small, closed-off rooms and dated finishes. We stripped it back, opened up the layout and built a floating walnut-and-glass staircase as the centrepiece. All the kitchen units, wardrobes and wall panels were designed and made in our own workshop in Accra, so the finish quality stayed in our hands from start to end.',
     heroImage: '/assets/interior-ridge.jpg',
-    galleryImages: [
-      '/assets/interior-ridge.jpg',
-      '/assets/facade-detail.jpg',
-      '/assets/craft-studio.jpg'
-    ],
+    galleryImages: ['/assets/interior-ridge.jpg', '/assets/facade-detail.jpg', '/assets/craft-studio.jpg'],
     features: [
-      'Sculptural floating staircase with concealed steel stringers',
-      'Continuous honed microcement flooring throughout both levels',
-      'Bespoke walnut millwork and concealed acoustic wall panelling',
-      'Architectural recessed linear uplighting with scene automation',
-      'Panoramic 270-degree skyline views over downtown Accra'
-    ]
+      'Floating staircase in walnut and glass',
+      'Seamless microcement floors across both levels',
+      'Custom kitchen, wardrobes and wall panels from our workshop',
+      'Hidden LED lighting with preset scenes',
+      'Wide views over the Accra skyline',
+    ],
   },
   {
     id: 'airport-arts-hq',
     slug: 'airport-arts-hq',
-    title: 'Airport Arts & Commerce HQ',
+    title: 'Airport City Office & Gallery',
     typology: 'Commercial',
-    categoryLabel: 'Commercial Headquarters & Gallery',
+    categoryLabel: 'Office building',
     location: 'Accra, Ghana',
-    neighborhood: 'Airport City Commercial Corridor',
+    neighborhood: 'Airport City',
     year: '2026',
     status: 'Under Construction',
     area: '2,800 m²',
-    timeline: '18 Months',
-    deliveryMethod: 'General Contracting & Architecture',
-    structuralSystem: 'Composite Steel Frame & Terracotta Brise-Soleil',
-    tagline: 'A sustainable commercial headquarters integrating contemporary art exhibition galleries.',
-    description: 'Situated within walking distance of Kotoka International Airport, this 5-story landmark building combines executive headquarters with a ground-floor contemporary West African art foundation. The exterior skin features an intricate perforated terracotta brick brise-soleil inspired by indigenous Ghanaian textile geometries. The masonry serves as a climatic envelope that reduces mechanical cooling requirements by 42% while filtering daylight into open-plan corporate work floors.',
+    timeline: '18 months',
+    deliveryMethod: 'Design & build',
+    structuralSystem: 'Steel and concrete frame, terracotta screen',
+    tagline: 'A five-storey office with an art gallery on the ground floor.',
+    description:
+      'A short drive from Kotoka, this five-storey building mixes company offices with a public art gallery at street level. The outside is wrapped in a terracotta brick screen — the pattern is inspired by kente — which shades the glass and cuts down how hard the air-conditioning has to work. Construction is ongoing, with our site team on the ground every day.',
     heroImage: '/assets/commercial-airport.jpg',
-    galleryImages: [
-      '/assets/commercial-airport.jpg',
-      '/assets/site-engineering.jpg',
-      '/assets/craft-studio.jpg'
-    ],
+    galleryImages: ['/assets/commercial-airport.jpg', '/assets/site-engineering.jpg', '/assets/craft-studio.jpg'],
     features: [
-      'Perforated artisanal terracotta brick climatic brise-soleil',
-      '6-meter cantilevered outdoor terrace viewing decks on levels 3 and 4',
-      'Ground-floor public sculpture garden with native drought-tolerant flora',
-      'Underground parking for 45 vehicles with EV charging stations',
-      'High-performance VRF cooling system with heat recovery ventilators'
-    ]
+      'Terracotta brick sun-screen with a kente-inspired pattern',
+      'Outdoor terraces on levels 3 and 4',
+      'Ground-floor gallery and sculpture garden',
+      'Basement parking for 45 cars with EV charging',
+      'Energy-efficient VRF air-conditioning',
+    ],
   },
   {
     id: 'brise-soleil-residence',
     slug: 'brise-soleil-residence',
-    title: 'The Brise-Soleil Residence',
+    title: 'Airport Residential Villa',
     typology: 'Residential',
-    categoryLabel: 'Tropical Contemporary Residence',
+    categoryLabel: 'Private home',
     location: 'Accra, Ghana',
-    neighborhood: 'Airport Residential Area',
+    neighborhood: 'Airport Residential',
     year: '2026',
     status: 'Completed',
     area: '620 m²',
-    timeline: '11 Months',
-    deliveryMethod: 'Turnkey Design-Build',
-    structuralSystem: 'Monolithic Concrete & Solid Teak Joinery',
-    tagline: 'Tactile architectural joinery converging board-marked concrete with solid brass channels.',
-    description: 'A study in tactile materiality and environmental balance. Sited on a quarter-acre plot in Airport Residential, this private home utilizes deep overhangs and fine vertical teak timber louvers to tame the intense Accra sun. The boundary between interior living rooms and private landscaped gardens dissolves completely via 3.2-meter motorized pocket glass doors.',
+    timeline: '11 months',
+    deliveryMethod: 'Design & build',
+    structuralSystem: 'Exposed concrete, solid teak joinery',
+    tagline: 'Fair-faced concrete, teak and brass on a quarter-acre plot.',
+    description:
+      'On a quarter-acre plot in Airport Residential, this home uses deep roof overhangs and slim teak louvres to keep the strong Accra sun off the walls and windows. Large sliding glass doors disappear into the walls, so the living room and garden become one space when they are open.',
     heroImage: '/assets/facade-detail.jpg',
-    galleryImages: [
-      '/assets/facade-detail.jpg',
-      '/assets/villa-cantonments.jpg',
-      '/assets/interior-ridge.jpg'
-    ],
+    galleryImages: ['/assets/facade-detail.jpg', '/assets/villa-cantonments.jpg', '/assets/interior-ridge.jpg'],
     features: [
-      'Full-height board-marked concrete exterior and interior feature walls',
-      'Solid brass architectural channel reveals and custom bronze hardware',
-      'Motorized flush pocket sliding glass doors disappearing into walls',
-      'Lush tropical courtyard gardens with native Ghanaian monstera & palms',
-      'Dedicated private staff quarters and multi-vehicle porte-cochère'
-    ]
+      'Board-marked concrete walls inside and out',
+      'Solid brass details and custom door handles',
+      'Sliding glass doors that hide fully into the walls',
+      'Courtyard garden with local plants and palms',
+      "Boys' quarters and covered parking for several cars",
+    ],
   },
   {
     id: 'coastal-superstructure',
     slug: 'coastal-superstructure',
-    title: 'Coastal Enclave Superstructures',
+    title: 'Beachfront Compound',
     typology: 'Structural',
-    categoryLabel: 'Civil & Structural Engineering',
+    categoryLabel: 'Construction',
     location: 'Accra, Ghana',
-    neighborhood: 'Greater Accra Coastline',
+    neighborhood: 'Greater Accra coast',
     year: '2026',
     status: 'Under Construction',
     area: '1,650 m²',
-    timeline: '12 Months',
-    deliveryMethod: 'Turnkey General Contracting',
-    structuralSystem: 'Heavy-Duty Reinforced Concrete (C30/37 Grade)',
-    tagline: 'High-tolerance coastal structural engineering engineered for marine corrosion resistance.',
-    description: 'Constructing along the Ghanaian coast requires uncompromising structural standards. This multi-level beachfront compound features high-density sulfate-resistant concrete, epoxy-coated rebar cages, and post-tensioned cantilevered floor slabs engineered to withstand seismic forces and humid marine air. Managed directly on-site by Linework’s senior structural engineering directors.',
+    timeline: '12 months',
+    deliveryMethod: 'Construction (client drawings)',
+    structuralSystem: 'Reinforced concrete (C30 grade)',
+    tagline: 'A multi-level beach compound built to stand up to sea air.',
+    description:
+      'Building by the sea is hard on concrete and steel — salty air rusts rebar fast if the work is careless. On this compound we used higher-grade concrete, proper cover to the reinforcement and coated rebar, with concrete cube tests at every major pour. The owners live abroad and get photo and video updates from site every week.',
     heroImage: '/assets/site-engineering.jpg',
-    galleryImages: [
-      '/assets/site-engineering.jpg',
-      '/assets/commercial-airport.jpg',
-      '/assets/craft-studio.jpg'
-    ],
+    galleryImages: ['/assets/site-engineering.jpg', '/assets/commercial-airport.jpg', '/assets/craft-studio.jpg'],
     features: [
-      'C30/37 high-density marine-grade concrete with silica fume additive',
-      'Third-party certified laboratory crush testing for every casting phase',
-      'Heavy-duty reusable modular steel formwork ensuring fair-faced finish',
-      'Seismic zone 4 structural engineering with ductile shear walls',
-      'Weekly 360-degree drone photogrammetry reports for remote owners'
-    ]
+      'C30 concrete mix suited to coastal conditions',
+      'Concrete cube tests at every major pour',
+      'Steel formwork for clean, straight concrete finishes',
+      'Coated rebar to fight rust from sea air',
+      'Weekly photo & video reports for owners abroad',
+    ],
   },
   {
     id: 'linework-atelier',
     slug: 'linework-atelier',
-    title: 'The Drafting & Material Archive',
+    title: 'Our Studio & Workshop',
     typology: 'Structural',
-    categoryLabel: 'Studio R&D & Scale Modeling Lab',
+    categoryLabel: 'Studio',
     location: 'Accra, Ghana',
-    neighborhood: 'Linework Studio, Accra',
+    neighborhood: 'Accra',
     year: '2026',
     status: 'Completed',
     area: '280 m²',
-    timeline: 'Ongoing R&D',
-    deliveryMethod: 'In-House Studio Lab',
-    structuralSystem: 'Physical & Computational BIM Integration',
-    tagline: 'Where theoretical lines transform into tangible material prototypes and physical scale models.',
-    description: 'Linework’s physical workspace is both an architectural studio and an active material laboratory. Every project commission undergoes physical 1:50 and 1:20 concrete test castings, timber joinery stress-tests, and computational BIM clash detection before breaking ground on site. Clients and diaspora investors are invited to examine material samples in person or via high-definition video consultations.',
+    timeline: 'Ongoing',
+    deliveryMethod: 'In-house',
+    structuralSystem: 'Design studio and joinery workshop',
+    tagline: 'Where the drawings, models and material samples live.',
+    description:
+      'Our studio is part design office, part workshop. This is where we draw, build scale models, test finishes and make joinery before anything goes to site. Clients are welcome to visit, see material samples in person and walk through their 3D model with us — or do it over a video call from abroad.',
     heroImage: '/assets/craft-studio.jpg',
-    galleryImages: [
-      '/assets/craft-studio.jpg',
-      '/assets/facade-detail.jpg',
-      '/assets/site-engineering.jpg'
-    ],
+    galleryImages: ['/assets/craft-studio.jpg', '/assets/facade-detail.jpg', '/assets/site-engineering.jpg'],
     features: [
-      'Comprehensive material library: local Ghanaian timbers, stones & cements',
-      'Precision scale model drafting benches and 3D printing workshop',
-      'BIM structural coordinate modeling and MEP clash detection suite',
-      'Private client design review lounge with digital twin visualizer',
-      'Direct connection to Linework’s on-site general contracting teams'
-    ]
-  }
+      'Material library: local timbers, stone, tiles and finishes',
+      'Model-making benches and 3D printing',
+      '3D design and coordination before construction',
+      'Client meeting room for design reviews',
+      'Joinery workshop for kitchens, wardrobes and doors',
+    ],
+  },
 ];

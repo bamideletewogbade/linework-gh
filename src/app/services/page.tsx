@@ -1,189 +1,259 @@
 import React from 'react';
+import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Ruler, HardHat, Sparkles, Box, Globe, ShieldCheck, ArrowRight, CheckCircle2 } from 'lucide-react';
-import TurnkeyMatrix from '@/components/TurnkeyMatrix';
+import { ArrowRight, Check } from 'lucide-react';
+import Reveal from '@/components/ui/Reveal';
+import SectionHeader from '@/components/ui/SectionHeader';
+import CtaBand from '@/components/ui/CtaBand';
+import { WhatsAppIcon } from '@/components/ui/icons';
+import { whatsappLink } from '@/lib/site';
+
+export const metadata: Metadata = {
+  title: 'Services — Design, Permits, Construction & Interiors',
+  description:
+    'Architectural drawings and building permits, construction from foundation to finishing, interiors and joinery, and project management for Ghanaians building from abroad. One team in Accra.',
+  alternates: { canonical: '/services' },
+};
+
+type Service = {
+  id: string;
+  number: string;
+  title: string;
+  summary: string;
+  body: string;
+  includes: string[];
+  image: string;
+  imageAlt: string;
+  whatsapp: string;
+};
+
+const SERVICES: Service[] = [
+  {
+    id: 'design',
+    number: '01',
+    title: 'Architectural design & permits',
+    summary: 'Drawings you can actually build from — and the permit to go with them.',
+    body: 'We start with a site visit and a proper chat about how you live or work, and your budget. Then we design the building, show it to you in 3D so there are no surprises, and prepare the full set of drawings. We submit to the Metropolitan or Municipal Assembly and follow up until the building permit is approved.',
+    includes: [
+      'Site visit and brief',
+      'Concept design and 3D views',
+      'Architectural and structural drawings',
+      'Building permit application and follow-up at the Assembly',
+      'BOQ (bill of quantities) so you know the cost before you build',
+    ],
+    image: '/assets/craft-studio.jpg',
+    imageAlt: 'Drawings, models and material samples on a table in the Linework studio',
+    whatsapp: "Hi Linework, I'd like to talk about drawings and a building permit.",
+  },
+  {
+    id: 'construction',
+    number: '02',
+    title: 'Construction',
+    summary: 'From foundation to finishing, built by our own site team.',
+    body: 'Our engineers and site team build what we designed — so nothing gets “changed on site” to save someone else money. We work stage by stage: foundation, blockwork, decking, roofing and finishing. You pay in stages as the work is done, and you see every stage in photos and videos.',
+    includes: [
+      'Setting out and foundation',
+      'Blockwork, columns and decking (slab casting)',
+      'Roofing, plumbing and electrical',
+      'Finishing: plastering, tiling, painting, doors and windows',
+      'Concrete cube tests at key pours',
+      'Daily site supervision by our engineers',
+    ],
+    image: '/assets/site-engineering.jpg',
+    imageAlt: 'Linework site team working on a reinforced concrete structure',
+    whatsapp: "Hi Linework, I'd like to talk about building on my plot.",
+  },
+  {
+    id: 'interiors',
+    number: '03',
+    title: 'Interiors, joinery & fit-out',
+    summary: 'Kitchens, wardrobes and full fit-outs made in our own workshop.',
+    body: 'Whether it is a new house, an apartment or an office, we design the inside to match how you use the space. Kitchens, wardrobes, doors and wall panels are made in our joinery workshop in Accra, so we control the quality and the timing — not a supplier we have never met.',
+    includes: [
+      'Interior design and layouts',
+      'Material and finish selection with real samples',
+      'Kitchens, wardrobes and doors from our workshop',
+      'Lighting, ceilings and flooring',
+      'Office and shop fit-out',
+    ],
+    image: '/assets/interior-ridge.jpg',
+    imageAlt: 'Finished living room with walnut joinery and a floating staircase',
+    whatsapp: "Hi Linework, I'd like to talk about interiors / fit-out.",
+  },
+  {
+    id: 'diaspora',
+    number: '04',
+    title: 'Project management & building from abroad',
+    summary: 'Living in the UK, US or Canada? Build at home without the stress.',
+    body: 'Too many people abroad send money home and end up with an uncompleted building. We are your team on the ground. We help you check your land documents with your lawyer, agree a BOQ before work starts, and send you photo and video updates on WhatsApp every week. You pay in stages, only for work that is done — and you can see it.',
+    includes: [
+      'Help checking your site plan, indenture and land title (with your lawyer)',
+      'Video calls at times that suit your time zone',
+      'Weekly photo and video updates on WhatsApp',
+      'Pay in stages, tied to work completed',
+      'One project manager as your single point of contact',
+      'Site visits arranged whenever you are in Ghana',
+    ],
+    image: '/assets/villa-cantonments.jpg',
+    imageAlt: 'A finished family home in Cantonments built for a client living in London',
+    whatsapp: "Hi Linework, I live abroad and I'd like to build in Ghana.",
+  },
+  {
+    id: 'renovations',
+    number: '05',
+    title: 'Renovations & extensions',
+    summary: 'Add a floor, finish an old building or give your home a new life.',
+    body: 'Got an uncompleted building, or a house that no longer fits your family? We check the existing structure first, tell you honestly what can and cannot be done, then design and build the changes — from a new boys’ quarters to an extra floor.',
+    includes: [
+      'Structural check of the existing building',
+      'Completing uncompleted buildings',
+      'Extensions, extra floors and boys’ quarters',
+      'Kitchen, bathroom and full home makeovers',
+    ],
+    image: '/assets/facade-detail.jpg',
+    imageAlt: 'Concrete and timber louvre detail on a renovated home',
+    whatsapp: "Hi Linework, I'd like to talk about a renovation or extension.",
+  },
+];
+
+const STEPS = [
+  { title: 'Site visit & brief', text: 'We visit your plot, listen, and agree what you want and what you can spend.' },
+  { title: 'Design & 3D', text: 'We design it and walk you through it in 3D before anything is built.' },
+  { title: 'Permits & BOQ', text: 'We get your building permit and give you a full BOQ, so the cost is clear.' },
+  { title: 'Construction', text: 'Our site team builds it. You pay in stages and get weekly updates.' },
+  { title: 'Handover', text: 'We hand over your keys, then stay on for the defects period.' },
+];
 
 export default function ServicesPage() {
-  const services = [
-    {
-      id: 'architecture',
-      icon: Ruler,
-      num: '01',
-      title: 'Architectural Conception & Schematics',
-      tagline: 'Passive bioclimatic tropical design, site microclimate orientation, and municipal approvals in Accra.',
-      desc: 'We do not design generic glass boxes that overheat under the Ghanaian sun. Every Linework architectural commission begins with rigorous sun-path analysis, passive solar shading calculations, and wind direction studies. We produce comprehensive architectural schematics, permit-ready submission sets, and detailed construction documentation complying with the Ghana National Building Code.',
-      deliverables: [
-        'Bioclimatic site analysis & orientation schematics',
-        'Zoning, planning permits & municipal engineering approvals',
-        'Detailed 1:50 architectural construction drawings and joinery schedules',
-        'Life-cycle energy modeling and passive ventilation design'
-      ]
-    },
-    {
-      id: 'construction',
-      icon: HardHat,
-      num: '02',
-      title: 'Turnkey Construction & General Contracting',
-      tagline: 'In-house structural engineering, high-yield rebar placement, and precision concrete execution.',
-      desc: 'As an integrated design-build practice, we construct what we design. Linework employs certified structural engineers, master formwork carpenters, and experienced site managers directly. We do not subcontract your project to low-bid intermediaries. From deep foundation piling and post-tensioned slabs to finishing trades, we manage the entire site with single-point contractual accountability.',
-      deliverables: [
-        'Excavation, earthworks, and reinforced concrete substructures',
-        'Post-tensioned slabs, structural steel framing, and shear walls',
-        'Independent laboratory crush testing for every concrete batch (C25/C30/C37)',
-        'Full MEP (Mechanical, Electrical, Plumbing) integration and testing'
-      ]
-    },
-    {
-      id: 'interior',
-      icon: Sparkles,
-      num: '03',
-      title: 'Interior Architecture & Bespoke Millwork',
-      tagline: 'Double-height spatial planning, honed microcement surfaces, and custom African hardwood joinery.',
-      desc: 'Interior architecture is an inseparable continuation of structural form. Our interior studio crafts seamless transitions between raw board-marked concrete and tactile natural materials—including smoked teak, native Iroko, solid brass hardware, and Italian honed microcement. Every kitchen, wardrobe, floating staircase, and architectural vanity is designed and fabricated in our dedicated workshop.',
-      deliverables: [
-        'Custom architectural millwork and built-in furniture fabrication',
-        'Specialist microcement, polished terrazzo, and natural stone finishes',
-        'Architectural lighting design with scene automation and indirect fixtures',
-        'Turnkey FF&E (Furniture, Fixtures & Equipment) procurement and curation'
-      ]
-    },
-    {
-      id: 'bim',
-      icon: Box,
-      num: '04',
-      title: '3D BIM & Parametric Clash Detection',
-      tagline: 'Millimeter pre-construction in digital 3D space before pouring a single cubic meter of concrete.',
-      desc: 'Building errors on site cost time and money. We resolve every potential conflict before construction commences by building a complete 3D digital twin of your building in Building Information Modeling (BIM). Structural rebars, HVAC ducts, plumbing runs, and electrical conduits are clash-detected and coordinated to eliminate on-site improvisations and budget variations.',
-      deliverables: [
-        'LOD 350 / 400 Building Information Modeling (BIM)',
-        '3D MEP clash detection and structural coordination reports',
-        'Photorealistic CGI visualizations and virtual interactive walkthroughs',
-        'As-built digital twin archiving for lifetime post-occupancy facility maintenance'
-      ]
-    },
-    {
-      id: 'diaspora',
-      icon: Globe,
-      num: '05',
-      title: 'Diaspora Remote Build Stewardship',
-      tagline: 'Total transparency, milestone-locked escrow, and weekly 360° drone photogrammetry for overseas owners.',
-      desc: 'Building in Ghana while living in the UK, United States, Canada, or Europe is often fraught with anxiety, contractor unresponsiveness, and lack of visual proof. Linework operates a dedicated Diaspora Build Hub. Every Friday, clients receive high-resolution drone orthomosaics, laboratory material test certificates, and milestone updates directly through their private WhatsApp portal.',
-      deliverables: [
-        'Weekly 360-degree high-definition drone progress photogrammetry',
-        'Milestone-locked payment schedules backed by certified engineer sign-offs',
-        'Dedicated WhatsApp hotline for direct video site walk-throughs with the studio principal',
-        'Turnkey assistance with legal site title verification and land registry documentation'
-      ]
-    }
-  ];
-
   return (
-    <div className="bg-[#FAF9F6] min-h-screen py-12 md:py-20">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        
-        {/* Page Header */}
-        <div className="max-w-3xl mb-16">
-          <span className="text-xs font-mono uppercase tracking-[0.25em] text-amber-700 font-semibold block mb-2">
-            Integrated Design-Build Expertise &middot; Accra, Ghana
-          </span>
-          <h1 className="font-serif text-4xl md:text-5xl font-extrabold text-stone-900 tracking-tight mb-4">
-            Turnkey Architectural &amp; Building Capabilities
+    <>
+      {/* Hero */}
+      <section className="container-site pt-10 pb-12 md:pt-16 md:pb-20">
+        <Reveal className="flex flex-col gap-5">
+          <span className="eyebrow">Our services</span>
+          <h1 className="max-w-4xl text-display-lg font-bold text-ink-900">
+            One team, from your plot to your keys.
           </h1>
-          <p className="text-stone-600 text-base md:text-lg leading-relaxed font-sans">
-            From initial sketch and bioclimatic orientation to general contracting and final interior fit-out, Linework GH delivers complete spatial solutions under single-point legal and structural accountability.
+          <p className="max-w-2xl text-lg text-ink-600">
+            We design, get the permit, build and finish. Use us for everything, or just the part you need. Either way,
+            you deal with one team that owns the result.
           </p>
-        </div>
+        </Reveal>
 
-        {/* Services List Grid */}
-        <div className="space-y-12 mb-20">
-          {services.map((svc) => {
-            const Icon = svc.icon;
-            return (
-              <div 
-                key={svc.id} 
-                id={svc.id}
-                className="bg-white rounded-xl border border-stone-200 p-8 md:p-12 shadow-sm hover:shadow-card transition-shadow"
+        {/* Quick jump links — swipe on mobile */}
+        <Reveal delay={120} className="mt-8">
+          <nav aria-label="Services on this page" className="snap-row sm:mx-0 sm:flex-wrap sm:px-0 sm:pb-0">
+            {SERVICES.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                className="inline-flex min-h-[2.75rem] shrink-0 snap-start items-center rounded-full border border-line bg-white px-5 text-sm font-semibold text-ink-800 transition-colors hover:border-ink-900"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                  
-                  {/* Left Info Column */}
-                  <div className="lg:col-span-7 flex flex-col gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded bg-amber-500/10 text-amber-700 flex items-center justify-center flex-shrink-0">
-                        <Icon size={20} />
-                      </div>
-                      <span className="font-mono text-xs font-bold text-amber-700 tracking-widest uppercase">
-                        PILLAR {svc.num} // EXPERTISE
-                      </span>
-                    </div>
+                {s.title}
+              </a>
+            ))}
+          </nav>
+        </Reveal>
+      </section>
 
-                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 tracking-tight">
-                      {svc.title}
-                    </h2>
-
-                    <p className="text-amber-800/90 font-medium text-sm font-sans leading-relaxed">
-                      {svc.tagline}
-                    </p>
-
-                    <p className="text-stone-600 text-sm md:text-base font-sans leading-relaxed">
-                      {svc.desc}
-                    </p>
+      {/* Services */}
+      <section className="container-site pb-20 md:pb-28">
+        <div className="flex flex-col gap-16 md:gap-28">
+          {SERVICES.map((s, i) => {
+            const flip = i % 2 === 1;
+            return (
+              <article
+                key={s.id}
+                id={s.id}
+                className="grid items-center gap-8 md:grid-cols-2 md:gap-14 lg:gap-20"
+              >
+                <Reveal className={`relative ${flip ? 'md:order-2' : ''}`}>
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-3xl bg-sand md:aspect-[4/5] lg:aspect-[5/5.4]">
+                    <Image
+                      src={s.image}
+                      alt={s.imageAlt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover"
+                    />
                   </div>
+                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-sm font-semibold text-ink-900 backdrop-blur">
+                    {s.number}
+                  </span>
+                </Reveal>
 
-                  {/* Right Deliverables Column */}
-                  <div className="lg:col-span-5 bg-[#FAF9F6] border border-stone-200/80 rounded-lg p-6">
-                    <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 font-bold mb-4 pb-2 border-b border-stone-200">
-                      Standard Practice Deliverables
-                    </h3>
-                    <ul className="space-y-3 font-sans text-xs md:text-sm text-stone-700">
-                      {svc.deliverables.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5">
-                          <CheckCircle2 size={16} className="text-emerald-600 flex-shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                <Reveal delay={100} className={flip ? 'md:order-1' : ''}>
+                  <h2 className="text-display-md font-bold text-ink-900">{s.title}</h2>
+                  <p className="mt-3 text-lg font-medium text-ink-800">{s.summary}</p>
+                  <p className="mt-4 text-base leading-relaxed text-ink-600">{s.body}</p>
+
+                  <h3 className="mt-8 text-lg font-bold text-ink-900">What you get</h3>
+                  <ul className="mt-4 grid gap-3">
+                    {s.includes.map((item) => (
+                      <li key={item} className="flex items-start gap-3 text-base text-ink-700">
+                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                          <Check size={14} strokeWidth={3} />
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <a
+                      href={whatsappLink(s.whatsapp)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-whatsapp"
+                    >
+                      <WhatsAppIcon size={18} /> Ask about this
+                    </a>
+                    <Link href="/contact#brief" className="btn btn-outline">
+                      Send us your brief <ArrowRight size={18} />
+                    </Link>
                   </div>
-
-                </div>
-              </div>
+                </Reveal>
+              </article>
             );
           })}
         </div>
+      </section>
 
-        {/* Turnkey Matrix Comparison Section */}
-        <TurnkeyMatrix />
-
-        {/* Bottom CTA Banner */}
-        <div className="mt-16 bg-[#0B0E14] text-white rounded-xl p-8 md:p-12 text-center max-w-3xl mx-auto shadow-xl">
-          <span className="text-xs font-mono uppercase tracking-[0.25em] text-amber-400 font-semibold block mb-2">
-            Schedule a Preliminary Project Appraisal
-          </span>
-          <h2 className="font-serif text-3xl font-bold mb-4">
-            Ready to Build With Single-Point Accountability?
-          </h2>
-          <p className="text-stone-300 text-sm md:text-base max-w-xl mx-auto mb-8 font-sans">
-            Our principal architects and structural directors review your project requirements and provide a confidential feasibility appraisal within 24 hours.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/contact"
-              className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-mono text-xs uppercase tracking-widest font-bold px-8 py-3.5 rounded transition-colors shadow-sm"
-            >
-              Start Project Brief &rarr;
-            </Link>
-            <a
-              href="https://wa.me/233256869481"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-mono text-xs uppercase tracking-wider py-3.5 px-6 rounded transition-colors"
-            >
-              WhatsApp Studio Consultation
-            </a>
-          </div>
+      {/* How we work */}
+      <section className="bg-sand">
+        <div className="container-site section">
+          <SectionHeader
+            eyebrow="How we work"
+            title="Five clear steps. No guesswork."
+            intro="Every project follows the same simple path, so you always know what is happening and what comes next."
+          />
+          <ol className="snap-row md:mx-0 md:grid md:grid-cols-5 md:gap-5 md:overflow-visible md:px-0 md:pb-0">
+            {STEPS.map((step, i) => (
+              <Reveal
+                as="li"
+                key={step.title}
+                delay={i * 80}
+                className="card flex w-[78%] shrink-0 snap-start flex-col gap-3 p-6 sm:w-[45%] md:w-auto"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ink-900 text-base font-bold text-brand">
+                  {i + 1}
+                </span>
+                <h3 className="text-lg font-bold text-ink-900">{step.title}</h3>
+                <p className="text-base leading-relaxed text-ink-600">{step.text}</p>
+              </Reveal>
+            ))}
+          </ol>
         </div>
+      </section>
 
+      <div className="pt-20 md:pt-28">
+        <CtaBand
+          title="Not sure which service you need?"
+          text="Tell us about your plot or your building. We will tell you honestly where to start — usually within one working day."
+          whatsappMessage="Hi Linework, I'm not sure which service I need. Can we talk?"
+        />
       </div>
-    </div>
+    </>
   );
 }

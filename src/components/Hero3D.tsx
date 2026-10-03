@@ -14,10 +14,14 @@ export default function Hero3D() {
   const [isWireframe, setIsWireframe] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  const [mounted, setMounted] = useState(false);
+  const [webglSupported, setWebglSupported] = useState(true);
+
   // References to internal Three.js objects
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const controlsRef = useRef<OrbitControls | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const flyStateRef = useRef({
     isFlying: false,
     targetCam: new THREE.Vector3(22, 14, 26),
@@ -36,36 +40,49 @@ export default function Hero3D() {
   });
 
   useEffect(() => {
+    setMounted(true);
     if (!containerRef.current || !canvasRef.current) return;
 
     const container = containerRef.current;
     const canvas = canvasRef.current;
 
+    const initialWidth = container.clientWidth || 600;
+    const initialHeight = container.clientHeight || 450;
+
     // Scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0B0E14);
-    scene.fog = new THREE.FogExp2(0x0B0E14, 0.02);
+    scene.background = new THREE.Color(0x0E131F);
+    scene.fog = new THREE.FogExp2(0x0E131F, 0.02);
     sceneRef.current = scene;
 
     // Camera
     const camera = new THREE.PerspectiveCamera(
       38,
-      container.clientWidth / container.clientHeight,
+      initialWidth / initialHeight,
       0.1,
       1000
     );
     camera.position.set(22, 14, 26);
     cameraRef.current = camera;
 
-    // Renderer
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      powerPreference: 'high-performance',
-      alpha: false,
-    });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Renderer with try-catch for WebGL support
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        powerPreference: 'high-performance',
+        alpha: false,
+      });
+      rendererRef.current = renderer;
+    } catch (e) {
+      console.warn('WebGL initialization failed, falling back:', e);
+      setWebglSupported(false);
+      return;
+    }
+
+    renderer.setSize(initialWidth, initialHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -77,6 +94,11 @@ export default function Hero3D() {
     controls.minDistance = 10;
     controls.maxDistance = 50;
     controls.target.set(0, 3.5, 0);
+    // Don't swallow page scroll gesture completely on small touch devices
+    controls.touches = {
+      ONE: THREE.TOUCH.ROTATE,
+      TWO: THREE.TOUCH.DOLLY_PAN,
+    };
     controlsRef.current = controls;
 
     // Refined Architectural Museum Lighting
@@ -199,14 +221,27 @@ export default function Hero3D() {
 
     modelRefs.current.allMeshes = allMeshes;
 
-    // Handle Window Resize
+    // Handle Container Resize with ResizeObserver
     const handleResize = () => {
       if (!container || !camera || !renderer) return;
-      camera.aspect = container.clientWidth / container.clientHeight;
+      const w = container.clientWidth || 600;
+      const h = container.clientHeight || 450;
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setSize(w, h);
     };
+
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => {
+        handleResize();
+      });
+      resizeObserver.observe(container);
+    }
     window.addEventListener('resize', handleResize);
+
+    // Initial pass to guarantee correct size on hydration
+    requestAnimationFrame(handleResize);
 
     // IntersectionObserver to pause rendering when offscreen
     let isVisible = true;
@@ -253,6 +288,7 @@ export default function Hero3D() {
     return () => {
       cancelAnimationFrame(animId);
       observer.disconnect();
+      if (resizeObserver) resizeObserver.disconnect();
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
     };
@@ -298,21 +334,34 @@ export default function Hero3D() {
       ref={containerRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative w-full h-[400px] md:h-[540px] lg:h-[620px] rounded-lg overflow-hidden border border-white/10 bg-[#0B0E14] shadow-2xl touch-pan-y"
+      className="relative w-full h-[380px] sm:h-[460px] md:h-[540px] lg:h-[600px] rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-[#0E131F] shadow-2xl touch-pan-y"
     >
-      <canvas ref={canvasRef} className="w-full h-full block" />
+      {/* 3D Canvas */}
+      {webglSupported ? (
+        <canvas ref={canvasRef} className="w-full h-full block" />
+      ) : (
+        <div className="absolute inset-0 bg-[#0E131F]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/assets/villa-cantonments.jpg"
+            alt="Cantonments Villa Architecture"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent" />
+        </div>
+      )}
 
       {/* Top Left Perspective Presets */}
-      <div className="absolute top-4 left-4 flex gap-1.5 z-10 flex-wrap">
+      <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex gap-1.5 z-10 flex-wrap">
         {(['iso', 'front', 'side', 'top'] as const).map(p => (
           <button
             key={p}
             type="button"
             onClick={() => setPreset(p)}
-            className={`text-[10px] font-mono tracking-widest uppercase px-2.5 py-1.5 rounded transition-all ${
+            className={`text-[10px] font-mono tracking-widest uppercase px-2.5 py-1.5 rounded-full transition-all ${
               activePreset === p
-                ? 'bg-amber-500 text-stone-950 font-bold'
-                : 'bg-black/60 text-stone-300 border border-white/10 hover:border-amber-500/50'
+                ? 'bg-brand text-ink-950 font-bold shadow'
+                : 'bg-black/60 text-stone-300 border border-white/10 hover:border-brand/50 backdrop-blur'
             }`}
           >
             {p === 'iso' ? 'Isometric' : p === 'front' ? 'Front' : p === 'side' ? 'Side' : 'Plan'}
@@ -321,20 +370,20 @@ export default function Hero3D() {
       </div>
 
       {/* Top Right Instruction Tag */}
-      <div className="absolute top-4 right-4 bg-black/60 border border-white/10 text-stone-400 text-[10px] font-mono tracking-wider uppercase px-2.5 py-1 rounded pointer-events-none hidden sm:flex items-center gap-1.5">
-        <Compass size={12} className="text-amber-500" />
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-black/60 backdrop-blur border border-white/10 text-stone-300 text-[10px] font-mono tracking-wider uppercase px-2.5 py-1.5 rounded-full pointer-events-none hidden sm:flex items-center gap-1.5">
+        <Compass size={12} className="text-brand" />
         <span>Drag to Orbit &middot; Scroll to Zoom</span>
       </div>
 
       {/* Bottom Architectural Inspection Bar */}
-      <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md border border-white/10 p-2.5 rounded flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
+      <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-black/80 backdrop-blur-md border border-white/10 p-2 sm:p-2.5 rounded-2xl flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setIsExploded(!isExploded)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] uppercase tracking-wider transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] uppercase tracking-wider transition-all ${
               isExploded
-                ? 'bg-amber-500 text-stone-950 font-bold'
+                ? 'bg-brand text-ink-950 font-bold'
                 : 'bg-white/10 text-stone-300 hover:bg-white/20'
             }`}
           >
@@ -345,9 +394,9 @@ export default function Hero3D() {
           <button
             type="button"
             onClick={() => setIsWireframe(!isWireframe)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] uppercase tracking-wider transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] uppercase tracking-wider transition-all ${
               isWireframe
-                ? 'bg-sky-400 text-stone-950 font-bold'
+                ? 'bg-sky-400 text-ink-950 font-bold'
                 : 'bg-white/10 text-stone-300 hover:bg-white/20'
             }`}
           >

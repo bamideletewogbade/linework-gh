@@ -75,17 +75,17 @@ export default function ConversationalBrief() {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-stone-200 shadow-card p-6 md:p-10 max-w-4xl mx-auto">
+    <div className="bg-white rounded-3xl border border-line shadow-sm p-6 sm:p-8 md:p-10 max-w-4xl mx-auto">
       
       {/* Stepper Progress Bar */}
       <div className="mb-8">
-        <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider text-stone-500 mb-3">
-          <span className="text-amber-700 font-bold">Studio Consultation Builder</span>
-          <span>{step <= 5 ? `Phase ${step} of 5` : 'Dossier Compiled'}</span>
+        <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-ink-500 mb-3">
+          <span className="text-brand-700">Project Brief</span>
+          <span>{step <= 5 ? `Step ${step} of 5` : 'Summary ready'}</span>
         </div>
-        <div className="w-full h-2 bg-stone-100 rounded-full overflow-hidden">
+        <div className="w-full h-2 bg-paper rounded-full overflow-hidden">
           <div 
-            className="h-full bg-amber-600 transition-all duration-400 ease-out"
+            className="h-full bg-brand transition-all duration-300 ease-out"
             style={{ width: `${Math.min(100, step * 20)}%` }}
           />
         </div>
@@ -93,12 +93,12 @@ export default function ConversationalBrief() {
 
       {/* STEP 1: Typology */}
       {step === 1 && (
-        <div className="animate-fadeIn">
-          <h3 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 mb-2">
-            What spatial vision are we bringing to life?
+        <div>
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
+            What are we building for you?
           </h3>
-          <p className="text-stone-600 text-sm mb-6 font-sans">
-            Select the primary architectural typology of your intended project.
+          <p className="text-ink-600 text-sm mb-6">
+            Select the primary type of property you want to develop.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -110,20 +110,20 @@ export default function ConversationalBrief() {
                   key={idx}
                   type="button"
                   onClick={() => setFormData({ ...formData, typology: t.title })}
-                  className={`p-5 rounded-lg border text-left flex flex-col gap-2 transition-all ${
+                  className={`p-5 rounded-2xl border text-left flex flex-col gap-2 transition-all ${
                     isSelected
-                      ? 'border-amber-600 bg-amber-50/50 shadow-sm ring-1 ring-amber-600'
-                      : 'border-stone-200 hover:border-stone-400 bg-white'
+                      ? 'border-brand bg-paper shadow-sm ring-1 ring-brand'
+                      : 'border-line hover:border-ink-300 bg-white'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="w-8 h-8 rounded bg-stone-100 flex items-center justify-center text-stone-800">
+                    <div className="w-9 h-9 rounded-xl bg-ink-100 flex items-center justify-center text-ink-800">
                       <Icon size={18} />
                     </div>
-                    {isSelected && <CheckCircle2 size={18} className="text-amber-600" />}
+                    {isSelected && <CheckCircle2 size={18} className="text-brand-700" />}
                   </div>
-                  <span className="font-bold text-base text-stone-900 mt-1">{t.title}</span>
-                  <span className="text-xs text-stone-600 leading-relaxed font-sans">{t.desc}</span>
+                  <span className="font-bold text-base text-ink-900 mt-1">{t.title}</span>
+                  <span className="text-xs text-ink-600 leading-relaxed">{t.desc}</span>
                 </button>
               );
             })}
@@ -133,10 +133,10 @@ export default function ConversationalBrief() {
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="bg-[#0B0E14] text-white text-xs uppercase tracking-widest font-mono font-semibold px-6 py-3.5 rounded hover:bg-amber-600 transition-colors flex items-center gap-2"
+              className="btn btn-primary"
             >
               <span>Continue to Location</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -144,12 +144,12 @@ export default function ConversationalBrief() {
 
       {/* STEP 2: Location */}
       {step === 2 && (
-        <div className="animate-fadeIn">
-          <h3 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 mb-2">
-            Where is the building site located?
+        <div>
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
+            Where is your land located?
           </h3>
-          <p className="text-stone-600 text-sm mb-6 font-sans">
-            We design and construct projects across Greater Accra and regional locations.
+          <p className="text-ink-600 text-sm mb-6">
+            We design and build projects across Greater Accra and regional locations.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -160,17 +160,17 @@ export default function ConversationalBrief() {
                   key={idx}
                   type="button"
                   onClick={() => setFormData({ ...formData, location: loc.title })}
-                  className={`p-5 rounded-lg border text-left flex flex-col gap-2 transition-all ${
+                  className={`p-5 rounded-2xl border text-left flex flex-col gap-2 transition-all ${
                     isSelected
-                      ? 'border-amber-600 bg-amber-50/50 shadow-sm ring-1 ring-amber-600'
-                      : 'border-stone-200 hover:border-stone-400 bg-white'
+                      ? 'border-brand bg-paper shadow-sm ring-1 ring-brand'
+                      : 'border-line hover:border-ink-300 bg-white'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-base text-stone-900">{loc.title}</span>
-                    {isSelected && <CheckCircle2 size={18} className="text-amber-600" />}
+                    <span className="font-bold text-base text-ink-900">{loc.title}</span>
+                    {isSelected && <CheckCircle2 size={18} className="text-brand-700" />}
                   </div>
-                  <span className="text-xs text-stone-600 leading-relaxed font-sans">{loc.desc}</span>
+                  <span className="text-xs text-ink-600 leading-relaxed">{loc.desc}</span>
                 </button>
               );
             })}
@@ -180,18 +180,18 @@ export default function ConversationalBrief() {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="text-stone-600 text-xs uppercase tracking-wider font-mono font-semibold px-4 py-3 hover:text-stone-900 flex items-center gap-1.5"
+              className="btn btn-outline"
             >
-              <ArrowLeft size={14} />
+              <ArrowLeft size={16} />
               <span>Back</span>
             </button>
             <button
               type="button"
               onClick={() => setStep(3)}
-              className="bg-[#0B0E14] text-white text-xs uppercase tracking-widest font-mono font-semibold px-6 py-3.5 rounded hover:bg-amber-600 transition-colors flex items-center gap-2"
+              className="btn btn-primary"
             >
               <span>Continue to Stage</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -199,12 +199,12 @@ export default function ConversationalBrief() {
 
       {/* STEP 3: Stage */}
       {step === 3 && (
-        <div className="animate-fadeIn">
-          <h3 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 mb-2">
+        <div>
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
             What stage is your project currently at?
           </h3>
-          <p className="text-stone-600 text-sm mb-6 font-sans">
-            This determines whether we mobilize architectural schematics, engineering permits, or general contracting crews.
+          <p className="text-ink-600 text-sm mb-6">
+            Whether you just bought land or already have drawings, we adapt to what you need.
           </p>
 
           <div className="flex flex-col gap-3.5 mb-8">
@@ -215,17 +215,17 @@ export default function ConversationalBrief() {
                   key={idx}
                   type="button"
                   onClick={() => setFormData({ ...formData, stage: stg.title })}
-                  className={`p-5 rounded-lg border text-left flex items-start justify-between gap-4 transition-all ${
+                  className={`p-5 rounded-2xl border text-left flex items-start justify-between gap-4 transition-all ${
                     isSelected
-                      ? 'border-amber-600 bg-amber-50/50 shadow-sm ring-1 ring-amber-600'
-                      : 'border-stone-200 hover:border-stone-400 bg-white'
+                      ? 'border-brand bg-paper shadow-sm ring-1 ring-brand'
+                      : 'border-line hover:border-ink-300 bg-white'
                   }`}
                 >
                   <div className="flex flex-col gap-1">
-                    <span className="font-bold text-base text-stone-900">{stg.title}</span>
-                    <span className="text-xs text-stone-600 leading-relaxed font-sans">{stg.desc}</span>
+                    <span className="font-bold text-base text-ink-900">{stg.title}</span>
+                    <span className="text-xs text-ink-600 leading-relaxed">{stg.desc}</span>
                   </div>
-                  {isSelected && <CheckCircle2 size={18} className="text-amber-600 flex-shrink-0 mt-1" />}
+                  {isSelected && <CheckCircle2 size={18} className="text-brand-700 shrink-0 mt-1" />}
                 </button>
               );
             })}
@@ -235,18 +235,18 @@ export default function ConversationalBrief() {
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="text-stone-600 text-xs uppercase tracking-wider font-mono font-semibold px-4 py-3 hover:text-stone-900 flex items-center gap-1.5"
+              className="btn btn-outline"
             >
-              <ArrowLeft size={14} />
+              <ArrowLeft size={16} />
               <span>Back</span>
             </button>
             <button
               type="button"
               onClick={() => setStep(4)}
-              className="bg-[#0B0E14] text-white text-xs uppercase tracking-widest font-mono font-semibold px-6 py-3.5 rounded hover:bg-amber-600 transition-colors flex items-center gap-2"
+              className="btn btn-primary"
             >
-              <span>Continue to Scale &amp; Budget</span>
-              <ArrowRight size={14} />
+              <span>Continue to Size &amp; Budget</span>
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -254,18 +254,18 @@ export default function ConversationalBrief() {
 
       {/* STEP 4: Area & Budget */}
       {step === 4 && (
-        <div className="animate-fadeIn">
-          <h3 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 mb-2">
-            Estimated floor area &amp; turnkey budget?
+        <div>
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
+            Approximate floor size &amp; estimated cost
           </h3>
-          <p className="text-stone-600 text-sm mb-6 font-sans">
-            Adjust the slider to preview estimated turnkey construction ranges for premium architectural builds in Accra.
+          <p className="text-ink-600 text-sm mb-6">
+            Adjust the slider to see a rough guide for turnkey design &amp; build in Accra (excluding land).
           </p>
 
-          <div className="bg-[#FAF9F6] border border-stone-200 p-6 rounded-lg mb-8">
-            <div className="flex items-center justify-between mb-3 font-mono">
-              <span className="text-xs uppercase tracking-wider text-stone-500 font-semibold">Estimated Gross Floor Area</span>
-              <span className="text-xl font-bold text-amber-700">{formData.area} m²</span>
+          <div className="bg-paper border border-line p-6 rounded-2xl mb-8">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs uppercase tracking-wider text-ink-500 font-semibold">Estimated Gross Floor Area</span>
+              <span className="text-xl font-bold text-brand-700">{formData.area} m²</span>
             </div>
 
             <input
@@ -275,12 +275,12 @@ export default function ConversationalBrief() {
               step="50"
               value={formData.area}
               onChange={(e) => updateArea(parseInt(e.target.value))}
-              className="w-full accent-amber-600 cursor-pointer h-2 bg-stone-200 rounded-lg mb-4"
+              className="w-full accent-brand cursor-pointer h-2 bg-ink-200 rounded-lg mb-4"
             />
 
-            <div className="pt-4 border-t border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono text-xs">
-              <span className="text-stone-500 uppercase tracking-wider">Estimated Turnkey Delivery Bracket:</span>
-              <span className="font-bold text-stone-900 text-sm bg-white py-1 px-3 rounded border border-stone-200">
+            <div className="pt-4 border-t border-line flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+              <span className="text-ink-600 font-medium">Estimated Turnkey Construction Range:</span>
+              <span className="font-bold text-ink-900 text-sm bg-white py-1.5 px-3 rounded-full border border-line">
                 {formData.budgetTier}
               </span>
             </div>
@@ -290,18 +290,18 @@ export default function ConversationalBrief() {
             <button
               type="button"
               onClick={() => setStep(3)}
-              className="text-stone-600 text-xs uppercase tracking-wider font-mono font-semibold px-4 py-3 hover:text-stone-900 flex items-center gap-1.5"
+              className="btn btn-outline"
             >
-              <ArrowLeft size={14} />
+              <ArrowLeft size={16} />
               <span>Back</span>
             </button>
             <button
               type="button"
               onClick={() => setStep(5)}
-              className="bg-[#0B0E14] text-white text-xs uppercase tracking-widest font-mono font-semibold px-6 py-3.5 rounded hover:bg-amber-600 transition-colors flex items-center gap-2"
+              className="btn btn-primary"
             >
               <span>Continue to Contact</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -309,17 +309,17 @@ export default function ConversationalBrief() {
 
       {/* STEP 5: Contact Info */}
       {step === 5 && (
-        <form onSubmit={handleSubmit} className="animate-fadeIn">
-          <h3 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 mb-2">
-            Who should our Principal Architect contact?
+        <form onSubmit={handleSubmit}>
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
+            How should we get in touch?
           </h3>
-          <p className="text-stone-600 text-sm mb-6 font-sans">
-            All inquiries are treated with strict confidentiality. We review your parameters and respond with a preliminary appraisal within 24 hours.
+          <p className="text-ink-600 text-sm mb-6">
+            We review your details and send a direct feasibility appraisal within one working day.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-mono uppercase tracking-wider text-stone-600 font-semibold" htmlFor="fullName">
+              <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="fullName">
                 Full Name *
               </label>
               <input
@@ -329,12 +329,12 @@ export default function ConversationalBrief() {
                 value={formData.fullName}
                 onChange={e => setFormData({ ...formData, fullName: e.target.value })}
                 placeholder="e.g. Kwesi Mensah"
-                className="w-full text-base p-3.5 rounded border border-stone-300 focus:border-amber-600 focus:outline-none bg-white font-sans text-stone-900"
+                className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-mono uppercase tracking-wider text-stone-600 font-semibold" htmlFor="phone">
+              <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="phone">
                 WhatsApp / Phone Number *
               </label>
               <input
@@ -343,14 +343,14 @@ export default function ConversationalBrief() {
                 required
                 value={formData.phone}
                 onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                placeholder="+233 24 000 0000 or +44 / +1"
-                className="w-full text-base p-3.5 rounded border border-stone-300 focus:border-amber-600 focus:outline-none bg-white font-sans text-stone-900"
+                placeholder="+233 24 000 0000 or UK/US/Canada"
+                className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-1.5 mb-5">
-            <label className="text-xs font-mono uppercase tracking-wider text-stone-600 font-semibold" htmlFor="email">
+            <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="email">
               Email Address *
             </label>
             <input
@@ -359,22 +359,22 @@ export default function ConversationalBrief() {
               required
               value={formData.email}
               onChange={e => setFormData({ ...formData, email: e.target.value })}
-              placeholder="kwesi@company.com"
-              className="w-full text-base p-3.5 rounded border border-stone-300 focus:border-amber-600 focus:outline-none bg-white font-sans text-stone-900"
+              placeholder="kwesi@example.com"
+              className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
             />
           </div>
 
           <div className="flex flex-col gap-1.5 mb-8">
-            <label className="text-xs font-mono uppercase tracking-wider text-stone-600 font-semibold" htmlFor="notes">
-              Specific Project Vision or Plot Details (Optional)
+            <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="notes">
+              Tell us about your plot or ideas (Optional)
             </label>
             <textarea
               id="notes"
               rows={3}
               value={formData.notes}
               onChange={e => setFormData({ ...formData, notes: e.target.value })}
-              placeholder="e.g. 5-bedroom cantilevered residence in Cantonments with double-height glass, natural teak louvers, and a 16m pool..."
-              className="w-full text-base p-3.5 rounded border border-stone-300 focus:border-amber-600 focus:outline-none bg-white font-sans text-stone-900"
+              placeholder="e.g. 4-bedroom house in Cantonments with staff quarters, a swimming pool, and solar backup..."
+              className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
             />
           </div>
 
@@ -382,17 +382,17 @@ export default function ConversationalBrief() {
             <button
               type="button"
               onClick={() => setStep(4)}
-              className="text-stone-600 text-xs uppercase tracking-wider font-mono font-semibold px-4 py-3 hover:text-stone-900 flex items-center gap-1.5"
+              className="btn btn-outline"
             >
-              <ArrowLeft size={14} />
+              <ArrowLeft size={16} />
               <span>Back</span>
             </button>
             <button
               type="submit"
-              className="bg-amber-600 text-white text-xs uppercase tracking-widest font-mono font-bold px-8 py-3.5 rounded hover:bg-amber-700 transition-colors shadow-sm flex items-center gap-2"
+              className="btn btn-primary"
             >
-              <span>Compile &amp; Dispatch Dossier</span>
-              <ArrowRight size={14} />
+              <span>Review &amp; Send</span>
+              <ArrowRight size={16} />
             </button>
           </div>
         </form>
@@ -400,31 +400,33 @@ export default function ConversationalBrief() {
 
       {/* STEP 6: Confirmation & WhatsApp Direct */}
       {step === 6 && (
-        <div className="text-center py-6 animate-fadeIn">
-          <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 size={32} />
+        <div className="text-center py-4">
+          <div className="w-16 h-16 rounded-full bg-brand/10 text-brand-700 flex items-center justify-center mx-auto mb-4">
+            <CheckCircle2 size={36} />
           </div>
 
-          <h3 className="font-serif text-2xl md:text-3xl font-bold text-stone-900 mb-2">
-            Architectural Project Dossier Compiled
+          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
+            Your Project Summary is Ready
           </h3>
-          <p className="text-stone-600 text-sm max-w-lg mx-auto mb-6 font-sans">
-            Thank you, {formData.fullName}. Your project parameters have been structured and recorded for Linework GH’s studio directors.
+          <p className="text-ink-600 text-sm max-w-lg mx-auto mb-6">
+            Thank you, {formData.fullName}. You can send this straight to our team on WhatsApp for an immediate response.
           </p>
 
           {/* Dossier Card */}
-          <div className="bg-[#FAF9F6] border border-stone-200 rounded-lg p-5 text-left max-w-xl mx-auto mb-8 font-mono text-xs leading-relaxed text-stone-700">
-            <div className="pb-3 mb-3 border-b border-stone-200 flex justify-between font-bold text-stone-900">
-              <span>PROJECT DOSSIER SUMMARY</span>
-              <span className="text-amber-700">REF: LWGH-{new Date().getFullYear()}</span>
+          <div className="bg-paper border border-line rounded-2xl p-6 text-left max-w-xl mx-auto mb-8 text-xs leading-relaxed text-ink-700">
+            <div className="pb-3 mb-3 border-b border-line flex justify-between font-bold text-ink-900">
+              <span>PROJECT SUMMARY</span>
+              <span className="text-brand-700">Linework GH</span>
             </div>
-            <div><strong>Client:</strong> {formData.fullName} ({formData.phone} &middot; {formData.email})</div>
-            <div><strong>Typology:</strong> {formData.typology}</div>
-            <div><strong>Location:</strong> {formData.location}</div>
-            <div><strong>Project Stage:</strong> {formData.stage}</div>
-            <div><strong>Estimated Scale:</strong> {formData.area} m²</div>
-            <div><strong>Turnkey Bracket:</strong> {formData.budgetTier}</div>
-            {formData.notes && <div className="mt-2 text-stone-600"><strong>Notes:</strong> {formData.notes}</div>}
+            <div className="space-y-1.5">
+              <div><strong>Name:</strong> {formData.fullName} ({formData.phone} &middot; {formData.email})</div>
+              <div><strong>Building Type:</strong> {formData.typology}</div>
+              <div><strong>Location:</strong> {formData.location}</div>
+              <div><strong>Current Stage:</strong> {formData.stage}</div>
+              <div><strong>Estimated Size:</strong> {formData.area} m²</div>
+              <div><strong>Estimated Budget Range:</strong> {formData.budgetTier}</div>
+              {formData.notes && <div className="mt-2 text-ink-600"><strong>Notes:</strong> {formData.notes}</div>}
+            </div>
           </div>
 
           {/* Actions */}
@@ -433,15 +435,15 @@ export default function ConversationalBrief() {
               href={`https://wa.me/233256869481?text=${getWhatsAppMessage()}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto bg-[#25D366] text-stone-950 font-mono font-bold text-xs uppercase tracking-wider py-3.5 px-6 rounded flex items-center justify-center gap-2 hover:bg-[#20ba5a] transition-colors shadow-sm"
+              className="btn btn-whatsapp w-full sm:w-auto"
             >
-              <Phone size={15} />
-              <span>Send Directly to WhatsApp Studio (+233 25 686 9481)</span>
+              <Phone size={18} />
+              <span>Send to WhatsApp (+233 25 686 9481)</span>
             </a>
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="w-full sm:w-auto border border-stone-300 text-stone-700 font-mono text-xs uppercase tracking-wider py-3.5 px-5 rounded hover:bg-stone-50 transition-colors"
+              className="btn btn-outline w-full sm:w-auto"
             >
               Modify Brief
             </button>

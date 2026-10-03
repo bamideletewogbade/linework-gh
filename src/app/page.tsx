@@ -1,12 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Phone, ArrowUpRight, Compass, ShieldCheck, MapPin } from 'lucide-react';
+import { ArrowRight, Phone, MapPin } from 'lucide-react';
 import Hero3D from '@/components/Hero3D';
 import TrustMetrics from '@/components/TrustMetrics';
 import ProjectCard from '@/components/ProjectCard';
 import BioclimaticDiagram from '@/components/BioclimaticDiagram';
 import TurnkeyMatrix from '@/components/TurnkeyMatrix';
 import ConversationalBrief from '@/components/ConversationalBrief';
+import Reveal from '@/components/ui/Reveal';
+import CtaBand from '@/components/ui/CtaBand';
 import { PROJECTS } from '@/data/projects';
 
 export default function HomePage() {
@@ -16,83 +18,84 @@ export default function HomePage() {
     <div className="flex flex-col">
       
       {/* ========================================================
-          HERO SECTION (3-SECOND TEST + INTERACTIVE 3D PAVILION)
+          HERO SECTION (PLAIN ENGLISH + 3D ARCHITECTURAL MODEL)
           ======================================================== */}
-      <section className="bg-[#0B0E14] text-white pt-10 pb-16 md:pt-14 md:pb-24 border-b border-white/10 relative overflow-hidden">
+      <section className="bg-ink-950 text-white pt-6 pb-16 sm:pt-10 sm:pb-20 md:pt-14 md:pb-24 border-b border-white/10 relative overflow-hidden">
         
         {/* Subtle Background Blueprint Grid */}
-        <div className="absolute inset-0 bg-dark-grid opacity-30 pointer-events-none" />
+        <div className="bg-grid-dark absolute inset-0 opacity-40 pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="container-site relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left Copy Column (7 cols) */}
+            {/* Left Copy Column (6 cols) */}
             <div className="lg:col-span-6 flex flex-col justify-center">
               
-              {/* 3-Second Practice Eyebrow Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-mono tracking-widest uppercase text-amber-400 mb-6 w-max">
-                <MapPin size={13} className="text-amber-500" />
-                <span>Accra &middot; Design &amp; Turnkey Construction</span>
+              {/* Practice Eyebrow Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold uppercase tracking-wider text-brand mb-5 w-max">
+                <MapPin size={14} className="text-brand" />
+                <span>Accra &middot; Architecture &amp; Construction</span>
               </div>
 
               {/* Main Headline */}
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white mb-6">
-                Architectural Design &amp; Turnkey Construction in Ghana.
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white mb-5">
+                We don’t just draw it. <br className="hidden sm:inline" />
+                <span className="text-brand">We build it.</span>
               </h1>
 
               {/* Instant Clarification Subhead */}
-              <p className="text-stone-300 text-base md:text-lg leading-relaxed font-sans max-w-xl mb-8">
-                Linework GH conceives, engineers, and builds bespoke private residential estates, commercial headquarters, and luxury interiors across Cantonments, Airport Residential, and Greater Accra.
+              <p className="text-ink-200 text-base sm:text-lg leading-relaxed font-sans max-w-xl mb-7">
+                Linework designs, secures building permits, builds and finishes luxury homes and commercial spaces across Cantonments, Airport Residential, East Legon and Greater Accra. One team from your plot to your keys.
               </p>
 
               {/* Primary Calls to Action */}
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 <Link
                   href="/contact"
-                  className="bg-amber-500 hover:bg-amber-400 text-stone-950 font-mono text-xs uppercase tracking-widest font-bold px-7 py-4 rounded shadow-lg transition-all duration-200 flex items-center gap-2"
+                  className="btn btn-primary"
                 >
-                  <span>Start Project Brief</span>
-                  <ArrowRight size={15} />
+                  <span>Start your project</span>
+                  <ArrowRight size={16} />
                 </Link>
 
                 <Link
                   href="/projects"
-                  className="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-mono text-xs uppercase tracking-widest font-semibold px-6 py-4 rounded transition-all duration-200"
+                  className="btn btn-outline-light"
                 >
-                  View Built Works
+                  View built work
                 </Link>
 
                 <a
                   href="https://wa.me/233256869481"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-stone-300 hover:text-white font-mono text-xs uppercase tracking-wider flex items-center gap-1.5 py-2 px-1"
+                  className="text-white/80 hover:text-white text-sm font-semibold flex items-center gap-2 py-2 px-2"
                 >
-                  <Phone size={14} className="text-amber-500" />
+                  <Phone size={15} className="text-brand" />
                   <span>Direct WhatsApp</span>
                 </a>
               </div>
 
               {/* Quick Trust Highlights */}
-              <div className="mt-10 pt-6 border-t border-white/10 grid grid-cols-3 gap-4 font-mono text-xs text-stone-400">
+              <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-3 sm:gap-4 text-xs text-ink-300">
                 <div>
-                  <span className="text-white font-bold block text-base sm:text-lg font-sans">100%</span>
-                  <span className="text-[10px] uppercase tracking-wider text-stone-400">Turnkey Accountability</span>
+                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Single Team</span>
+                  <span className="text-[11px] text-ink-300">Drawings to Handover</span>
                 </div>
-                <div className="border-x border-white/10 px-3">
-                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Accra</span>
-                  <span className="text-[10px] uppercase tracking-wider text-stone-400">Cantonments &amp; Prime</span>
+                <div className="border-x border-white/10 px-2 sm:px-3">
+                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Accra Based</span>
+                  <span className="text-[11px] text-ink-300">Cantonments &amp; Prime</span>
                 </div>
                 <div>
-                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Fixed</span>
-                  <span className="text-[10px] uppercase tracking-wider text-stone-400">Milestone Escrow</span>
+                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Pay in Stages</span>
+                  <span className="text-[11px] text-ink-300">Transparent BOQ</span>
                 </div>
               </div>
 
             </div>
 
             {/* Right Three.js 3D Pavilion Viewer (6 cols) */}
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-6 w-full">
               <Hero3D />
             </div>
 
@@ -108,66 +111,66 @@ export default function HomePage() {
       {/* ========================================================
           THE MANIFESTO: NOT JUST LINES
           ======================================================== */}
-      <section className="py-20 bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="section bg-white border-b border-line">
+        <div className="container-site">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             
-            <div className="lg:col-span-5 flex flex-col gap-4">
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-amber-700 font-semibold">
-                The Studio Philosophy &middot; Not Just Lines
+            <Reveal className="lg:col-span-5 flex flex-col gap-4">
+              <span className="eyebrow">
+                The studio philosophy
               </span>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-stone-900 tracking-tight leading-tight">
-                Drawings are promises. We turn them into structural reality.
+              <h2 className="text-display-md font-bold text-ink-900 leading-tight">
+                Drawings are promises. We turn them into finished buildings.
               </h2>
-              <p className="text-stone-600 text-sm md:text-base leading-relaxed font-sans">
-                In architectural practice, the greatest risk occurs when visionary drawings are handed off to disconnected building contractors. Costs spiral, rebar is downgraded, and designs are compromised.
+              <p className="text-ink-600 text-base leading-relaxed">
+                In building, the biggest risk is handing drawings to an independent contractor who cuts corners on blockwork, downgrades steel, or demands endless extra money.
               </p>
-              <p className="text-stone-600 text-sm md:text-base leading-relaxed font-sans">
-                Linework was founded in Accra to eliminate this divide. As an integrated design-build practice, our in-house architects, structural engineers, and master builders supervise every phase under one single contract.
+              <p className="text-ink-600 text-base leading-relaxed">
+                Linework was founded in Accra to bring design and construction together. Our architects and site engineers work side by side under one contract — from initial plot check to the day you pick up your keys.
               </p>
               <div className="pt-2">
                 <Link
                   href="/about"
-                  className="text-amber-700 hover:text-amber-900 font-mono text-xs uppercase tracking-widest font-bold inline-flex items-center gap-1.5"
+                  className="link-arrow"
                 >
-                  <span>Learn More About Our Practice</span>
-                  <ArrowRight size={14} />
+                  <span>Learn more about how we work</span>
+                  <ArrowRight size={16} />
                 </Link>
               </div>
-            </div>
+            </Reveal>
 
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="bg-[#FAF9F6] border border-stone-200 p-6 rounded-lg">
-                <span className="font-mono text-xs font-bold text-amber-700 block mb-2">01 // PRE-CONSTRUCTION</span>
-                <h3 className="font-serif text-xl font-bold text-stone-900 mb-2">Parametric 3D BIM</h3>
-                <p className="text-stone-600 text-xs leading-relaxed">
-                  Every structural beam, electrical run, and plumbing stack is modeled in 3D BIM clash detection before breaking ground on site.
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+              <Reveal delay={60} className="bg-paper border border-line p-6 rounded-3xl hover:border-brand/40 transition-colors">
+                <span className="text-xs font-semibold text-brand-700 block mb-2">01 // PRE-CONSTRUCTION</span>
+                <h3 className="text-xl font-bold text-ink-900 mb-2">3D Design &amp; Clear BOQ</h3>
+                <p className="text-ink-600 text-xs sm:text-sm leading-relaxed">
+                  We walk you through every room in 3D and prepare a clear bill of quantities so your total construction cost is known before anyone breaks ground.
                 </p>
-              </div>
+              </Reveal>
 
-              <div className="bg-[#FAF9F6] border border-stone-200 p-6 rounded-lg">
-                <span className="font-mono text-xs font-bold text-amber-700 block mb-2">02 // TROPICAL ARCHITECTURE</span>
-                <h3 className="font-serif text-xl font-bold text-stone-900 mb-2">Bioclimatic Engineering</h3>
-                <p className="text-stone-600 text-xs leading-relaxed">
-                  Native timber brise-soleil, passive stack convection, and cantilevered thermal mass specifically engineered for Accra’s equatorial sun.
+              <Reveal delay={120} className="bg-paper border border-line p-6 rounded-3xl hover:border-brand/40 transition-colors">
+                <span className="text-xs font-semibold text-brand-700 block mb-2">02 // TROPICAL ARCHITECTURE</span>
+                <h3 className="text-xl font-bold text-ink-900 mb-2">Built for Accra Heat</h3>
+                <p className="text-ink-600 text-xs sm:text-sm leading-relaxed">
+                  Deep overhangs, teak and Iroko louvres, and open cross-ventilation keep your home cool naturally and cut your monthly electricity bills.
                 </p>
-              </div>
+              </Reveal>
 
-              <div className="bg-[#FAF9F6] border border-stone-200 p-6 rounded-lg">
-                <span className="font-mono text-xs font-bold text-amber-700 block mb-2">03 // GENERAL CONTRACTING</span>
-                <h3 className="font-serif text-xl font-bold text-stone-900 mb-2">In-House Master Builders</h3>
-                <p className="text-stone-600 text-xs leading-relaxed">
-                  Direct site supervision by licensed structural engineers, heavy modular formwork, and certified laboratory concrete testing.
+              <Reveal delay={180} className="bg-paper border border-line p-6 rounded-3xl hover:border-brand/40 transition-colors">
+                <span className="text-xs font-semibold text-brand-700 block mb-2">03 // CONSTRUCTION DISCIPLINE</span>
+                <h3 className="text-xl font-bold text-ink-900 mb-2">Our Own Site Engineers</h3>
+                <p className="text-ink-600 text-xs sm:text-sm leading-relaxed">
+                  Direct supervision on site every day. Proper formwork, rebar spacing, and concrete cube test checks at key slab decking pours.
                 </p>
-              </div>
+              </Reveal>
 
-              <div className="bg-[#FAF9F6] border border-stone-200 p-6 rounded-lg">
-                <span className="font-mono text-xs font-bold text-amber-700 block mb-2">04 // REMOTE STEWARDSHIP</span>
-                <h3 className="font-serif text-xl font-bold text-stone-900 mb-2">Diaspora Client Portal</h3>
-                <p className="text-stone-600 text-xs leading-relaxed">
-                  Weekly 360-degree drone photogrammetry and transparent escrow billing for Ghanaian clients living in the UK, US, and Canada.
+              <Reveal delay={240} className="bg-paper border border-line p-6 rounded-3xl hover:border-brand/40 transition-colors">
+                <span className="text-xs font-semibold text-brand-700 block mb-2">04 // BUILDING FROM ABROAD</span>
+                <h3 className="text-xl font-bold text-ink-900 mb-2">Weekly WhatsApp Updates</h3>
+                <p className="text-ink-600 text-xs sm:text-sm leading-relaxed">
+                  For clients in the UK, US, and Canada: video calls at your convenience, weekly progress footage, and payments tied to completed stages.
                 </p>
-              </div>
+              </Reveal>
             </div>
 
           </div>
@@ -177,31 +180,33 @@ export default function HomePage() {
       {/* ========================================================
           SELECTED BUILT WORKS SHOWCASE
           ======================================================== */}
-      <section className="py-20 bg-[#FAF9F6] border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <section className="section bg-paper border-b border-line">
+        <div className="container-site">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <Reveal className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
-              <span className="text-xs font-mono uppercase tracking-[0.25em] text-amber-700 font-semibold block mb-2">
-                Selected Portfolio &middot; Accra Works
+              <span className="eyebrow mb-2">
+                Selected portfolio
               </span>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-stone-900 tracking-tight">
-                Featured Built Realities
+              <h2 className="text-display-md font-bold text-ink-900 tracking-tight">
+                Featured work in Accra
               </h2>
             </div>
 
             <Link
               href="/projects"
-              className="text-stone-900 hover:text-amber-700 font-mono text-xs uppercase tracking-widest font-bold inline-flex items-center gap-2 group"
+              className="link-arrow group"
             >
-              <span>View All 6 Projects</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <span>View all projects</span>
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProjects.map(project => (
-              <ProjectCard key={project.id} project={project} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {featuredProjects.map((project, idx) => (
+              <Reveal key={project.id} delay={idx * 100}>
+                <ProjectCard project={project} />
+              </Reveal>
             ))}
           </div>
 
@@ -221,25 +226,39 @@ export default function HomePage() {
       {/* ========================================================
           CONVERSATIONAL PROJECT STUDIO BRIEF
           ======================================================== */}
-      <section className="py-20 bg-white" id="brief">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
+      <section className="section bg-white" id="brief">
+        <div className="container-site">
           
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-mono uppercase tracking-[0.25em] text-amber-700 font-semibold block mb-2">
-              Project Initiation &middot; Step-by-Step
+          <Reveal className="text-center max-w-2xl mx-auto mb-12">
+            <span className="eyebrow mb-3 mx-auto">
+              Start your project
             </span>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-stone-900 tracking-tight mb-4">
-              Structure Your Architectural Brief
+            <h2 className="text-display-md font-bold text-ink-900 tracking-tight mb-4">
+              Tell us what you want to build
             </h2>
-            <p className="text-stone-600 text-sm md:text-base leading-relaxed font-sans">
-              No generic contact forms. Answer 4 quick questions about your project scope, location, and investment tier to receive a confidential feasibility appraisal.
+            <p className="text-ink-600 text-base md:text-lg leading-relaxed">
+              No long forms or generic templates. Answer 4 quick questions about your plot, building type, and budget, and we’ll respond with direct advice.
             </p>
-          </div>
+          </Reveal>
 
           <ConversationalBrief />
 
         </div>
       </section>
+
+      {/* Closing Banner */}
+      <CtaBand
+        title={
+          <>
+            Got a plot in Accra? <br className="hidden sm:inline" />
+            Let’s review it together.
+          </>
+        }
+        text="Whether you have site drawings or are starting from scratch, we’re happy to review your plot and offer honest guidance."
+        primaryLabel="Schedule consultation"
+        primaryHref="/contact"
+        whatsappMessage="Hi Linework, I have a plot in Accra and would like to schedule a consultation."
+      />
 
     </div>
   );
