@@ -45,7 +45,7 @@ export default function HomePage() {
 
               {/* Instant Clarification Subhead */}
               <p className="text-ink-200 text-base sm:text-lg leading-relaxed font-sans max-w-xl mb-7">
-                notjustlines designs, secures building permits, builds and finishes luxury homes and commercial spaces across Cantonments, Airport Residential, East Legon and Greater Accra. One team from your plot to your keys.
+                Architecture, construction and interiors in Accra. Tell us about your plot, existing building or early idea, and let’s discuss the right scope for your project.
               </p>
 
               {/* Primary Calls to Action */}
@@ -62,7 +62,7 @@ export default function HomePage() {
                   href="/projects"
                   className="btn btn-outline-light"
                 >
-                  View built work
+                  Explore design ideas
                 </Link>
               </div>
 
@@ -74,11 +74,11 @@ export default function HomePage() {
                 </div>
                 <div className="border-x border-white/10 px-2 sm:px-3">
                   <span className="text-white font-bold block text-base sm:text-lg font-sans">Accra Based</span>
-                  <span className="text-[11px] text-ink-300">Cantonments &amp; Prime</span>
+                  <span className="text-[11px] text-ink-300">Projects in Ghana</span>
                 </div>
                 <div>
-                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Pay in Stages</span>
-                  <span className="text-[11px] text-ink-300">Transparent BOQ</span>
+                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Plan the Scope</span>
+                  <span className="text-[11px] text-ink-300">Design, build or renovate</span>
                 </div>
               </div>
 
@@ -113,10 +113,10 @@ export default function HomePage() {
                 Drawings are promises. We turn them into finished buildings.
               </h2>
               <p className="text-ink-600 text-base leading-relaxed">
-                In building, the biggest risk is handing drawings to an independent contractor who cuts corners on blockwork, downgrades steel, or demands endless extra money.
+                A useful drawing needs a clear path to construction: a defined scope, a realistic budget and people who understand their responsibilities.
               </p>
               <p className="text-ink-600 text-base leading-relaxed">
-                notjustlines was founded in Accra to bring design and construction together. Our architects and site engineers work side by side under one contract — from initial plot check to the day you pick up your keys.
+                notjustlines brings design and construction into the same conversation. Start with what you need, then agree the services, responsibilities and next steps for your project.
               </p>
               <div className="pt-2">
                 <Link
@@ -134,7 +134,7 @@ export default function HomePage() {
                 <span className="text-xs font-semibold text-brand-700 block mb-2">01 // PRE-CONSTRUCTION</span>
                 <h3 className="text-xl font-bold text-ink-900 mb-2">3D Design &amp; Clear BOQ</h3>
                 <p className="text-ink-600 text-xs sm:text-sm leading-relaxed">
-                  We walk you through every room in 3D and prepare a clear bill of quantities so your total construction cost is known before anyone breaks ground.
+                  Discuss layouts, specifications and a bill of quantities before committing to construction. A visual model can help you review the design.
                 </p>
               </Reveal>
 
@@ -142,23 +142,23 @@ export default function HomePage() {
                 <span className="text-xs font-semibold text-brand-700 block mb-2">02 // TROPICAL ARCHITECTURE</span>
                 <h3 className="text-xl font-bold text-ink-900 mb-2">Built for Accra Heat</h3>
                 <p className="text-ink-600 text-xs sm:text-sm leading-relaxed">
-                  Deep overhangs, teak and Iroko louvres, and open cross-ventilation keep your home cool naturally and cut your monthly electricity bills.
+                  Explore shading, ventilation and material choices in relation to the site, orientation and how you use each room.
                 </p>
               </Reveal>
 
               <Reveal delay={180} className="bg-paper border border-line p-6 rounded-3xl hover:border-brand/40 transition-colors">
                 <span className="text-xs font-semibold text-brand-700 block mb-2">03 // CONSTRUCTION DISCIPLINE</span>
-                <h3 className="text-xl font-bold text-ink-900 mb-2">Our Own Site Engineers</h3>
+                <h3 className="text-xl font-bold text-ink-900 mb-2">Plan Site Supervision</h3>
                 <p className="text-ink-600 text-xs sm:text-sm leading-relaxed">
-                  Direct supervision on site every day. Proper formwork, rebar spacing, and concrete cube test checks at key slab decking pours.
+                  Agree who supervises the work, which inspections are needed and how decisions and changes will be recorded.
                 </p>
               </Reveal>
 
               <Reveal delay={240} className="bg-paper border border-line p-6 rounded-3xl hover:border-brand/40 transition-colors">
                 <span className="text-xs font-semibold text-brand-700 block mb-2">04 // BUILDING FROM ABROAD</span>
-                <h3 className="text-xl font-bold text-ink-900 mb-2">Weekly WhatsApp Updates</h3>
+                <h3 className="text-xl font-bold text-ink-900 mb-2">Building from Abroad</h3>
                 <p className="text-ink-600 text-xs sm:text-sm leading-relaxed">
-                  For clients in the UK, US, and Canada: video calls at your convenience, weekly progress footage, and payments tied to completed stages.
+                  Discuss your time zone, preferred contact method and reporting needs before agreeing a project schedule.
                 </p>
               </Reveal>
             </div>
@@ -176,10 +176,10 @@ export default function HomePage() {
           <Reveal className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
               <span className="eyebrow mb-2">
-                Selected portfolio
+                Illustrative projects
               </span>
               <h2 className="text-display-md font-bold text-ink-900 tracking-tight">
-                Featured work in Accra
+                Ideas for your next space
               </h2>
             </div>
 
@@ -187,7 +187,7 @@ export default function HomePage() {
               href="/projects"
               className="link-arrow group"
             >
-              <span>View all projects</span>
+              <span>Explore all examples</span>
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </Reveal>
@@ -227,7 +227,7 @@ export default function HomePage() {
               Tell us what you want to build
             </h2>
             <p className="text-ink-600 text-base md:text-lg leading-relaxed">
-              No long forms or generic templates. Answer 4 quick questions about your plot, building type, and budget, and we’ll respond with direct advice.
+              Prepare your project brief in four short steps, review it, then send it to the studio by WhatsApp or email.
             </p>
           </Reveal>
 
@@ -245,7 +245,7 @@ export default function HomePage() {
           </>
         }
         text="Whether you have site drawings or are starting from scratch, we’re happy to review your plot and offer honest guidance."
-        primaryLabel="Schedule consultation"
+        primaryLabel="Request a conversation"
         primaryHref="/contact"
         whatsappMessage="Hi notjustlines, I have a plot in Accra and would like to schedule a consultation."
       />

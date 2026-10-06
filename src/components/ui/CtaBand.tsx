@@ -21,7 +21,7 @@ export default function CtaBand({
       <br className="hidden sm:block" /> Let&apos;s talk.
     </>
   ),
-  text = 'Tell us what you want to build. We reply within one working day, usually on WhatsApp.',
+  text = 'Tell us what you want to build. Share a brief by WhatsApp or email to start the conversation.',
   primaryLabel = 'Start your project',
   primaryHref = '/contact',
   whatsappMessage = DEFAULT_WHATSAPP_MESSAGE,

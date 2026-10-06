@@ -18,80 +18,80 @@ interface StepDetail {
 
 const STAGES: StepDetail[] = [
   {
-    number: '01',
-    title: 'Site Visit & Brief',
-    stageName: 'Discovery & Feasibility',
-    tagline: 'We inspect your plot in person before sketching a single line.',
-    icon: Compass,
-    deliverables: [
-      'Topography & boundary beacon verification',
-      'Soil condition & drainage path assessment',
-      'Access road check for heavy delivery trucks',
-      'Client lifestyle & functional brief alignment',
+    "number": "01",
+    "title": "Site & brief",
+    "stageName": "Discovery",
+    "tagline": "Understand the site and what you want to achieve.",
+    "icon": Compass,
+    "deliverables": [
+      "Site information and existing drawings",
+      "Access, survey and assessment needs",
+      "Rooms, uses and project priorities",
+      "Initial scope discussion"
     ],
-    clientAction: 'Share site plan, indenture & wish list',
-    siteReality: 'Prevents foundation surprises on swampy or sloping ground.',
+    "clientAction": "Share your site location and priorities.",
+    "siteReality": "Identify information that is still needed before design begins."
   },
   {
-    number: '02',
-    title: 'Design & 3D Walkthrough',
-    stageName: 'Concept to Detail',
-    tagline: 'Experience room layouts, natural lighting, and finishes in 3D.',
-    icon: FileText,
-    deliverables: [
-      'Architectural floor plans & elevation drawings',
-      'High-detail 3D exterior & interior visualizations',
-      'Passive airflow & sun shading design for Accra heat',
-      'Structural concept & service ducts planning',
+    "number": "02",
+    "title": "Design",
+    "stageName": "Explore & review",
+    "tagline": "Review the layout, appearance and specifications.",
+    "icon": FileText,
+    "deliverables": [
+      "Concept options",
+      "Plans and visual studies",
+      "Material and finish discussions",
+      "Specialist design input where required"
     ],
-    clientAction: 'Review 3D walkthrough & lock design choices',
-    siteReality: 'Zero guesswork — you know exactly what your building looks like before casting concrete.',
+    "clientAction": "Review the options and record design decisions.",
+    "siteReality": "Confirm the design scope and review process in the proposal."
   },
   {
-    number: '03',
-    title: 'Permits & Clear BOQ',
-    stageName: 'Compliance & Budgeting',
-    tagline: 'Complete drawings, Municipal Assembly permits, and itemized costs.',
-    icon: CheckCircle2,
-    deliverables: [
-      'Full architectural, structural, MEP engineering sets',
-      'Municipal / Metropolitan Assembly permit submission & follow-up',
-      'Itemized Bill of Quantities (BOQ) with true material counts',
-      'Binding construction timeline & milestone payment schedule',
+    "number": "03",
+    "title": "Costs & permits",
+    "stageName": "Prepare",
+    "tagline": "Define the scope, budget and approval requirements.",
+    "icon": CheckCircle2,
+    "deliverables": [
+      "Required drawing and specification packages",
+      "Permit application responsibilities",
+      "Cost breakdown and exclusions",
+      "Programme and payment terms"
     ],
-    clientAction: 'Sign off on BOQ and stage payment milestones',
-    siteReality: 'No surprise "boss, cement has finished" mid-project demands.',
+    "clientAction": "Review costs, assumptions and approvals before proceeding.",
+    "siteReality": "Permit decisions and timelines depend on the relevant authority."
   },
   {
-    number: '04',
-    title: 'Construction & Site Supervision',
-    stageName: 'Foundation to Finishing',
-    tagline: 'Our own site engineers supervise every pour, block, and conduit.',
-    icon: HardHat,
-    deliverables: [
-      'Setting out, excavation & reinforced foundation casting',
-      'Solid blockwork, columns, beams & slab decking',
-      'Concrete cube crushing tests at key structural pours',
-      'Roofing, plumbing, wiring, plastering, tiling & custom joinery',
+    "number": "04",
+    "title": "Construction",
+    "stageName": "Build & review",
+    "tagline": "Agree how work, inspections and changes will be managed.",
+    "icon": HardHat,
+    "deliverables": [
+      "Construction sequence",
+      "Supervision and inspection plan",
+      "Progress reporting arrangements",
+      "Written change approval process"
     ],
-    clientAction: 'Review weekly photo/video logs & release stage payments',
-    siteReality: 'Strict quality control without cutting corners on rebar spacing or cement ratios.',
+    "clientAction": "Review progress and decisions at agreed points.",
+    "siteReality": "Confirm supervision, reporting and payment arrangements in the contract."
   },
   {
-    number: '05',
-    title: 'Handover & Defects Period',
-    stageName: 'Keys & Peace of Mind',
-    tagline: 'Walk through your finished building with our team and receive your keys.',
-    icon: KeyRound,
-    deliverables: [
-      'Deep post-construction cleaning & fixture commissioning',
-      'Full architectural as-built drawings & maintenance manual',
-      'Official key handover ceremony & documentation',
-      'Active defects liability period for post-handover warranty support',
+    "number": "05",
+    "title": "Handover",
+    "stageName": "Completion",
+    "tagline": "Review the finished work and the agreed handover information.",
+    "icon": KeyRound,
+    "deliverables": [
+      "Inspection and outstanding work list",
+      "Relevant operating and maintenance information",
+      "Handover records",
+      "Agreed aftercare responsibilities"
     ],
-    clientAction: 'Move in, celebrate, and sleep peacefully',
-    siteReality: 'We remain accountable long after the final coat of paint dries.',
-  },
+    "clientAction": "Record outstanding items and confirm handover arrangements.",
+    "siteReality": "Aftercare and defects terms should be specified in the agreement."
+  }
 ];
 
 export default function TurnkeyProcessDiagram() {
@@ -104,12 +104,12 @@ export default function TurnkeyProcessDiagram() {
       <div className="container-site">
         {/* Header */}
         <Reveal className="max-w-3xl mb-12">
-          <span className="eyebrow mb-3">Our 5-stage turnkey delivery</span>
+          <span className="eyebrow mb-3">A project planning guide</span>
           <h2 className="text-display-md font-bold text-ink-900 mb-4">
             From empty plot to keys in hand.
           </h2>
           <p className="text-ink-600 text-base md:text-lg leading-relaxed">
-            Building in Accra shouldn’t be a chaotic trial of trial and error. We run every project through five disciplined milestones with total transparency on drawings, costs, and site progress.
+            These five stages describe a typical design and build journey. Your proposal will confirm which stages apply and what is included.
           </p>
         </Reveal>
 
@@ -174,7 +174,7 @@ export default function TurnkeyProcessDiagram() {
 
               <div className="bg-white rounded-2xl p-5 border border-line mb-6">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-ink-500 mb-3">
-                  Key Deliverables &amp; Milestones
+                  Items to discuss
                 </h4>
                 <ul className="space-y-2.5">
                   {current.deliverables.map((item, dIdx) => (
@@ -236,7 +236,7 @@ export default function TurnkeyProcessDiagram() {
 
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-brand-700 block mb-1">
-                  Site Reality &amp; Protection
+                  What to confirm
                 </span>
                 <p className="text-sm text-ink-700 leading-relaxed bg-brand/5 p-3 rounded-xl border border-brand/20">
                   {current.siteReality}
@@ -246,21 +246,21 @@ export default function TurnkeyProcessDiagram() {
               {/* Technical Blueprint Micro-diagram */}
               <div className="p-4 rounded-xl bg-ink-950 text-white font-sans text-xs">
                 <div className="flex items-center justify-between text-ink-400 mb-2 border-b border-white/10 pb-2">
-                  <span>STAGE METRIC</span>
-                  <span className="text-brand font-bold">VERIFIED</span>
+                  <span>PROJECT ARRANGEMENTS</span>
+                  <span className="text-brand font-bold">TO BE AGREED</span>
                 </div>
                 <div className="space-y-1.5 text-ink-300">
                   <div className="flex justify-between">
                     <span>Supervisor:</span>
-                    <span className="text-white font-medium">In-house notjustlines Engineer</span>
+                    <span className="text-white font-medium">Named in the proposal</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Payment gate:</span>
-                    <span className="text-white font-medium">Tied to milestone completion</span>
+                    <span className="text-white font-medium">Set out in the contract</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Verification:</span>
-                    <span className="text-white font-medium">Weekly WhatsApp photos/video</span>
+                    <span className="text-white font-medium">Agreed reporting schedule</span>
                   </div>
                 </div>
               </div>

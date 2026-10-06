@@ -19,9 +19,7 @@ function ProjectsFilterContent() {
 
   useEffect(() => {
     const typeParam = searchParams.get('type')?.toLowerCase();
-    if (typeParam && TYPOLOGY_MAP[typeParam]) {
-      setFilter(TYPOLOGY_MAP[typeParam]);
-    }
+    setFilter(typeParam && TYPOLOGY_MAP[typeParam] ? TYPOLOGY_MAP[typeParam] : 'All');
   }, [searchParams]);
 
   const updateFilter = (newFilter: 'All' | Project['typology']) => {
@@ -55,6 +53,7 @@ function ProjectsFilterContent() {
           <button
             key={cat.value}
             type="button"
+            aria-pressed={filter === cat.value}
             onClick={() => updateFilter(cat.value)}
             className={`min-h-[2.75rem] shrink-0 snap-start rounded-full px-5 text-sm font-semibold transition-all ${
               filter === cat.value

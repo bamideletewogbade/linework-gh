@@ -1,12 +1,16 @@
 {
-  "name": "linework-gh",
+  "name": "notjustlines",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "node scripts/preview.mjs",
+    "lint": "next lint",
+    "images": "node scripts/optimize-images.mjs",
+    "prebuild": "npm run images",
+    "typecheck": "tsc --noEmit",
+    "preview": "node scripts/preview.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.453.0",

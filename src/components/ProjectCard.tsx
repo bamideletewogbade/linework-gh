@@ -17,7 +17,7 @@ export default function ProjectCard({
   sizes = '(max-width: 640px) 85vw, (max-width: 1024px) 50vw, 33vw',
   className = '',
 }: ProjectCardProps) {
-  const inProgress = project.status !== 'Completed';
+
   return (
     <Link
       href={`/projects/${project.slug}`}
@@ -26,7 +26,7 @@ export default function ProjectCard({
       <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[4/4.6]">
         <Image
           src={project.heroImage}
-          alt={`${project.title}, ${project.neighborhood}`}
+          alt={`Illustrative image: ${project.title}`}
           fill
           sizes={sizes}
           className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
@@ -37,10 +37,10 @@ export default function ProjectCard({
           <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-ink-900 backdrop-blur">
             {project.categoryLabel}
           </span>
-          {inProgress && (
+          {(
             <span className="inline-flex items-center gap-1.5 rounded-full bg-ink-950/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-              {project.status === 'Under Construction' ? 'On site now' : 'In design'}
+              Illustrative
             </span>
           )}
         </div>
@@ -48,7 +48,7 @@ export default function ProjectCard({
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 md:p-6">
           <div>
             <p className="mb-1 text-sm text-white/70">
-              {project.neighborhood} · {project.area}
+              {project.categoryLabel} idea
             </p>
             <h3 className="text-xl font-bold leading-tight md:text-2xl">{project.title}</h3>
           </div>

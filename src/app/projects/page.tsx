@@ -5,9 +5,9 @@ import Reveal from '@/components/ui/Reveal';
 import CtaBand from '@/components/ui/CtaBand';
 
 export const metadata: Metadata = {
-  title: 'Projects — Built Homes, Commercial & Interiors in Accra',
+  title: 'Projects — Illustrative Design Ideas',
   description:
-    'Explore completed and current notjustlines projects across Cantonments, Airport Residential, East Legon, and Greater Accra.',
+    'Explore illustrative residential, commercial and interior ideas with notjustlines. These examples are not completed client projects.',
   alternates: { canonical: '/projects' },
 };
 
@@ -17,12 +17,12 @@ export default function ProjectsPage() {
       {/* Hero */}
       <section className="container-site pt-10 pb-8 md:pt-16 md:pb-12">
         <Reveal className="max-w-3xl">
-          <span className="eyebrow mb-3">Our portfolio</span>
+          <span className="eyebrow mb-3">Illustrative projects</span>
           <h1 className="text-display-lg font-bold text-ink-900 mb-4">
-            Built work across Accra.
+            Explore ideas for your space.
           </h1>
           <p className="text-ink-600 text-base md:text-lg leading-relaxed">
-            Every project here represents single-point responsibility: we designed it, supervised the site, and delivered the finished keys.
+            These images and scenarios illustrate possible project directions. They are not a record of completed notjustlines work, and the images are not verified photographs of our projects.
           </p>
         </Reveal>
       </section>
@@ -38,7 +38,7 @@ export default function ProjectsPage() {
         text="Whether you have an empty plot or want to remodel an existing home, let’s talk through your ideas."
         primaryLabel="Start your project"
         primaryHref="/contact"
-        whatsappMessage="Hi notjustlines, I was looking at your projects and want to build something similar."
+        whatsappMessage="Hi notjustlines, I was looking at your illustrative projects and would like to discuss an idea."
       />
     </div>
   );

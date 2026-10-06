@@ -19,7 +19,7 @@ const display = Bricolage_Grotesque({
 });
 
 const description =
-  'notjustlines is an architecture and construction company in Accra. We design, get permits, build and finish homes, offices and interiors — one team from your plot to your keys.';
+  'Architecture, construction and interiors in Accra. Explore design ideas and discuss your project with notjustlines.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: 'notjustlines — We don’t just draw it. We build it.',
     description,
-    images: [{ url: '/assets/villa-cantonments.jpg', width: 1376, height: 768, alt: 'A house designed and built by notjustlines in Accra' }],
+    images: [{ url: '/assets/villa-cantonments.jpg', width: 1376, height: 768, alt: 'Illustrative residential architecture image' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -82,7 +82,7 @@ const jsonLd = {
   slogan: SITE.tagline,
   address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: 'GH' },
   areaServed: SITE.areasServed.map((name) => ({ '@type': 'Place', name })),
-  sameAs: [SITE.instagramUrl],
+  sameAs: SITE.instagramUrl ? [SITE.instagramUrl] : undefined,
   knowsAbout: ['Architecture', 'Construction', 'Interior design', 'Building permits', 'Project management'],
 };
 

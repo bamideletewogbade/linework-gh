@@ -30,91 +30,89 @@ type Service = {
 
 const SERVICES: Service[] = [
   {
-    id: 'design',
-    number: '01',
-    title: 'Architectural design & permits',
-    summary: 'Drawings you can actually build from — and the permit to go with them.',
-    body: 'We start with a site visit and a proper chat about how you live or work, and your budget. Then we design the building, show it to you in 3D so there are no surprises, and prepare the full set of drawings. We submit to the Metropolitan or Municipal Assembly and follow up until the building permit is approved.',
-    includes: [
-      'Site visit and brief',
-      'Concept design and 3D views',
-      'Architectural and structural drawings',
-      'Building permit application and follow-up at the Assembly',
-      'BOQ (bill of quantities) so you know the cost before you build',
+    "id": "design",
+    "number": "01",
+    "title": "Architectural design & permits",
+    "summary": "Start with the site, the brief and the drawings.",
+    "body": "Discuss your site, how you want to use the space and the design information you need. The proposal should set out drawing stages, specialist input and any permit application support. Approval rests with the relevant authority.",
+    "includes": [
+      "Site visit and project brief",
+      "Concept design and visual studies",
+      "Drawing scope and specialist coordination",
+      "Permit application support, where agreed",
+      "Cost planning and specification review"
     ],
-    image: '/assets/craft-studio.jpg',
-    imageAlt: 'Drawings, models and material samples on a table in the notjustlines studio',
-    whatsapp: "Hi notjustlines, I'd like to talk about drawings and a building permit.",
+    "image": "/assets/craft-studio.jpg",
+    "imageAlt": "Illustrative reference for architectural design & permits",
+    "whatsapp": "Hi notjustlines, I would like to discuss drawings and permit application support."
   },
   {
-    id: 'construction',
-    number: '02',
-    title: 'Construction',
-    summary: 'From foundation to finishing, built by our own site team.',
-    body: 'Our engineers and site team build what we designed — so nothing gets “changed on site” to save someone else money. We work stage by stage: foundation, blockwork, decking, roofing and finishing. You pay in stages as the work is done, and you see every stage in photos and videos.',
-    includes: [
-      'Setting out and foundation',
-      'Blockwork, columns and decking (slab casting)',
-      'Roofing, plumbing and electrical',
-      'Finishing: plastering, tiling, painting, doors and windows',
-      'Concrete cube tests at key pours',
-      'Daily site supervision by our engineers',
+    "id": "construction",
+    "number": "02",
+    "title": "Construction",
+    "summary": "Plan the work from foundation to finishing.",
+    "body": "Bring your drawings or discuss a combined design and construction scope. Agree the work, responsibilities, inspection requirements, programme and payment terms before starting.",
+    "includes": [
+      "Site preparation and construction sequence",
+      "Structure and building envelope",
+      "Plumbing and electrical coordination",
+      "Finishes and installation",
+      "Site supervision and inspection arrangements"
     ],
-    image: '/assets/site-engineering.jpg',
-    imageAlt: 'notjustlines site team working on a reinforced concrete structure',
-    whatsapp: "Hi notjustlines, I'd like to talk about building on my plot.",
+    "image": "/assets/site-engineering.jpg",
+    "imageAlt": "Illustrative reference for construction",
+    "whatsapp": "Hi notjustlines, I would like to discuss construction."
   },
   {
-    id: 'interiors',
-    number: '03',
-    title: 'Interiors, joinery & fit-out',
-    summary: 'Kitchens, wardrobes and full fit-outs made in our own workshop.',
-    body: 'Whether it is a new house, an apartment or an office, we design the inside to match how you use the space. Kitchens, wardrobes, doors and wall panels are made in our joinery workshop in Accra, so we control the quality and the timing — not a supplier we have never met.',
-    includes: [
-      'Interior design and layouts',
-      'Material and finish selection with real samples',
-      'Kitchens, wardrobes and doors from our workshop',
-      'Lighting, ceilings and flooring',
-      'Office and shop fit-out',
+    "id": "interiors",
+    "number": "03",
+    "title": "Interiors, joinery & fit-out",
+    "summary": "Make the space work for everyday life.",
+    "body": "Explore layouts, materials, lighting and joinery for a home or workplace. Fabrication, sourcing and installation responsibilities should be defined in the project scope.",
+    "includes": [
+      "Interior layouts",
+      "Material and finish selection",
+      "Kitchen, wardrobe and joinery design",
+      "Lighting, ceilings and flooring",
+      "Fit-out and installation planning"
     ],
-    image: '/assets/interior-ridge.jpg',
-    imageAlt: 'Finished living room with walnut joinery and a floating staircase',
-    whatsapp: "Hi notjustlines, I'd like to talk about interiors / fit-out.",
+    "image": "/assets/interior-ridge.jpg",
+    "imageAlt": "Illustrative reference for interiors, joinery & fit-out",
+    "whatsapp": "Hi notjustlines, I would like to discuss interiors and fit-out."
   },
   {
-    id: 'diaspora',
-    number: '04',
-    title: 'Project management & building from abroad',
-    summary: 'Living in the UK, US or Canada? Build at home without the stress.',
-    body: 'Too many people abroad send money home and end up with an uncompleted building. We are your team on the ground. We help you check your land documents with your lawyer, agree a BOQ before work starts, and send you photo and video updates on WhatsApp every week. You pay in stages, only for work that is done — and you can see it.',
-    includes: [
-      'Help checking your site plan, indenture and land title (with your lawyer)',
-      'Video calls at times that suit your time zone',
-      'Weekly photo and video updates on WhatsApp',
-      'Pay in stages, tied to work completed',
-      'One project manager as your single point of contact',
-      'Site visits arranged whenever you are in Ghana',
+    "id": "diaspora",
+    "number": "04",
+    "title": "Project management & building from abroad",
+    "summary": "Plan a project in Ghana from wherever you live.",
+    "body": "Tell us where you are based and what support you need on the ground. Discuss communication, reporting and approval arrangements before agreeing the project. Land ownership questions need review by your legal adviser.",
+    "includes": [
+      "Site information and project brief",
+      "Time-zone and contact preferences",
+      "Progress reporting arrangements",
+      "Budget and change approval process",
+      "Project contact and visit arrangements"
     ],
-    image: '/assets/villa-cantonments.jpg',
-    imageAlt: 'A finished family home in Cantonments built for a client living in London',
-    whatsapp: "Hi notjustlines, I live abroad and I'd like to build in Ghana.",
+    "image": "/assets/villa-cantonments.jpg",
+    "imageAlt": "Illustrative reference for project management & building from abroad",
+    "whatsapp": "Hi notjustlines, I would like to discuss building in Ghana from abroad."
   },
   {
-    id: 'renovations',
-    number: '05',
-    title: 'Renovations & extensions',
-    summary: 'Add a floor, finish an old building or give your home a new life.',
-    body: 'Got an uncompleted building, or a house that no longer fits your family? We check the existing structure first, tell you honestly what can and cannot be done, then design and build the changes — from a new boys’ quarters to an extra floor.',
-    includes: [
-      'Structural check of the existing building',
-      'Completing uncompleted buildings',
-      'Extensions, extra floors and boys’ quarters',
-      'Kitchen, bathroom and full home makeovers',
+    "id": "renovations",
+    "number": "05",
+    "title": "Renovations & extensions",
+    "summary": "Review the existing building before planning changes.",
+    "body": "Describe what you would like to change, finish or add. The condition of the building and any required structural assessment will shape what is feasible.",
+    "includes": [
+      "Existing building review",
+      "Completion of unfinished spaces",
+      "Extensions and layout changes",
+      "Kitchen, bathroom and interior updates"
     ],
-    image: '/assets/facade-detail.jpg',
-    imageAlt: 'Concrete and timber louvre detail on a renovated home',
-    whatsapp: "Hi notjustlines, I'd like to talk about a renovation or extension.",
-  },
+    "image": "/assets/facade-detail.jpg",
+    "imageAlt": "Illustrative reference for renovations & extensions",
+    "whatsapp": "Hi notjustlines, I would like to discuss a renovation or extension."
+  }
 ];
 
 
@@ -129,8 +127,7 @@ export default function ServicesPage() {
             One team, from your plot to your keys.
           </h1>
           <p className="max-w-2xl text-lg text-ink-600">
-            We design, get the permit, build and finish. Use us for everything, or just the part you need. Either way,
-            you deal with one team that owns the result.
+            Discuss the services you need, from an initial design to construction or a fit-out. Scope, fees, timescales and responsibilities are agreed for each project. Images on this page are illustrative references.
           </p>
         </Reveal>
 
@@ -181,7 +178,7 @@ export default function ServicesPage() {
                   <p className="mt-3 text-lg font-medium text-ink-800">{s.summary}</p>
                   <p className="mt-4 text-base leading-relaxed text-ink-600">{s.body}</p>
 
-                  <h3 className="mt-8 text-lg font-bold text-ink-900">What you get</h3>
+                  <h3 className="mt-8 text-lg font-bold text-ink-900">Scope to discuss</h3>
                   <ul className="mt-4 grid gap-3">
                     {s.includes.map((item) => (
                       <li key={item} className="flex items-start gap-3 text-base text-ink-700">
@@ -219,7 +216,7 @@ export default function ServicesPage() {
       <div className="pt-20 md:pt-28">
         <CtaBand
           title="Not sure which service you need?"
-          text="Tell us about your plot or your building. We will tell you honestly where to start — usually within one working day."
+          text="Tell us about your plot or building and the questions you would like to discuss."
           whatsappMessage="Hi notjustlines, I'm not sure which service I need. Can we talk?"
         />
       </div>

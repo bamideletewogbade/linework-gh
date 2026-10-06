@@ -1,637 +1,74 @@
 'use client';
-
-import React, { useState } from 'react';
-import {
-  CheckCircle2,
-  ArrowRight,
-  ArrowLeft,
-  Phone,
-  Home,
-  Building2,
-  Armchair,
-  Layers,
-  Sparkles,
-  HelpCircle,
-  Calendar,
-  Clock,
-  Send,
-  MessageSquareQuote,
-} from 'lucide-react';
-import { WhatsAppIcon } from './ui/icons';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Copy, Mail } from 'lucide-react';
 import { SITE, whatsappLink } from '@/lib/site';
+import { WhatsAppIcon } from './ui/icons';
 
-interface BriefData {
-  intent: string;
-  projectType: string;
-  location: string;
-  stage: string;
-  landStatus: string;
-  area: number;
-  budgetBracket: string;
-  timeline: string;
-  fullName: string;
-  phone: string;
-  email: string;
-  clientLocation: string; // Accra / UK / US / Canada / Europe / Other
-  preferredContact: 'WhatsApp' | 'Phone Call' | 'Video Call';
-  message: string;
-}
+const intents = ['Design and build a new property', 'Build from existing drawings', 'Renovate or finish an existing building', 'Explore a site or an early idea'];
+const headings = ['What would you like help with?', 'What and where are you planning?', 'What do you know so far?', 'How can we contact you?', 'Review your brief'];
+const inputClass = 'w-full rounded-xl border border-line bg-paper p-3 text-base text-ink-900';
+const labelClass = 'mb-2 block text-sm font-semibold text-ink-900';
 
 export default function ConversationalBrief() {
-  const [step, setStep] = useState<number>(1);
-  const [formData, setFormData] = useState<BriefData>({
-    intent: 'I want to build a new property from scratch',
-    projectType: 'Private Home / Family Villa',
-    location: 'Cantonments / Airport / Ridge / Labone',
-    stage: 'I own a plot and need architectural design + full construction',
-    landStatus: 'Land acquired with registered indenture/title',
-    area: 400,
-    budgetBracket: '$200,000 – $340,000 (~3.1M – 5.3M GHS)',
-    timeline: 'Ready to start within 1–3 months',
-    fullName: '',
-    phone: '',
-    email: '',
-    clientLocation: 'Living abroad (UK / US / Canada / Diaspora)',
-    preferredContact: 'WhatsApp',
-    message: '',
-  });
+  const [step, setStep] = useState(1);
+  const [copyStatus, setCopyStatus] = useState('');
+  const heading = useRef<HTMLHeadingElement>(null);
+  const previousStep = useRef(1);
+  const [data, setData] = useState({ intent: '', property: '', location: '', land: 'Not sure yet', area: '', budget: '', currency: 'GHS', timeline: 'Not sure yet', name: '', phone: '', email: '', based: '', preferred: 'WhatsApp', notes: '' });
+  const update = (key: keyof typeof data, value: string) => setData(previous => ({ ...previous, [key]: value }));
+  useEffect(() => {
+    if (previousStep.current !== step) { heading.current?.focus(); previousStep.current = step; }
+    setCopyStatus('');
+  }, [step]);
 
-  const updateArea = (val: number) => {
-    const minUSD = Math.round(val * 500);
-    const maxUSD = Math.round(val * 850);
-    const minGHS = ((minUSD * 15.6) / 1000000).toFixed(1);
-    const maxGHS = ((maxUSD * 15.6) / 1000000).toFixed(1);
-    const bracket = `$${minUSD.toLocaleString()} – $${maxUSD.toLocaleString()} (~${minGHS}M – ${maxGHS}M GHS)`;
-
-    setFormData((prev) => ({
-      ...prev,
-      area: val,
-      budgetBracket: bracket,
-    }));
-  };
-
-  // STEP 1: What is the main reason for reaching out today? (Front desk triage)
-  const intents = [
-    {
-      title: 'I want to build a new property from scratch',
-      desc: 'You have a plot (or are getting one) and want turnkey drawings, permits, and construction.',
-      badge: 'Turnkey Design & Build',
-      icon: Home,
-    },
-    {
-      title: 'I already have approved drawings — I need a builder',
-      desc: 'Your architectural plans are ready; you need an honest, engineer-supervised contractor.',
-      badge: 'Construction Only',
-      icon: Layers,
-    },
-    {
-      title: 'I want to renovate, extend, or finish an uncompleted building',
-      desc: 'Add an extra floor, build a boys’ quarters, remodel a kitchen, or complete an old structure.',
-      badge: 'Renovation & Fit-out',
-      icon: Armchair,
-    },
-    {
-      title: 'I live abroad and need land verification & feasibility',
-      desc: 'You want an experienced team on the ground before committing money to land or drawings.',
-      badge: 'Diaspora Feasibility',
-      icon: Sparkles,
-    },
-  ];
-
-  // STEP 2: Typology & Scale
-  const projectTypes = [
-    { title: 'Private Home / Family Villa', desc: 'Bespoke 3 to 6-bedroom residence with compound, boys’ quarters, and optional pool.' },
-    { title: 'Commercial Office / Showroom / Retail', desc: 'Modern commercial workplace, clinic, gallery, or restaurant space.' },
-    { title: 'Multi-Unit Townhouses or Apartments', desc: 'Gated duplex enclave or 2–4 unit residential rental development.' },
-    { title: 'Interior Fit-out & Custom Joinery', desc: 'Luxury interior remodeling, bespoke kitchen cabinetry, and custom wardrobes.' },
-  ];
-
-  // Locations in Accra & Regional
-  const locations = [
-    { title: 'Cantonments / Airport / Ridge / Labone', desc: 'Prime central Accra diplomatic & residential zones.' },
-    { title: 'East Legon / Trasacco / Adjiringanor / Airport Hills', desc: 'High-growth residential neighbourhoods with large plots.' },
-    { title: 'Oyarifa / Aburi / Dodowa / Hills', desc: 'Scenic highland estates and retreat properties.' },
-    { title: 'Other Greater Accra / Regional Location', desc: 'Tema, Sakumono, Spintex, Cape Coast, Takoradi, or Kumasi.' },
-  ];
-
-  // Current plot and paperwork status
-  const landStatuses = [
-    { title: 'Land acquired with registered indenture/title', desc: 'We can start site visit & concept drawings immediately.' },
-    { title: 'Land identified, finalising purchase with lawyer', desc: 'We can help verify topography, access, and building feasibility.' },
-    { title: 'Still searching for a suitable plot', desc: 'We advise on plot sizes and zoning requirements in Accra.' },
-    { title: 'Existing structure already on site', desc: 'Needs structural assessment or remodel planning.' },
-  ];
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStep(5);
-  };
-
-  const getWhatsAppMessage = () => {
-    const msg =
-      `*NOTJUSTLINES — PROJECT BRIEF & CONSULTATION REQUEST*\n` +
-      `-------------------------------------------\n` +
-      `*Client Name:* ${formData.fullName}\n` +
-      `*Current Location:* ${formData.clientLocation}\n` +
-      `*Phone/WhatsApp:* ${formData.phone}\n` +
-      `*Email:* ${formData.email}\n` +
-      `*Preferred Contact:* ${formData.preferredContact}\n` +
-      `-------------------------------------------\n` +
-      `*Primary Request:* ${formData.intent}\n` +
-      `*Building Type:* ${formData.projectType}\n` +
-      `*Plot Location:* ${formData.location}\n` +
-      `*Land & Legal Status:* ${formData.landStatus}\n` +
-      `*Approx. Floor Area:* ${formData.area} m²\n` +
-      `*Estimated Cost Bracket:* ${formData.budgetBracket}\n` +
-      `*Target Timeline:* ${formData.timeline}\n` +
-      (formData.message ? `*Client Notes:* ${formData.message}\n` : '') +
-      `-------------------------------------------\n` +
-      `Hello notjustlines front desk, I have completed my project parameters above. Please review and arrange my initial consultation.`;
-    return encodeURIComponent(msg);
-  };
-
+  const brief = [
+    'notjustlines — project enquiry', `Name: ${data.name.trim()}`, `Request: ${data.intent}`, `Property: ${data.property}`,
+    `Site location: ${data.location.trim() || 'Not decided yet'}`, `Land / building status: ${data.land}`,
+    `Approximate floor area: ${data.area ? `${data.area} m²` : 'Not sure yet'}`,
+    `My budget: ${data.budget ? `${data.currency} ${data.budget} (client-provided, not a quote)` : 'To discuss'}`,
+    `Preferred start: ${data.timeline}`, `Currently based in: ${data.based.trim() || 'Not provided'}`, `Preferred reply: ${data.preferred}`,
+    ...(data.phone.trim() ? [`Phone: ${data.phone.trim()}`] : []), ...(data.email.trim() ? [`Email: ${data.email.trim()}`] : []),
+    ...(data.notes.trim() ? [`Notes: ${data.notes.trim()}`] : []), '', 'Please let me know the next steps for discussing this project.',
+  ].join('\n');
+  async function copyBrief() {
+    try { await navigator.clipboard.writeText(brief); setCopyStatus('Copied. Paste your brief into a message to the studio.'); }
+    catch { setCopyStatus('Copy is unavailable here. Select and copy the text in the brief below.'); }
+  }
   return (
-    <div className="bg-white rounded-3xl border border-line shadow-sm p-6 sm:p-8 md:p-10 max-w-4xl mx-auto">
-      {/* Front Desk Header & Stepper Progress */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-ink-500 mb-3">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
-            <span className="text-brand-700 font-bold">Front Desk &amp; Consultation Desk</span>
-          </div>
-          <span>{step <= 4 ? `Step ${step} of 4` : 'Review & Submit'}</span>
+    <div className="mx-auto max-w-3xl rounded-3xl border border-line bg-white p-5 shadow-sm sm:p-8 md:p-10">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-700">{step < 5 ? `Project enquiry · Step ${step} of 4` : 'Ready to share · Not sent yet'}</p>
+      <div className="mb-6 h-1.5 overflow-hidden rounded-full bg-paper" aria-hidden="true"><div className="h-full bg-brand" style={{ width: `${Math.min(step, 4) * 25}%` }} /></div>
+      <h3 ref={heading} tabIndex={-1} className="mb-3 text-2xl font-bold text-ink-900 focus:outline-none sm:text-3xl">{headings[step - 1]}</h3>
+      <p className="mb-6 text-sm text-ink-600">{step === 5 ? 'Your brief has not been sent. Open WhatsApp or your email app, then send the message there. Opening an app does not confirm delivery.' : 'Prepare a short brief, review it, then send it through WhatsApp or email. Your answers stay on this page until you choose to share them; they are lost if you reload or leave.'}</p>
+      {step < 5 ? <form onSubmit={event => { event.preventDefault(); setStep(previous => previous + 1); }}>
+        <div className="mb-8 space-y-5">
+          {step === 1 && <fieldset><legend className="sr-only">Project request</legend><div className="grid gap-3 sm:grid-cols-2">{intents.map(intent => <label key={intent} className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-5 text-sm font-semibold ${data.intent === intent ? 'border-brand bg-paper' : 'border-line'}`}><input className="mt-1 accent-brand" type="radio" name="intent" required value={intent} checked={data.intent === intent} onChange={() => update('intent', intent)} />{intent}</label>)}</div></fieldset>}
+          {step === 2 && <>
+            <div><label htmlFor="brief-property" className={labelClass}>Property type</label><select id="brief-property" className={inputClass} required value={data.property} onChange={e => update('property', e.target.value)}><option value="">Choose a type</option>{['Home', 'Apartments or townhouses', 'Office, shop or other commercial space', 'Interior or individual room', 'Not sure yet'].map(value => <option key={value}>{value}</option>)}</select></div>
+            <div><label htmlFor="brief-location" className={labelClass}>Site location (optional)</label><input id="brief-location" className={inputClass} maxLength={160} value={data.location} onChange={e => update('location', e.target.value)} placeholder="Town or neighbourhood, if known" /></div>
+          </>}
+          {step === 3 && <>
+            <div><label htmlFor="brief-land" className={labelClass}>Land or building status</label><select id="brief-land" className={inputClass} value={data.land} onChange={e => update('land', e.target.value)}>{['Not sure yet', 'I own land', 'I am considering a plot', 'I am still looking for land', 'There is an existing building'].map(value => <option key={value}>{value}</option>)}</select></div>
+            <div><label htmlFor="brief-area" className={labelClass}>Approximate floor area in m² (optional)</label><input id="brief-area" type="number" min="1" max="1000000" step="any" className={inputClass} value={data.area} onChange={e => update('area', e.target.value)} placeholder="Leave blank if you are unsure" /></div>
+            <div><label htmlFor="brief-budget" className={labelClass}>Your working budget (optional)</label><div className="flex gap-2"><select aria-label="Budget currency" className="rounded-xl border border-line bg-paper p-3" value={data.currency} onChange={e => update('currency', e.target.value)}>{['GHS', 'USD', 'GBP', 'EUR', 'CAD'].map(value => <option key={value}>{value}</option>)}</select><input id="brief-budget" type="number" min="1" max="100000000000" step="any" className={`${inputClass} min-w-0`} value={data.budget} onChange={e => update('budget', e.target.value)} placeholder="Amount, if known" /></div><p className="mt-2 text-xs text-ink-600">This is your budget, not a construction estimate. Scope, site conditions and specifications need review before pricing.</p></div>
+            <div><label htmlFor="brief-timeline" className={labelClass}>When would you like to start?</label><select id="brief-timeline" className={inputClass} value={data.timeline} onChange={e => update('timeline', e.target.value)}>{['Not sure yet', 'Within 3 months', 'In 3–6 months', 'In 6–12 months', 'More than a year from now'].map(value => <option key={value}>{value}</option>)}</select></div>
+          </>}
+          {step === 4 && <>
+            <div><label htmlFor="brief-name" className={labelClass}>Your name</label><input id="brief-name" required pattern=".*\S.*" autoComplete="name" maxLength={100} className={inputClass} value={data.name} onChange={e => update('name', e.target.value)} /></div>
+            <div className="grid gap-5 sm:grid-cols-2"><div><label htmlFor="brief-phone" className={labelClass}>Phone (optional)</label><input id="brief-phone" type="tel" autoComplete="tel" maxLength={40} className={inputClass} value={data.phone} onChange={e => update('phone', e.target.value)} /></div><div><label htmlFor="brief-email" className={labelClass}>Email (optional)</label><input id="brief-email" type="email" autoComplete="email" maxLength={200} className={inputClass} value={data.email} onChange={e => update('email', e.target.value)} /></div></div>
+            <div><label htmlFor="brief-based" className={labelClass}>Where are you currently based? (optional)</label><input id="brief-based" maxLength={120} className={inputClass} value={data.based} onChange={e => update('based', e.target.value)} placeholder="City or country" /></div>
+            <div><label htmlFor="brief-preferred" className={labelClass}>Preferred way to hear back</label><select id="brief-preferred" className={inputClass} value={data.preferred} onChange={e => update('preferred', e.target.value)}>{['WhatsApp', 'Email', 'Phone call'].map(value => <option key={value}>{value}</option>)}</select><p className="mt-2 text-xs text-ink-600">Include a phone number or email above if you want a reply somewhere other than the channel you send from.</p></div>
+            <div><label htmlFor="brief-notes" className={labelClass}>Anything else we should know? (optional)</label><textarea id="brief-notes" rows={3} maxLength={1200} className={inputClass} value={data.notes} onChange={e => update('notes', e.target.value)} /></div>
+          </>}
         </div>
-        <div className="w-full h-2 bg-paper rounded-full overflow-hidden">
-          <div
-            className="h-full bg-brand transition-all duration-300 ease-out"
-            style={{ width: `${Math.min(100, step * 25)}%` }}
-          />
-        </div>
-      </div>
-
-      {/* STEP 1: What can we help you with? (Triage & Lead intent) */}
-      {step === 1 && (
-        <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-700 mb-1 block">
-            Welcome to notjustlines
-          </span>
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
-            What brings you to our studio today?
-          </h3>
-          <p className="text-ink-600 text-sm mb-6">
-            Tell our front desk team what you’re planning so we connect you with the right architect or site engineer.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            {intents.map((item, idx) => {
-              const Icon = item.icon;
-              const isSelected = formData.intent === item.title;
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setFormData({ ...formData, intent: item.title })}
-                  className={`p-5 rounded-2xl border text-left flex flex-col justify-between gap-3 transition-all ${
-                    isSelected
-                      ? 'border-brand bg-paper shadow-sm ring-1 ring-brand'
-                      : 'border-line hover:border-ink-300 bg-white'
-                  }`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="w-9 h-9 rounded-xl bg-ink-100 flex items-center justify-center text-ink-800">
-                      <Icon size={18} />
-                    </div>
-                    <span className="text-[11px] font-bold text-brand-700 bg-brand/10 px-2.5 py-0.5 rounded-full">
-                      {item.badge}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-bold text-base text-ink-900 block mb-1">{item.title}</span>
-                    <span className="text-xs text-ink-600 leading-relaxed block">{item.desc}</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              type="button"
-              onClick={() => setStep(2)}
-              className="btn btn-primary"
-            >
-              <span>Continue: Property Details</span>
-              <ArrowRight size={16} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* STEP 2: Property Type & Location */}
-      {step === 2 && (
-        <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-700 mb-1 block">
-            Scope &amp; Geography
-          </span>
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
-            What type of property and where?
-          </h3>
-          <p className="text-ink-600 text-sm mb-6">
-            We handle projects across Greater Accra and regional locations.
-          </p>
-
-          <div className="space-y-6 mb-8">
-            {/* Building Type */}
-            <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-ink-500 block mb-3">
-                1. Select Property Type
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {projectTypes.map((pt, idx) => {
-                  const isSelected = formData.projectType === pt.title;
-                  return (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, projectType: pt.title })}
-                      className={`p-4 rounded-xl border text-left transition-all ${
-                        isSelected
-                          ? 'border-brand bg-paper ring-1 ring-brand font-semibold'
-                          : 'border-line hover:border-ink-300 bg-white'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-bold text-ink-900">{pt.title}</span>
-                        {isSelected && <CheckCircle2 size={16} className="text-brand-700" />}
-                      </div>
-                      <span className="text-xs text-ink-600 leading-relaxed block">{pt.desc}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Plot Location */}
-            <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-ink-500 block mb-3">
-                2. Neighborhood / Location
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {locations.map((loc, idx) => {
-                  const isSelected = formData.location === loc.title;
-                  return (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, location: loc.title })}
-                      className={`p-4 rounded-xl border text-left transition-all ${
-                        isSelected
-                          ? 'border-brand bg-paper ring-1 ring-brand'
-                          : 'border-line hover:border-ink-300 bg-white'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-bold text-ink-900">{loc.title}</span>
-                        {isSelected && <CheckCircle2 size={16} className="text-brand-700" />}
-                      </div>
-                      <span className="text-xs text-ink-600 leading-relaxed block">{loc.desc}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => setStep(1)}
-              className="btn btn-outline"
-            >
-              <ArrowLeft size={16} />
-              <span>Back</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setStep(3)}
-              className="btn btn-primary"
-            >
-              <span>Continue: Land &amp; Budget</span>
-              <ArrowRight size={16} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* STEP 3: Land Status & Rough Scale/Budget */}
-      {step === 3 && (
-        <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-700 mb-1 block">
-            Readiness &amp; Estimates
-          </span>
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
-            Land status &amp; construction scale
-          </h3>
-          <p className="text-ink-600 text-sm mb-6">
-            Every project has a realistic budget. This helps us suggest the best approach before you spend money on drawings.
-          </p>
-
-          {/* Land Paperwork Status */}
-          <div className="mb-6">
-            <label className="text-xs font-bold uppercase tracking-wider text-ink-500 block mb-3">
-              What is the status of the land documentation?
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {landStatuses.map((ls, idx) => {
-                const isSelected = formData.landStatus === ls.title;
-                return (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setFormData({ ...formData, landStatus: ls.title })}
-                    className={`p-3.5 rounded-xl border text-left transition-all ${
-                      isSelected
-                        ? 'border-brand bg-paper ring-1 ring-brand'
-                        : 'border-line hover:border-ink-300 bg-white'
-                    }`}
-                  >
-                    <span className="text-sm font-bold text-ink-900 block mb-1">{ls.title}</span>
-                    <span className="text-xs text-ink-600 block">{ls.desc}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Interactive Scale & Budget Slider */}
-          <div className="bg-paper border border-line p-6 rounded-2xl mb-8">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs uppercase tracking-wider text-ink-500 font-semibold">
-                Approximate Gross Floor Area
-              </span>
-              <span className="text-xl font-bold text-brand-700">{formData.area} m²</span>
-            </div>
-
-            <input
-              type="range"
-              min="150"
-              max="1500"
-              step="50"
-              value={formData.area}
-              onChange={(e) => updateArea(parseInt(e.target.value))}
-              className="w-full accent-brand cursor-pointer h-2 bg-ink-200 rounded-lg mb-4"
-            />
-
-            <div className="pt-3 border-t border-line flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-              <span className="text-ink-600 font-medium">Estimated Turnkey Construction Range (excl. land):</span>
-              <span className="font-bold text-ink-900 text-xs sm:text-sm bg-white py-1 px-3 rounded-full border border-line">
-                {formData.budgetBracket}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => setStep(2)}
-              className="btn btn-outline"
-            >
-              <ArrowLeft size={16} />
-              <span>Back</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setStep(4)}
-              className="btn btn-primary"
-            >
-              <span>Continue: Your Contact</span>
-              <ArrowRight size={16} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* STEP 4: Client Info & Timezone / Support Channel */}
-      {step === 4 && (
-        <form onSubmit={handleSubmit}>
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-700 mb-1 block">
-            Customer Support &amp; Consultation Booking
-          </span>
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
-            Who should we reach out to?
-          </h3>
-          <p className="text-ink-600 text-sm mb-6">
-            We reply within one working day with preliminary advice and feasibility feedback.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="fullName">
-                Your Full Name *
-              </label>
-              <input
-                id="fullName"
-                type="text"
-                required
-                value={formData.fullName}
-                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                placeholder="e.g. Kwesi Mensah / Sarah Boateng"
-                className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="phone">
-                WhatsApp / Phone Number *
-              </label>
-              <input
-                id="phone"
-                type="tel"
-                required
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                placeholder="+233 ... or UK / US / Canada number"
-                className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="email">
-                Email Address *
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="you@example.com"
-                className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="clientLocation">
-                Where are you currently based?
-              </label>
-              <select
-                id="clientLocation"
-                value={formData.clientLocation}
-                onChange={(e) => setFormData({ ...formData, clientLocation: e.target.value })}
-                className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
-              >
-                <option value="Accra / Ghana">Accra / Ghana</option>
-                <option value="United Kingdom (London / UK)">United Kingdom (London / UK)</option>
-                <option value="United States (US East / Central / West)">United States (US)</option>
-                <option value="Canada (Toronto / Vancouver)">Canada</option>
-                <option value="Europe / Other Diaspora">Europe / Other Diaspora</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Preferred channel */}
-          <div className="mb-5">
-            <label className="text-xs font-semibold uppercase tracking-wider text-ink-700 block mb-2">
-              Preferred Way to Connect
-            </label>
-            <div className="grid grid-cols-3 gap-3">
-              {(['WhatsApp', 'Phone Call', 'Video Call'] as const).map((method) => {
-                const isSelected = formData.preferredContact === method;
-                return (
-                  <button
-                    key={method}
-                    type="button"
-                    onClick={() => setFormData({ ...formData, preferredContact: method })}
-                    className={`py-3 px-3 rounded-xl border text-center text-xs font-bold transition-all ${
-                      isSelected
-                        ? 'bg-ink-950 text-white border-ink-950 shadow-sm'
-                        : 'bg-paper text-ink-700 border-line hover:border-ink-400'
-                    }`}
-                  >
-                    {method}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-1.5 mb-8">
-            <label className="text-xs font-semibold uppercase tracking-wider text-ink-700" htmlFor="message">
-              Any specific questions or details? (Optional)
-            </label>
-            <textarea
-              id="message"
-              rows={3}
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              placeholder="e.g. Plot is on a slight slope in East Legon Hills; looking for 4 ensuite bedrooms with solar backup and staff quarters..."
-              className="w-full text-base p-3.5 rounded-xl border border-line focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none bg-paper text-ink-900"
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => setStep(3)}
-              className="btn btn-outline"
-            >
-              <ArrowLeft size={16} />
-              <span>Back</span>
-            </button>
-            <button
-              type="submit"
-              className="btn btn-primary"
-            >
-              <span>Review Summary</span>
-              <ArrowRight size={16} />
-            </button>
-          </div>
-        </form>
-      )}
-
-      {/* STEP 5: Confirmation Dossier & Instant Dispatch */}
-      {step === 5 && (
-        <div className="text-center py-4">
-          <div className="w-16 h-16 rounded-full bg-brand/10 text-brand-700 flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 size={36} />
-          </div>
-
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-ink-900 mb-2">
-            Your Project Summary is Ready
-          </h3>
-          <p className="text-ink-600 text-sm max-w-lg mx-auto mb-6">
-            Thank you, {formData.fullName}. You can send this dossier straight to our front desk on WhatsApp for instant receipt, or wait for our team to contact you via {formData.preferredContact}.
-          </p>
-
-          {/* Dossier Card */}
-          <div className="bg-paper border border-line rounded-2xl p-6 text-left max-w-xl mx-auto mb-8 text-xs leading-relaxed text-ink-700 shadow-sm">
-            <div className="pb-3 mb-3 border-b border-line flex justify-between font-bold text-ink-900">
-              <span>PROJECT BRIEF DOSSIER</span>
-              <span className="text-brand-700">{SITE.name}</span>
-            </div>
-            <div className="space-y-1.5">
-              <div>
-                <strong>Client:</strong> {formData.fullName} ({formData.phone} &middot; {formData.email})
-              </div>
-              <div>
-                <strong>Base Location:</strong> {formData.clientLocation}
-              </div>
-              <div>
-                <strong>Primary Request:</strong> {formData.intent}
-              </div>
-              <div>
-                <strong>Property Type:</strong> {formData.projectType}
-              </div>
-              <div>
-                <strong>Site Location:</strong> {formData.location}
-              </div>
-              <div>
-                <strong>Land Status:</strong> {formData.landStatus}
-              </div>
-              <div>
-                <strong>Estimated Floor Area:</strong> {formData.area} m²
-              </div>
-              <div>
-                <strong>Estimated Budget Guide:</strong> {formData.budgetBracket}
-              </div>
-              <div>
-                <strong>Preferred Follow-up:</strong> {formData.preferredContact}
-              </div>
-              {formData.message && (
-                <div className="mt-2 text-ink-600 bg-white p-2.5 rounded-lg border border-line">
-                  <strong>Notes:</strong> {formData.message}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href={`https://wa.me/${SITE.whatsappNumber}?text=${getWhatsAppMessage()}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-whatsapp w-full sm:w-auto text-xs"
-            >
-              <WhatsAppIcon size={18} />
-              <span>Send directly to WhatsApp ({SITE.phoneDisplay})</span>
-            </a>
-            <button
-              type="button"
-              onClick={() => setStep(1)}
-              className="btn btn-outline w-full sm:w-auto text-xs"
-            >
-              Edit parameters
-            </button>
-          </div>
-
-          <p className="mt-4 text-[11px] text-ink-500">
-            Our studio hours are Monday to Saturday, 8:00am – 6:00pm GMT. WhatsApp inquiries are attended to continuously.
-          </p>
-        </div>
-      )}
+        <div className="flex flex-wrap justify-between gap-3">{step > 1 ? <button type="button" className="btn btn-outline" onClick={() => setStep(previous => previous - 1)}><ArrowLeft size={16} />Back</button> : <span />}<button type="submit" className="btn btn-primary">{step === 4 ? 'Review brief' : 'Continue'}<ArrowRight size={16} /></button></div>
+      </form> : <>
+        <label htmlFor="brief-summary" className={labelClass}>Your message</label><textarea id="brief-summary" readOnly value={brief} rows={15} className={`${inputClass} mb-5 text-sm`} />
+        <div className="flex flex-wrap gap-3"><a className="btn btn-whatsapp" href={whatsappLink(brief)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} />Open WhatsApp</a><a className="btn btn-outline" href={`mailto:${SITE.email}?subject=${encodeURIComponent('Project enquiry — notjustlines')}&body=${encodeURIComponent(brief)}`}><Mail size={18} />Open email app</a><button type="button" className="btn btn-outline" onClick={copyBrief}><Copy size={18} />Copy brief</button></div>
+        <p role="status" className="mt-3 text-sm text-ink-600">{copyStatus}</p>
+        <p className="mt-4 text-sm text-ink-600">If an app does not open, copy your brief and send it to <a className="underline break-all" href={`mailto:${SITE.email}`}>{SITE.email}</a> or {SITE.phoneDisplay} on WhatsApp.</p>
+        <button type="button" className="btn btn-outline mt-6" onClick={() => setStep(1)}><ArrowLeft size={16} />Edit brief</button>
+      </>}
     </div>
   );
 }

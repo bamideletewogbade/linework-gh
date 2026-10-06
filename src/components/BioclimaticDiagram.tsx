@@ -13,28 +13,28 @@ export default function BioclimaticDiagram() {
       title: 'Timber sun louvres',
       category: 'Sun shading',
       icon: Sun,
-      desc: 'Vertical teak and Iroko louvres block the midday sun and reduce heat buildup, while keeping natural daylight flowing through the rooms.',
+      desc: 'Explore louvre orientation, spacing and materials to balance shade, privacy and daylight.',
     },
     {
       id: 2,
       title: 'Deep concrete overhangs',
-      category: 'Thermal mass',
+      category: 'Shading',
       icon: Shield,
-      desc: 'Thick concrete slabs shade the windows and walls during the hottest hours, lowering your electricity bill for air conditioning.',
+      desc: 'Consider the depth and position of overhangs in relation to the sun, openings and the use of each room.',
     },
     {
       id: 3,
       title: 'Natural cross-ventilation',
       category: 'Airflow',
       icon: Wind,
-      desc: 'High ceilings and open lightwells pull warm air up and out, while drawing cooler breezes across the living areas throughout the day.',
+      desc: 'Review openings and room connections against the available breeze, privacy needs and site conditions.',
     },
     {
       id: 4,
       title: 'Courtyard & water features',
-      category: 'Cooling breeze',
+      category: 'Outdoor space',
       icon: Droplets,
-      desc: 'Water pools placed along the path of the prevailing coastal breeze cool the air before it reaches interior rooms.',
+      desc: 'Consider outdoor space, planting and water features alongside humidity, maintenance and how the courtyard will be used.',
     },
   ];
 
@@ -49,7 +49,7 @@ export default function BioclimaticDiagram() {
             Built for Accra heat.
           </h2>
           <p className="text-ink-600 text-base md:text-lg leading-relaxed">
-            Good architecture in Ghana shouldn’t depend entirely on air conditioners running all day. We design with natural airflow, deep shading, and materials that keep rooms comfortable — saving energy and reducing ECG bills.
+            Explore design choices for shade, airflow and outdoor space. This diagram illustrates ideas to assess for a particular site; it does not predict indoor temperatures or energy savings.
           </p>
         </Reveal>
 

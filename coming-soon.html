@@ -3,17 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Linework GH — Design &amp; Construction | Coming Soon</title>
-<meta name="description" content="Linework GH is a design and construction studio in Ghana. Architecture, build and project delivery. Our new site is under construction — get in touch at info@lineworkgh.com." />
+<title>notjustlines — Design &amp; Construction | Coming Soon</title>
+<meta name="description" content="notjustlines is a design and construction studio in Ghana. Architecture, build and project delivery. Our new site is under construction — get in touch at info@notjustlines.com." />
 <meta name="theme-color" content="#070B10" />
-<link rel="canonical" href="https://lineworkgh.com/" />
+<link rel="canonical" href="https://notjustlines.com/" />
 
 <!-- Open Graph / social -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://lineworkgh.com/" />
-<meta property="og:title" content="Linework GH — Design &amp; Construction" />
+<meta property="og:url" content="https://notjustlines.com/" />
+<meta property="og:title" content="notjustlines — Design &amp; Construction" />
 <meta property="og:description" content="Drawn with intent. Built to last. Something is going up here." />
-<meta property="og:image" content="https://lineworkgh.com/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23070B10'/%3E%3Cpath d='M7 24V8M7 24h18' stroke='%23F5A524' stroke-width='2.5' stroke-linecap='square'/%3E%3Cpath d='M12 24V15l6-5 6 5v9' stroke='%236EE7F9' stroke-width='1.6' fill='none'/%3E%3C/svg%3E" />
@@ -24,7 +23,7 @@
 
 <style>
 /* ============================================================
-   LINEWORK GH — coming soon
+   notjustlines — coming soon
    Single file. No build step. Drop into public_html/
    ============================================================ */
 
@@ -431,11 +430,11 @@ footer.bottom{
         <path d="M6 26V6M6 26h20" stroke="#F5A524" stroke-width="2.4" stroke-linecap="square"/>
         <path d="M11 26v-9l6.5-5.5L24 17v9" stroke="#6EE7F9" stroke-width="1.5" fill="none"/>
       </svg>
-      <div class="name">Linework<span>&nbsp;GH</span></div>
+      <div class="name">notjustlines</div>
     </div>
     <div class="top-meta">
       <span class="pulse" aria-hidden="true"></span>
-      Accra, Ghana &nbsp;·&nbsp; Est. 2026
+      Accra, Ghana
     </div>
   </header>
 
@@ -453,30 +452,19 @@ footer.bottom{
       </h1>
 
       <p class="lede rise d1">
-        Linework GH is a design and construction studio working across architecture,
+        notjustlines is a design and construction studio working across architecture,
         interiors and build delivery. We're drafting a new home for the practice —
         drawings, projects and the full story land here shortly.
       </p>
 
       <div class="actions rise d2">
-        <form class="notify" id="notifyForm" novalidate>
-          <label for="email" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Email address</label>
-          <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
-                 placeholder="you@company.com" required />
-          <button class="btn" type="submit" id="submitBtn">
-            Notify me <span class="arrow" aria-hidden="true">→</span>
-          </button>
-        </form>
-        <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+        <a class="btn" href="mailto:info@notjustlines.com?subject=Project%20enquiry">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
+        <p style="font-size:13px;color:var(--muted);margin-top:16px">Opens your email app. Send your message there to contact the studio.</p>
       </div>
 
       <div class="contacts rise d3">
-        <a href="mailto:info@lineworkgh.com">info@lineworkgh.com</a>
-        <!-- TODO: real number + handle. Uncomment once confirmed.
-        <a href="tel:+233XXXXXXXXX">+233 XX XXX XXXX</a>
-        <a href="https://wa.me/233XXXXXXXXX" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="https://instagram.com/lineworkgh" target="_blank" rel="noopener">Instagram</a>
-        -->
+        <a href="mailto:info@notjustlines.com">info@notjustlines.com</a>
+
       </div>
     </div>
 
@@ -538,7 +526,7 @@ footer.bottom{
         <span>3D Visualisation</span><span>Site Supervision</span>
       </div>
     </div>
-    <div class="copyright">© <span id="yr">2026</span> Linework GH</div>
+    <div class="copyright">© <span id="yr">2026</span> notjustlines</div>
   </footer>
 
 </div>
@@ -591,63 +579,6 @@ footer.bottom{
     }
   }
 
-  /* --- notify form ------------------------------------------------
-     ENDPOINT: replace with your Formspree form id (formspree.io — free).
-     Until then the form falls back to opening a pre-filled email.
-  ------------------------------------------------------------------ */
-  var ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxxx'
-
-  var form = document.getElementById('notifyForm');
-  var input = document.getElementById('email');
-  var note  = document.getElementById('formNote');
-  var btn   = document.getElementById('submitBtn');
-
-  function say(msg, kind){
-    note.textContent = msg;
-    note.className = 'form-note show ' + (kind || '');
-  }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var value = input.value.trim();
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
-      say('That address doesn’t look right — check it and try again.', 'err');
-      input.focus();
-      return;
-    }
-
-    if (!ENDPOINT) {
-      // no backend configured yet: hand off to the user's mail client
-      say('Opening your mail app…', 'ok');
-      window.location.href = 'mailto:info@lineworkgh.com'
-        + '?subject=' + encodeURIComponent('Notify me when Linework GH launches')
-        + '&body='    + encodeURIComponent('Please add ' + value + ' to your launch list.');
-      return;
-    }
-
-    btn.disabled = true;
-    say('Sending…');
-
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: new FormData(form)
-    })
-    .then(function(res){
-      if (!res.ok) throw new Error('bad response');
-      form.style.display = 'none';
-      say('You’re on the list. We’ll be in touch.', 'ok');
-    })
-    .catch(function(){
-      btn.disabled = false;
-      say('Couldn’t send that. Email info@lineworkgh.com instead.', 'err');
-    });
-  });
-
-  input.addEventListener('input', function(){
-    if (note.classList.contains('err')) note.className = 'form-note';
-  });
 })();
 </script>
 </body>

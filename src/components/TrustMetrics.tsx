@@ -7,26 +7,26 @@ export default function TrustMetrics() {
     {
       icon: ShieldCheck,
       stat: 'Design & build',
-      label: 'Single contract',
-      desc: 'Drawings, building permits, engineering and construction handled together under one team.',
+      label: 'Discuss the scope',
+      desc: 'Start a conversation about the design and construction services your project needs.',
     },
     {
       icon: MapPin,
       stat: 'Greater Accra',
-      label: 'Local expertise',
-      desc: 'Deep on-the-ground experience with Municipal Assemblies, local soil, and Accra sub-contractors.',
+      label: 'Accra based',
+      desc: 'Share your site location so access, context and project requirements can be discussed.',
     },
     {
       icon: CheckCircle,
       stat: 'Stage-by-stage',
-      label: 'Clear BOQ',
-      desc: 'Fixed bill of quantities before construction starts. Pay in stages tied directly to completed work.',
+      label: 'Plan the budget',
+      desc: 'Agree specifications, costs and payment terms as part of the project scope.',
     },
     {
       icon: Smartphone,
-      stat: 'Diaspora ready',
-      label: 'Weekly updates',
-      desc: 'Live photo and video reports straight to WhatsApp so you see progress even from the UK, US or Canada.',
+      stat: 'Building from abroad',
+      label: 'Stay in touch',
+      desc: 'Discuss your time zone, contact preferences and the reporting you need.',
     },
   ];
 

@@ -406,7 +406,7 @@ export default function Hero3D() {
         </div>
 
         <div className="hidden sm:flex items-center gap-4 text-stone-400 text-[10px] uppercase tracking-widest">
-          <span>MODEL // <strong>CANTONMENTS VILLA (1:50)</strong></span>
+          <span>MODEL // <strong>ILLUSTRATIVE ARCHITECTURAL MODEL</strong></span>
           <button
             type="button"
             onClick={() => setPreset('iso')}

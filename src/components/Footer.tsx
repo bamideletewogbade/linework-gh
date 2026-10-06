@@ -42,8 +42,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-5 max-w-sm text-base leading-relaxed">
-              Architects and builders in Accra. We design it, get it approved, build it and hand you the keys —
-              one team, one contract.
+              Architecture, construction and interiors in Accra. Talk to notjustlines about your site, your ideas and the scope you need.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -55,7 +54,7 @@ export default function Footer() {
               >
                 <WhatsAppIcon size={18} /> WhatsApp us
               </a>
-              <a
+              {SITE.instagramUrl && <a
                 href={SITE.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -63,7 +62,7 @@ export default function Footer() {
                 className="btn btn-outline-light min-h-[2.75rem] w-11 px-0"
               >
                 <Instagram size={18} />
-              </a>
+              </a>}
             </div>
           </div>
 
