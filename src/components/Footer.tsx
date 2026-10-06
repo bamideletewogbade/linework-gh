@@ -45,7 +45,7 @@ export default function Footer() {
                 href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-whatsapp-footer min-h-[2.75rem] px-5"
+                className="btn btn-primary min-h-[2.75rem] px-5"
               >
                 <WhatsAppIcon size={18} /> WhatsApp us
               </a>
