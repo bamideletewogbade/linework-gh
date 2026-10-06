@@ -377,43 +377,44 @@ export default function Hero3D() {
       </div>
 
       {/* Bottom Architectural Inspection Bar */}
-      <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-black/80 backdrop-blur-md border border-white/10 p-2 sm:p-2.5 rounded-2xl flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
-        <div className="flex flex-wrap items-center gap-2">
+      {/* One compact row on phones so the controls never cover most of the model. */}
+      <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-black/80 backdrop-blur-md border border-white/10 p-1.5 sm:p-2.5 rounded-2xl grid grid-cols-3 gap-1.5 sm:flex sm:items-center sm:justify-between sm:gap-2 text-xs font-mono">
+        <div className="contents sm:flex sm:items-center sm:gap-2">
           <button
             type="button"
             onClick={() => setIsExploded(!isExploded)}
             aria-pressed={isExploded}
-            className={`flex min-h-11 items-center gap-1.5 px-3 py-2 rounded-full text-[11px] uppercase tracking-wider transition-all ${
+            className={`flex min-h-11 items-center justify-center gap-1.5 px-1 sm:px-3 py-2 rounded-full text-[11px] uppercase sm:tracking-wider transition-all ${
               isExploded
                 ? 'bg-brand text-ink-950 font-bold'
                 : 'bg-white/10 text-stone-300 hover:bg-white/20'
             }`}
           >
-            <Layers size={13} />
-            <span>{isExploded ? 'Collapse Levels' : 'Explode Levels'}</span>
+            <Layers size={13} className="hidden sm:block" />
+            <span>{isExploded ? 'Collapse' : 'Explode'}<span className="hidden sm:inline"> Levels</span></span>
           </button>
 
           <button
             type="button"
             onClick={() => setIsWireframe(!isWireframe)}
             aria-pressed={isWireframe}
-            className={`flex min-h-11 items-center gap-1.5 px-3 py-2 rounded-full text-[11px] uppercase tracking-wider transition-all ${
+            className={`flex min-h-11 items-center justify-center gap-1.5 px-1 sm:px-3 py-2 rounded-full text-[11px] uppercase sm:tracking-wider transition-all ${
               isWireframe
                 ? 'bg-sky-400 text-ink-950 font-bold'
                 : 'bg-white/10 text-stone-300 hover:bg-white/20'
             }`}
           >
-            <Eye size={13} />
-            <span>{isWireframe ? 'Solid Mode' : 'Blueprint Mode'}</span>
+            <Eye size={13} className="hidden sm:block" />
+            <span>{isWireframe ? 'Solid' : 'Blueprint'}<span className="hidden sm:inline"> Mode</span></span>
           </button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 text-stone-400 text-[10px] uppercase tracking-widest">
+        <div className="contents sm:flex sm:items-center sm:gap-4 text-stone-400 text-[10px] uppercase tracking-widest">
           <span className="hidden sm:inline">MODEL // <strong>ARCHITECTURAL STUDY</strong></span>
           <button
             type="button"
             onClick={() => setPreset('iso')}
-            className="min-h-11 px-3 hover:text-white flex items-center gap-1"
+            className="min-h-11 px-1 sm:px-3 rounded-full bg-white/10 sm:bg-transparent text-stone-300 sm:text-stone-400 text-[11px] sm:text-[10px] uppercase hover:text-white flex items-center justify-center gap-1"
             title="Reset Model Orientation"
           >
             <RefreshCw size={11} />

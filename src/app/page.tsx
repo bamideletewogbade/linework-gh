@@ -29,8 +29,8 @@ export default function HomePage() {
             <div className="lg:col-span-6 flex flex-col justify-center">
               
               {/* Practice Eyebrow Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold uppercase tracking-wider text-brand mb-5 w-max">
-                <MapPin size={14} className="text-brand" />
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl sm:rounded-full bg-white/10 border border-white/15 text-[11px] sm:text-xs leading-snug font-semibold uppercase tracking-wide sm:tracking-wider text-brand mb-5 w-fit max-w-full">
+                <MapPin size={14} className="text-brand shrink-0" />
                 <span>Accra &middot; Architecture &amp; Construction</span>
               </div>
 
