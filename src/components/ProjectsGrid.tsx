@@ -38,7 +38,7 @@ function ProjectsFilterContent() {
     : PROJECTS.filter(p => p.typology === filter);
 
   const categories: { label: string; value: 'All' | Project['typology'] }[] = [
-    { label: 'All projects', value: 'All' },
+    { label: 'All ideas', value: 'All' },
     { label: TYPOLOGY_LABELS.Residential, value: 'Residential' },
     { label: TYPOLOGY_LABELS.Commercial, value: 'Commercial' },
     { label: TYPOLOGY_LABELS.Interior, value: 'Interior' },
@@ -48,7 +48,7 @@ function ProjectsFilterContent() {
   return (
     <>
       {/* Filter Tabs — horizontal swipe on mobile */}
-      <div className="snap-row sm:mx-0 sm:flex-wrap sm:px-0 mb-10 pb-2">
+      <div className="flex flex-wrap gap-2 mb-8">
         {categories.map((cat) => (
           <button
             key={cat.value}

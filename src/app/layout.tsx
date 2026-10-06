@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: 'notjustlines — We don’t just draw it. We build it.',
     description,
-    images: [{ url: '/assets/villa-cantonments.jpg', width: 1376, height: 768, alt: 'Illustrative residential architecture image' }],
+    images: [{ url: '/assets/villa-cantonments.jpg', width: 1376, height: 768, alt: 'Courtyard home design inspiration' }],
   },
   twitter: {
     card: 'summary_large_image',

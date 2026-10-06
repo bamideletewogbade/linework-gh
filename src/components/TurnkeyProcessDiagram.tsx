@@ -30,7 +30,7 @@ const STAGES: StepDetail[] = [
       "Initial scope discussion"
     ],
     "clientAction": "Share your site location and priorities.",
-    "siteReality": "Identify information that is still needed before design begins."
+    "siteReality": "A clear brief connects your priorities with the possibilities of the site."
   },
   {
     "number": "02",
@@ -45,7 +45,7 @@ const STAGES: StepDetail[] = [
       "Specialist design input where required"
     ],
     "clientAction": "Review the options and record design decisions.",
-    "siteReality": "Confirm the design scope and review process in the proposal."
+    "siteReality": "This is where layouts, materials and everyday details come together."
   },
   {
     "number": "03",
@@ -60,13 +60,13 @@ const STAGES: StepDetail[] = [
       "Programme and payment terms"
     ],
     "clientAction": "Review costs, assumptions and approvals before proceeding.",
-    "siteReality": "Permit decisions and timelines depend on the relevant authority."
+    "siteReality": "Drawings, costs and approvals form the foundation for the next stage."
   },
   {
     "number": "04",
     "title": "Construction",
     "stageName": "Build & review",
-    "tagline": "Agree how work, inspections and changes will be managed.",
+    "tagline": "Bring the design to life, one stage at a time.",
     "icon": HardHat,
     "deliverables": [
       "Construction sequence",
@@ -75,7 +75,7 @@ const STAGES: StepDetail[] = [
       "Written change approval process"
     ],
     "clientAction": "Review progress and decisions at agreed points.",
-    "siteReality": "Confirm supervision, reporting and payment arrangements in the contract."
+    "siteReality": "Keep the work connected to the drawings through site reviews and recorded decisions."
   },
   {
     "number": "05",
@@ -90,7 +90,7 @@ const STAGES: StepDetail[] = [
       "Agreed aftercare responsibilities"
     ],
     "clientAction": "Record outstanding items and confirm handover arrangements.",
-    "siteReality": "Aftercare and defects terms should be specified in the agreement."
+    "siteReality": "A walkthrough brings the finishing details and handover information together."
   }
 ];
 
@@ -104,12 +104,12 @@ export default function TurnkeyProcessDiagram() {
       <div className="container-site">
         {/* Header */}
         <Reveal className="max-w-3xl mb-12">
-          <span className="eyebrow mb-3">A project planning guide</span>
+          <span className="eyebrow mb-3">The journey to your space</span>
           <h2 className="text-display-md font-bold text-ink-900 mb-4">
             From empty plot to keys in hand.
           </h2>
           <p className="text-ink-600 text-base md:text-lg leading-relaxed">
-            These five stages describe a typical design and build journey. Your proposal will confirm which stages apply and what is included.
+            See how a design and build project takes shape, from understanding the site to walking through the finished space.
           </p>
         </Reveal>
 
@@ -125,7 +125,7 @@ export default function TurnkeyProcessDiagram() {
                   key={s.number}
                   type="button"
                   onClick={() => setActiveStep(idx)}
-                  className={`flex items-center gap-2.5 px-4 py-3 rounded-xl sm:rounded-full text-left transition-all ${
+                  className={`flex items-center gap-2.5 min-h-12 px-3 py-3 rounded-xl sm:rounded-full text-left transition-all ${
                     isActive
                       ? 'bg-ink-950 text-white shadow-md'
                       : 'text-ink-700 hover:text-ink-950 hover:bg-white/80'
@@ -139,8 +139,8 @@ export default function TurnkeyProcessDiagram() {
                   >
                     {s.number}
                   </span>
-                  <div className="truncate">
-                    <span className="block text-xs font-bold truncate">{s.title}</span>
+                  <div className="min-w-0">
+                    <span className="block text-xs font-bold">{s.title}</span>
                   </div>
                 </button>
               );
@@ -174,7 +174,7 @@ export default function TurnkeyProcessDiagram() {
 
               <div className="bg-white rounded-2xl p-5 border border-line mb-6">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-ink-500 mb-3">
-                  Items to discuss
+                  What this stage covers
                 </h4>
                 <ul className="space-y-2.5">
                   {current.deliverables.map((item, dIdx) => (
@@ -193,30 +193,18 @@ export default function TurnkeyProcessDiagram() {
                 type="button"
                 disabled={activeStep === 0}
                 onClick={() => setActiveStep((prev) => Math.max(0, prev - 1))}
-                className="text-xs font-bold text-ink-600 hover:text-ink-950 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+                className="min-h-11 px-2 text-xs font-bold text-ink-600 hover:text-ink-950 disabled:opacity-30 disabled:pointer-events-none transition-colors"
               >
-                &larr; Previous Stage
+                &larr; Back
               </button>
-              <div className="flex items-center gap-1.5">
-                {STAGES.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setActiveStep(i)}
-                    className={`h-2 rounded-full transition-all ${
-                      activeStep === i ? 'w-6 bg-brand' : 'w-2 bg-ink-200'
-                    }`}
-                    aria-label={`Jump to stage ${i + 1}`}
-                  />
-                ))}
-              </div>
+              <span className="text-xs text-ink-600" aria-live="polite">{activeStep + 1} / {STAGES.length}</span>
               <button
                 type="button"
                 disabled={activeStep === STAGES.length - 1}
                 onClick={() => setActiveStep((prev) => Math.min(STAGES.length - 1, prev + 1))}
-                className="text-xs font-bold text-ink-900 hover:text-brand-700 disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1 transition-colors"
+                className="min-h-11 px-2 text-xs font-bold text-ink-900 hover:text-brand-700 disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1 transition-colors"
               >
-                <span>Next Stage</span>
+                <span>Next</span>
                 <ArrowRight size={14} />
               </button>
             </div>
@@ -227,7 +215,7 @@ export default function TurnkeyProcessDiagram() {
             <div className="space-y-5">
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-ink-500 block mb-1">
-                  Client Responsibility
+                  Your part
                 </span>
                 <p className="text-sm font-semibold text-ink-900 bg-sand/30 p-3 rounded-xl border border-line">
                   {current.clientAction}
@@ -236,7 +224,7 @@ export default function TurnkeyProcessDiagram() {
 
               <div>
                 <span className="text-[11px] font-bold uppercase tracking-wider text-brand-700 block mb-1">
-                  What to confirm
+                  Why it matters
                 </span>
                 <p className="text-sm text-ink-700 leading-relaxed bg-brand/5 p-3 rounded-xl border border-brand/20">
                   {current.siteReality}
@@ -246,21 +234,21 @@ export default function TurnkeyProcessDiagram() {
               {/* Technical Blueprint Micro-diagram */}
               <div className="p-4 rounded-xl bg-ink-950 text-white font-sans text-xs">
                 <div className="flex items-center justify-between text-ink-400 mb-2 border-b border-white/10 pb-2">
-                  <span>PROJECT ARRANGEMENTS</span>
-                  <span className="text-brand font-bold">TO BE AGREED</span>
+                  <span>START THE CONVERSATION</span>
+                  <span className="text-brand font-bold">YOUR PROJECT</span>
                 </div>
                 <div className="space-y-1.5 text-ink-300">
                   <div className="flex justify-between">
-                    <span>Supervisor:</span>
-                    <span className="text-white font-medium">Named in the proposal</span>
+                    <span>Location:</span>
+                    <span className="text-white font-medium">Your plot or building</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Payment gate:</span>
-                    <span className="text-white font-medium">Set out in the contract</span>
+                    <span>Priorities:</span>
+                    <span className="text-white font-medium">What you want to create</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Verification:</span>
-                    <span className="text-white font-medium">Agreed reporting schedule</span>
+                    <span>Budget:</span>
+                    <span className="text-white font-medium">An amount, if you have one</span>
                   </div>
                 </div>
               </div>
@@ -271,7 +259,7 @@ export default function TurnkeyProcessDiagram() {
                 href="#design"
                 className="text-xs font-bold text-brand-700 hover:text-ink-950 inline-flex items-center gap-1 transition-colors"
               >
-                <span>Read detailed services breakdown</span>
+                <span>Explore our services</span>
                 <ArrowRight size={13} />
               </a>
             </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import * as THREE from 'three';
 // @ts-ignore
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -12,9 +13,9 @@ export default function Hero3D() {
   const [activePreset, setActivePreset] = useState<'iso' | 'front' | 'side' | 'top'>('iso');
   const [isExploded, setIsExploded] = useState(false);
   const [isWireframe, setIsWireframe] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const [mounted, setMounted] = useState(false);
+  const explodedRef = useRef(false);
+  const requestRenderRef = useRef<() => void>(() => {});
+  const wireMaterialRef = useRef<THREE.MeshBasicMaterial | null>(null);
   const [webglSupported, setWebglSupported] = useState(true);
 
   // References to internal Three.js objects
@@ -40,7 +41,6 @@ export default function Hero3D() {
   });
 
   useEffect(() => {
-    setMounted(true);
     if (!containerRef.current || !canvasRef.current) return;
 
     const container = containerRef.current;
@@ -71,7 +71,7 @@ export default function Hero3D() {
       renderer = new THREE.WebGLRenderer({
         canvas,
         antialias: true,
-        powerPreference: 'high-performance',
+        powerPreference: 'low-power',
         alpha: false,
       });
       rendererRef.current = renderer;
@@ -82,19 +82,20 @@ export default function Hero3D() {
     }
 
     renderer.setSize(initialWidth, initialHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     // Orbit Controls
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    controls.enableDamping = !motionPreference.matches;
     controls.dampingFactor = 0.06;
     controls.maxPolarAngle = Math.PI / 2 - 0.02;
     controls.minDistance = 10;
     controls.maxDistance = 50;
     controls.target.set(0, 3.5, 0);
-    // Don't swallow page scroll gesture completely on small touch devices
+    // The visitor explicitly opens this viewer before it captures touch gestures.
     controls.touches = {
       ONE: THREE.TOUCH.ROTATE,
       TWO: THREE.TOUCH.DOLLY_PAN,
@@ -220,6 +221,8 @@ export default function Hero3D() {
     addMesh(new THREE.BoxGeometry(10, 0.3, 8), concreteMat, levelRoof, -1.5, 8.2, 0);
 
     modelRefs.current.allMeshes = allMeshes;
+    const wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x0B0E14, transparent: true, opacity: 0.25 });
+    wireMaterialRef.current = wireframeMaterial;
 
     // Handle Container Resize with ResizeObserver
     const handleResize = () => {
@@ -229,6 +232,7 @@ export default function Hero3D() {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      requestRenderRef.current();
     };
 
     let resizeObserver: ResizeObserver | null = null;
@@ -240,78 +244,78 @@ export default function Hero3D() {
     }
     window.addEventListener('resize', handleResize);
 
-    // Initial pass to guarantee correct size on hydration
-    requestAnimationFrame(handleResize);
 
-    // IntersectionObserver to pause rendering when offscreen
+    // Render only after interaction, a resize, or an animation update.
     let isVisible = true;
-    const observer = new IntersectionObserver(
-      entries => {
-        isVisible = entries[0].isIntersecting;
-      },
-      { threshold: 0.05 }
-    );
-    observer.observe(container);
-
-    // Animation Render Loop
-    let animId: number;
+    let disposed = false;
+    let animId = 0;
+    const requestRender = () => {
+      if (!disposed && isVisible && !document.hidden && !animId) animId = requestAnimationFrame(animate);
+    };
     const animate = () => {
-      animId = requestAnimationFrame(animate);
-
-      if (!isVisible) return;
-
-      // Explode Lerp
-      const upperTargetY = isExploded ? 3.5 : 0;
-      const roofTargetY = isExploded ? 7.5 : 0;
-      if (levelUpper) levelUpper.position.y += (upperTargetY - levelUpper.position.y) * 0.08;
-      if (levelRoof) levelRoof.position.y += (roofTargetY - levelRoof.position.y) * 0.08;
-
-      // Smooth Camera Fly Easing
-      if (flyStateRef.current.isFlying && cameraRef.current && controlsRef.current) {
-        cameraRef.current.position.lerp(flyStateRef.current.targetCam, 0.08);
-        controlsRef.current.target.lerp(flyStateRef.current.targetLook, 0.08);
-        if (cameraRef.current.position.distanceTo(flyStateRef.current.targetCam) < 0.05) {
-          flyStateRef.current.isFlying = false;
-        }
+      animId = 0;
+      if (disposed || !isVisible || document.hidden) return;
+      const factor = motionPreference.matches ? 1 : 0.12;
+      const upperTarget = explodedRef.current ? 3.5 : 0;
+      const roofTarget = explodedRef.current ? 7.5 : 0;
+      levelUpper.position.y += (upperTarget - levelUpper.position.y) * factor;
+      levelRoof.position.y += (roofTarget - levelRoof.position.y) * factor;
+      if (flyStateRef.current.isFlying) {
+        camera.position.lerp(flyStateRef.current.targetCam, factor);
+        controls.target.lerp(flyStateRef.current.targetLook, factor);
+        if (camera.position.distanceTo(flyStateRef.current.targetCam) < 0.05) flyStateRef.current.isFlying = false;
       }
-
-      // Gentle auto-rotation when idle
-      if (!isHovered && !flyStateRef.current.isFlying && archGroup) {
-        archGroup.rotation.y += 0.0015;
-      }
-
       controls.update();
       renderer.render(scene, camera);
+      if (flyStateRef.current.isFlying || Math.abs(levelUpper.position.y - upperTarget) > 0.001 || Math.abs(levelRoof.position.y - roofTarget) > 0.001) requestRender();
     };
-    animate();
-
+    requestRenderRef.current = requestRender;
+    controls.addEventListener('change', requestRender);
+    const stopOrRender = () => {
+      if (!isVisible || document.hidden) { cancelAnimationFrame(animId); animId = 0; }
+      else requestRender();
+    };
+    const observer = new IntersectionObserver(entries => { isVisible = entries[0].isIntersecting; stopOrRender(); });
+    observer.observe(container);
+    document.addEventListener('visibilitychange', stopOrRender);
+    const onMotionChange = () => { controls.enableDamping = !motionPreference.matches; requestRender(); };
+    motionPreference.addEventListener('change', onMotionChange);
+    requestRender();
     return () => {
+      disposed = true;
       cancelAnimationFrame(animId);
       observer.disconnect();
-      if (resizeObserver) resizeObserver.disconnect();
+      resizeObserver?.disconnect();
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', stopOrRender);
+      motionPreference.removeEventListener('change', onMotionChange);
+      controls.removeEventListener('change', requestRender);
+      controls.dispose();
+      const geometries = new Set<THREE.BufferGeometry>();
+      const materials = new Set<THREE.Material>([wireframeMaterial]);
+      scene.traverse(object => {
+        const item = object as THREE.Mesh;
+        if (item.geometry) geometries.add(item.geometry);
+        if (item.material) (Array.isArray(item.material) ? item.material : [item.material]).forEach(material => materials.add(material));
+      });
+      allMeshes.forEach(item => materials.add(item.defaultMat));
+      geometries.forEach(geometry => geometry.dispose());
+      materials.forEach(material => material.dispose());
       renderer.dispose();
+      requestRenderRef.current = () => {};
+      modelRefs.current.allMeshes = [];
     };
-  }, [isExploded, isHovered]);
+  }, []);
 
-  // Update wireframe mode
+  useEffect(() => { explodedRef.current = isExploded; requestRenderRef.current(); }, [isExploded]);
   useEffect(() => {
-    const allMeshes = modelRefs.current.allMeshes;
-    allMeshes.forEach(item => {
-      if (isWireframe) {
-        item.mesh.material = new THREE.MeshBasicMaterial({
-          color: 0x0B0E14,
-          transparent: true,
-          opacity: 0.25,
-        });
-      } else {
-        item.mesh.material = item.defaultMat;
-      }
-    });
+    modelRefs.current.allMeshes.forEach(item => { item.mesh.material = isWireframe && wireMaterialRef.current ? wireMaterialRef.current : item.defaultMat; });
+    requestRenderRef.current();
   }, [isWireframe]);
 
   const setPreset = (preset: 'iso' | 'front' | 'side' | 'top') => {
     setActivePreset(preset);
+    requestRenderRef.current();
     flyStateRef.current.isFlying = true;
 
     if (preset === 'iso') {
@@ -329,24 +333,20 @@ export default function Hero3D() {
     }
   };
 
+  if (!webglSupported) return <div className="relative h-[320px] overflow-hidden rounded-3xl"><Image src="/assets/villa-cantonments.jpg" alt="Courtyard home design inspiration" fill sizes="(max-width: 1023px) 100vw, 50vw" className="object-cover" /><p role="status" className="absolute inset-x-0 bottom-0 bg-ink-950/90 p-5 text-sm text-white">The 3D viewer is unavailable on this device. You can still explore the design inspiration.</p></div>;
+
   return (
     <div
       ref={containerRef}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="relative w-full h-[380px] sm:h-[460px] md:h-[540px] lg:h-[600px] rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-[#0E131F] shadow-2xl touch-pan-y"
+      className="relative w-full h-[400px] sm:h-[460px] lg:h-[520px] rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-[#0E131F] shadow-2xl touch-pan-y"
     >
       {/* 3D Canvas */}
       {webglSupported ? (
-        <canvas ref={canvasRef} className="w-full h-full block" />
+        <canvas ref={canvasRef} aria-label="Interactive architectural model" className="w-full h-full block" />
       ) : (
         <div className="absolute inset-0 bg-[#0E131F]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/villa-cantonments.jpg"
-            alt="Cantonments Villa Architecture"
-            className="w-full h-full object-cover"
-          />
+          <Image src="/assets/villa-cantonments.jpg" alt="Courtyard home design inspiration" fill sizes="(max-width: 1023px) 100vw, 50vw" className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent" />
         </div>
       )}
@@ -358,7 +358,8 @@ export default function Hero3D() {
             key={p}
             type="button"
             onClick={() => setPreset(p)}
-            className={`text-[10px] font-mono tracking-widest uppercase px-2.5 py-1.5 rounded-full transition-all ${
+            aria-pressed={activePreset === p}
+            className={`min-h-11 text-[10px] font-mono tracking-widest uppercase px-2.5 py-1.5 rounded-full transition-all ${
               activePreset === p
                 ? 'bg-brand text-ink-950 font-bold shadow'
                 : 'bg-black/60 text-stone-300 border border-white/10 hover:border-brand/50 backdrop-blur'
@@ -370,18 +371,19 @@ export default function Hero3D() {
       </div>
 
       {/* Top Right Instruction Tag */}
-      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-black/60 backdrop-blur border border-white/10 text-stone-300 text-[10px] font-mono tracking-wider uppercase px-2.5 py-1.5 rounded-full pointer-events-none hidden sm:flex items-center gap-1.5">
+      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-black/60 backdrop-blur border border-white/10 text-stone-300 text-[10px] font-mono tracking-wider uppercase px-2.5 py-1.5 rounded-full pointer-events-none hidden 2xl:flex items-center gap-1.5">
         <Compass size={12} className="text-brand" />
         <span>Drag to Orbit &middot; Scroll to Zoom</span>
       </div>
 
       {/* Bottom Architectural Inspection Bar */}
       <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-black/80 backdrop-blur-md border border-white/10 p-2 sm:p-2.5 rounded-2xl flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => setIsExploded(!isExploded)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] uppercase tracking-wider transition-all ${
+            aria-pressed={isExploded}
+            className={`flex min-h-11 items-center gap-1.5 px-3 py-2 rounded-full text-[11px] uppercase tracking-wider transition-all ${
               isExploded
                 ? 'bg-brand text-ink-950 font-bold'
                 : 'bg-white/10 text-stone-300 hover:bg-white/20'
@@ -394,7 +396,8 @@ export default function Hero3D() {
           <button
             type="button"
             onClick={() => setIsWireframe(!isWireframe)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] uppercase tracking-wider transition-all ${
+            aria-pressed={isWireframe}
+            className={`flex min-h-11 items-center gap-1.5 px-3 py-2 rounded-full text-[11px] uppercase tracking-wider transition-all ${
               isWireframe
                 ? 'bg-sky-400 text-ink-950 font-bold'
                 : 'bg-white/10 text-stone-300 hover:bg-white/20'
@@ -405,12 +408,12 @@ export default function Hero3D() {
           </button>
         </div>
 
-        <div className="hidden sm:flex items-center gap-4 text-stone-400 text-[10px] uppercase tracking-widest">
-          <span>MODEL // <strong>ILLUSTRATIVE ARCHITECTURAL MODEL</strong></span>
+        <div className="flex flex-wrap items-center gap-4 text-stone-400 text-[10px] uppercase tracking-widest">
+          <span className="hidden sm:inline">MODEL // <strong>ARCHITECTURAL STUDY</strong></span>
           <button
             type="button"
             onClick={() => setPreset('iso')}
-            className="hover:text-white flex items-center gap-1"
+            className="min-h-11 px-3 hover:text-white flex items-center gap-1"
             title="Reset Model Orientation"
           >
             <RefreshCw size={11} />

@@ -7,26 +7,26 @@ export default function TrustMetrics() {
     {
       icon: ShieldCheck,
       stat: 'Design & build',
-      label: 'Discuss the scope',
-      desc: 'Start a conversation about the design and construction services your project needs.',
+      label: 'From idea to space',
+      desc: 'Architecture, construction and interiors, connected around your project.',
     },
     {
       icon: MapPin,
       stat: 'Greater Accra',
       label: 'Accra based',
-      desc: 'Share your site location so access, context and project requirements can be discussed.',
+      desc: 'Homes and workplaces shaped by their site and the people who use them.',
     },
     {
       icon: CheckCircle,
-      stat: 'Stage-by-stage',
-      label: 'Plan the budget',
-      desc: 'Agree specifications, costs and payment terms as part of the project scope.',
+      stat: 'Your priorities',
+      label: 'Design with purpose',
+      desc: 'Start with what matters to you, then shape the design around your needs and budget.',
     },
     {
       icon: Smartphone,
       stat: 'Building from abroad',
       label: 'Stay in touch',
-      desc: 'Discuss your time zone, contact preferences and the reporting you need.',
+      desc: 'Start planning your project in Ghana, wherever you are in the world.',
     },
   ];
 

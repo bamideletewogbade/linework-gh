@@ -14,7 +14,7 @@ interface ProjectCardProps {
 /** Whole card is one tap target. Image-led, minimal text. */
 export default function ProjectCard({
   project,
-  sizes = '(max-width: 640px) 85vw, (max-width: 1024px) 50vw, 33vw',
+  sizes = '(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw',
   className = '',
 }: ProjectCardProps) {
 
@@ -23,10 +23,10 @@ export default function ProjectCard({
       href={`/projects/${project.slug}`}
       className={`group relative flex flex-col overflow-hidden rounded-3xl bg-ink-900 text-white ${className}`}
     >
-      <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[4/4.6]">
+      <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[4/4.6]">
         <Image
           src={project.heroImage}
-          alt={`Illustrative image: ${project.title}`}
+          alt={`Design reference: ${project.title}`}
           fill
           sizes={sizes}
           className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
@@ -40,7 +40,7 @@ export default function ProjectCard({
           {(
             <span className="inline-flex items-center gap-1.5 rounded-full bg-ink-950/60 px-3 py-1 text-xs font-medium text-white backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-              Illustrative
+              Inspiration
             </span>
           )}
         </div>

@@ -52,7 +52,7 @@
   }
 
   .section {
-    @apply py-20 md:py-28;
+    @apply py-12 md:py-20;
   }
 
   /* Small label above headings: "— What we do" */
@@ -69,10 +69,11 @@
 
   /* Buttons — pill shaped, 48px+ tall for thumbs */
   .btn {
-    @apply inline-flex min-h-[3rem] items-center justify-center gap-2 rounded-full px-6 text-[0.95rem] font-semibold
+    @apply inline-flex min-h-[3rem] max-w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-center text-[0.95rem] font-semibold
       transition-all duration-200 ease-out active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
   }
-  .btn-primary {
+  .btn-primary,
+  .btn-whatsapp {
     @apply bg-brand text-ink-950 hover:bg-brand-300;
   }
   .btn-dark {
@@ -84,7 +85,7 @@
   .btn-outline-light {
     @apply border border-white/25 bg-white/5 text-white backdrop-blur-sm hover:bg-white hover:text-ink-950;
   }
-  .btn-whatsapp {
+  .btn-whatsapp-footer {
     @apply bg-whatsapp text-ink-950 hover:brightness-95;
   }
 
@@ -113,7 +114,7 @@
 
   /* Horizontal swipe rows on mobile */
   .snap-row {
-    @apply -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-6 sm:px-6;
+    @apply -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6;
     scrollbar-width: none;
   }
   .snap-row::-webkit-scrollbar {

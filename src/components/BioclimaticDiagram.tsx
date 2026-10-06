@@ -49,7 +49,7 @@ export default function BioclimaticDiagram() {
             Built for Accra heat.
           </h2>
           <p className="text-ink-600 text-base md:text-lg leading-relaxed">
-            Explore design choices for shade, airflow and outdoor space. This diagram illustrates ideas to assess for a particular site; it does not predict indoor temperatures or energy savings.
+            A comfortable space starts with attention to the sun, the breeze and the way rooms connect. Explore four design ideas for life in a warm climate.
           </p>
         </Reveal>
 

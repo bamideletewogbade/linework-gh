@@ -24,7 +24,7 @@ Open http://127.0.0.1:3087. `npm start` also previews the export, on port 3000 b
 
 - `src/app/`: the main multi-page website. Its home page is `src/app/page.tsx`.
 - `src/lib/site.ts`: brand, domain and contact configuration. The phone and email were retained from the existing project and have not been independently verified.
-- `src/data/projects.ts`: illustrative scenarios, not verified client case studies. Existing URLs are retained for compatibility, including the older atelier slug.
+- `src/data/projects.ts`: design inspiration references, not verified client case studies. Existing URLs are retained for compatibility, including the older atelier slug.
 - `src/components/ConversationalBrief.tsx`: the four-step enquiry composer.
 - `public/assets/`: source images and generated responsive variants. Run `npm run images` after replacing an image, or run the build.
 - Root `index.html` and `coming-soon.html`: standalone holding pages. They are not the Next.js homepage. Their notjustlines branding and email address are maintained separately.
@@ -38,7 +38,7 @@ For normal deployment, upload the contents of `out/`, not the repository root. C
 The brief gathers a request, property details, optional readiness/budget information and contact details. It has no API, database, analytics collector or automatic email delivery.
 
 1. Answers live in component memory and disappear on reload or navigation away.
-2. The review screen explicitly says the brief has not been sent.
+2. The review screen says the brief is ready to send and instructs the visitor to press send in WhatsApp or email.
 3. WhatsApp opens a prefilled message. Email opens a prefilled draft in the visitor's email application. The visitor must send it there.
 4. Copy lets the visitor use another application. If clipboard access fails, the text remains selectable and the destination contact details remain visible.
 5. There is no claimed delivery confirmation or promised response time.
@@ -63,3 +63,7 @@ Budget is an optional client-provided amount in a selected currency. There is no
 - Mobile menu navigation, residential portfolio filtering, reset to all examples and an example detail page were checked at 390px width. No horizontal overflow was observed on the checked views.
 - Project detail canonical metadata points to its own notjustlines URL.
 - This is local verification, not a live deployment or a full accessibility audit.
+
+## Public copy direction
+
+Public copy focuses on the customer’s space, priorities and next step. The image collection is presented as Design inspiration, with concise reference labels. Verification notes and launch checks belong in this guide and source comments, not in marketing paragraphs. Do not describe these references as completed commissions or invent client outcomes.

@@ -2,17 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Instagram, Mail, MapPin, Phone } from 'lucide-react';
 import { LineworkMark, WhatsAppIcon } from './ui/icons';
-import { SITE, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '@/lib/site';
+import { NAV_LINKS, SITE, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '@/lib/site';
 
 const COLUMNS = [
   {
     title: 'Company',
-    links: [
-      { label: 'About us', href: '/about' },
-      { label: 'Projects', href: '/projects' },
-      { label: 'Services', href: '/services' },
-      { label: 'Contact', href: '/contact' },
-    ],
+    links: NAV_LINKS,
   },
   {
     title: 'What we do',
@@ -28,13 +23,13 @@ const COLUMNS = [
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative overflow-hidden bg-ink-950 pb-28 pt-16 text-ink-300 md:pb-10 md:pt-24">
+    <footer className="relative overflow-hidden bg-ink-950 pb-8 pt-10 text-ink-300 md:pb-10 md:pt-16">
       <div className="bg-grid-dark pointer-events-none absolute inset-0 opacity-40" />
 
       <div className="container-site relative">
-        <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-12 md:pb-16">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-8 border-b border-white/10 pb-8 lg:grid-cols-12 lg:pb-12">
           {/* Brand */}
-          <div className="md:col-span-5">
+          <div className="col-span-2 lg:col-span-5">
             <Link href="/" className="inline-flex items-center gap-2.5 text-white" aria-label="notjustlines — home">
               <LineworkMark className="h-9 w-9" />
               <span className="font-display text-xl font-bold tracking-tight">
@@ -42,7 +37,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-5 max-w-sm text-base leading-relaxed">
-              Architecture, construction and interiors in Accra. Talk to notjustlines about your site, your ideas and the scope you need.
+              Architecture, construction and interiors in Accra. From the first idea to the finishing details.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -50,7 +45,7 @@ export default function Footer() {
                 href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-whatsapp min-h-[2.75rem] px-5"
+                className="btn btn-whatsapp-footer min-h-[2.75rem] px-5"
               >
                 <WhatsAppIcon size={18} /> WhatsApp us
               </a>
@@ -68,12 +63,12 @@ export default function Footer() {
 
           {/* Link columns */}
           {COLUMNS.map((col) => (
-            <div key={col.title} className="md:col-span-2">
+            <div key={col.title} className="lg:col-span-2">
               <h3 className="font-sans text-sm font-semibold text-white">{col.title}</h3>
               <ul className="mt-4 flex flex-col gap-1">
                 {col.links.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="inline-block py-1.5 text-base transition-colors hover:text-brand">
+                    <Link href={l.href} className="inline-flex min-h-11 items-center py-2 text-sm transition-colors hover:text-brand">
                       {l.label}
                     </Link>
                   </li>
@@ -83,7 +78,7 @@ export default function Footer() {
           ))}
 
           {/* Contact */}
-          <div className="md:col-span-3">
+          <div className="col-span-2 lg:col-span-3">
             <h3 className="font-sans text-sm font-semibold text-white">Talk to us</h3>
             <ul className="mt-4 flex flex-col gap-3 text-base">
               <li>
@@ -104,7 +99,7 @@ export default function Footer() {
         </div>
 
         {/* Big sign-off */}
-        <div className="py-10 md:py-14">
+        <div className="py-7 md:py-10">
           <p
             aria-hidden="true"
             className="select-none font-display text-[clamp(3.5rem,13vw,11rem)] font-extrabold leading-[0.85] tracking-[-0.05em] text-white/[0.07]"

@@ -27,8 +27,8 @@ export const DEFAULT_WHATSAPP_MESSAGE =
 
 
 export const NAV_LINKS = [
-  { label: 'Projects', href: '/projects' },
   { label: 'Services', href: '/services' },
+  { label: 'Inspiration', href: '/projects' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ] as const;
