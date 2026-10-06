@@ -17,17 +17,18 @@ export default function HomePage() {
       {/* ========================================================
           HERO SECTION (PLAIN ENGLISH + 3D ARCHITECTURAL MODEL)
           ======================================================== */}
-      <section className="bg-ink-950 text-white pt-6 pb-16 sm:pt-10 sm:pb-20 md:pt-14 md:pb-24 border-b border-white/10 relative overflow-hidden">
-        
+      {/* Dark backing so the sheet's rounded corners never show paper behind them */}
+      <div className="bg-ink-950">
+      <section className="hero-stage relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-ink-950 text-white lg:min-h-[calc(100svh-72px)]">
+
         {/* Subtle Background Blueprint Grid */}
         <div className="bg-grid-dark absolute inset-0 opacity-40 pointer-events-none" />
 
-        <div className="container-site relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
-            {/* Left Copy Column (6 cols) */}
-            <div className="lg:col-span-6 flex flex-col justify-center">
-              
+        <div className="container-site relative z-10 flex flex-1 flex-col">
+
+            {/* Copy column: left half on desktop, vertically centred in the screen */}
+            <div className="my-auto flex flex-col justify-center py-8 sm:py-12 lg:w-1/2 lg:pr-10">
+
               {/* Practice Eyebrow Badge */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl sm:rounded-full bg-white/10 border border-white/15 text-[11px] sm:text-xs leading-snug font-semibold uppercase tracking-wide sm:tracking-wider text-brand mb-5 w-fit max-w-full">
                 <MapPin size={14} className="text-brand shrink-0" />
@@ -35,7 +36,7 @@ export default function HomePage() {
               </div>
 
               {/* Main Headline */}
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08] text-white mb-5">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl font-extrabold tracking-tight leading-[1.08] text-white mb-5">
                 We don’t just draw it. <br className="hidden sm:inline" />
                 <span className="text-brand">We build it.</span>
               </h1>
@@ -63,35 +64,43 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              {/* Quick Trust Highlights */}
-              <div className="mt-8 pt-6 border-t border-white/10 grid grid-cols-3 gap-3 sm:gap-4 text-xs text-ink-300">
-                <div>
-                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Single Team</span>
-                  <span className="text-[11px] text-ink-300">Drawings to Handover</span>
-                </div>
-                <div className="border-x border-white/10 px-2 sm:px-3">
-                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Accra Based</span>
-                  <span className="text-[11px] text-ink-300">Projects in Ghana</span>
-                </div>
-                <div>
-                  <span className="text-white font-bold block text-base sm:text-lg font-sans">Plan the Scope</span>
-                  <span className="text-[11px] text-ink-300">Design, build or renovate</span>
-                </div>
-              </div>
-
             </div>
-
-            {/* Right Three.js 3D Pavilion Viewer (6 cols) */}
-            <div className="lg:col-span-6 w-full">
-              <HeroPreview />
-            </div>
-
-          </div>
         </div>
+
+        {/* Image panel: full-bleed below the copy on phones, the whole right side on desktop */}
+        {/* Sits above the full-width copy containers so its buttons stay clickable */}
+        <div className="relative lg:absolute lg:inset-y-0 lg:right-0 lg:z-[15] lg:w-[46vw]">
+          <HeroPreview />
+        </div>
+
+        {/* Title block, set out like the corner of a drawing sheet */}
+        <div className="container-site relative z-10">
+          <dl className="grid grid-cols-3 border-t border-white/10 pt-5 pb-8 text-xs text-ink-300 lg:w-1/2 lg:grid-cols-[1fr_1fr_1fr_auto] lg:pr-10 lg:pb-10">
+            {[
+              ['Scope', 'Single team', 'Drawings to handover'],
+              ['Site', 'Accra based', 'Projects in Ghana'],
+              ['Start', 'Plan the scope', 'Design, build or renovate'],
+            ].map(([label, title, text], i) => (
+              <div key={label} className={i === 1 ? 'border-x border-white/10 px-2 sm:px-3' : i === 2 ? 'pl-2 sm:pl-3' : 'pr-2'}>
+                <dt className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-brand">{label}</dt>
+                <dd className="block font-sans text-base font-bold text-white sm:text-lg">{title}</dd>
+                <dd className="text-[11px] text-ink-300">{text}</dd>
+              </div>
+            ))}
+            <a href="#services" aria-label="Scroll to services" className="group hidden items-end justify-center pl-4 lg:flex">
+              <span className="relative block h-12 w-px overflow-hidden bg-white/15">
+                <span className="absolute inset-x-0 top-0 h-1/2 animate-scroll-cue bg-brand" />
+              </span>
+            </a>
+          </dl>
+        </div>
+
+        {/* Drafting scale along the foot of the hero */}
+        <div aria-hidden className="ruler-ticks absolute inset-x-0 bottom-0 z-20 h-2.5" />
       </section>
 
 
-      <section className="section bg-white" id="services">
+      <section className="section relative z-10 rounded-t-[2rem] bg-white shadow-[0_-30px_60px_-20px_rgba(0,0,0,0.6)] md:rounded-t-[2.5rem]" id="services">
         <div className="container-site">
           <span className="eyebrow mb-3">How we can help</span>
           <h2 className="text-display-md font-bold mb-4">What are you planning?</h2>
@@ -107,6 +116,7 @@ export default function HomePage() {
           <Link href="/services#diaspora" className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-brand-700">Building in Ghana from abroad? Start here<ArrowRight size={16} className="shrink-0" /></Link>
         </div>
       </section>
+      </div>
 
       <section className="section bg-paper border-y border-line">
         <div className="container-site">

@@ -73,6 +73,10 @@ module.exports = {
           to: { left: '100%', opacity: '0' },
         },
         draw: { to: { strokeDashoffset: '0' } },
+        'scroll-cue': {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(200%)' },
+        },
         'pulse-ring': {
           '0%': { transform: 'scale(0.9)', opacity: '0.7' },
           '100%': { transform: 'scale(1.8)', opacity: '0' },
@@ -87,6 +91,7 @@ module.exports = {
         scan: 'scan 1.5s cubic-bezier(0.77, 0, 0.18, 1) 0.9s both',
         draw: 'draw 1.4s ease-out both',
         'pulse-ring': 'pulse-ring 1.8s ease-out infinite',
+        'scroll-cue': 'scroll-cue 1.8s ease-in-out infinite',
       },
     },
   },
